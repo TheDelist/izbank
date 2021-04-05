@@ -20,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
     //naber lannn
 
     //halil yazdııı
-    // ssamet yazıyoooo
+    // ssamet yazıyoooo hey
 
 }
