@@ -23,4 +23,6 @@ public class MainActivity extends AppCompatActivity {
     //sadece commit deneme
     // ssamet yazıyoooo hey
 
+
+
 }
