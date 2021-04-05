@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".sign_up">
 
     <TextView
-        android:id="@+id/app_name"
+        android:id="@+id/app_name_sign_up"
         android:layout_marginTop="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -15,9 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40dp"
-        android:text="IZBANK"></TextView>
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="SIGN UP"></TextView>
     <LinearLayout
-        android:id="@+id/layout_user_name"
+        android:id="@+id/layout_user_name_sign_up"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:layout_marginTop="50dp"
@@ -26,7 +28,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_name"
+        app:layout_constraintTop_toBottomOf="@id/app_name_sign_up"
         >
 
         <ImageView
@@ -35,7 +37,7 @@
             android:src="@drawable/ic_baseline_person_24"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_user_name"
+            android:id="@+id/edittext_user_name_sign_up"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +54,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_user_name"
+        app:layout_constraintTop_toBottomOf="@id/layout_user_name_sign_up"
         >
 
         <ImageView
@@ -60,8 +62,10 @@
             android:layout_height="45dp"
             android:src="@drawable/ic_baseline_lock_24"></ImageView>
 
+
+
         <EditText
-            android:id="@+id/edittext_user_password"
+            android:id="@+id/edittext_user_password_sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -69,32 +73,16 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_sign_in"
+        android:id="@+id/button_sign_up"
         android:layout_marginTop="70dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/layout_user_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="SIGN IN"
+        android:text="SIGN UP"
         android:backgroundTint="@color/black"
         ></Button>
-
-    <TextView
-        android:id="@+id/textview_sign_up"
-        android:layout_marginTop="90dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/button_sign_in"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="SIGN UP"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"></TextView>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
