@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Sign.MainActivity">
 
     <ImageView
         android:layout_marginTop="30dp"
@@ -85,30 +85,31 @@
 
     <Button
         android:id="@+id/button_sign_in"
-        android:layout_marginTop="70dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout_user_password_sign_in"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="SIGN IN"
+        android:layout_marginTop="70dp"
         android:backgroundTint="@color/black"
-        ></Button>
+        android:onClick="signIn"
+        android:text="SIGN IN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_user_password_sign_in"></Button>
 
     <TextView
-        android:padding="5dp"
-        android:background="@drawable/bottom_line"
         android:id="@+id/textview_sign_up"
-        android:layout_marginTop="90dp"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/button_sign_in"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/bottom_line"
+        android:onClick="signUp"
+        android:padding="5dp"
         android:text="SIGN UP"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_sign_in"></TextView>
 
 
 

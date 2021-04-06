@@ -1,4 +1,4 @@
-package com.bank.izbank;
+package com.bank.izbank.MainScreen;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.bank.izbank.R;
 
 public class Fragment2 extends Fragment {
 
