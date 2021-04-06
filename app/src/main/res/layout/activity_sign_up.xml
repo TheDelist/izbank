@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sign_up">
+    tools:context=".SignUpActivity">
 
     <ImageView
         android:layout_marginTop="30dp"
@@ -47,11 +47,11 @@
             android:src="@drawable/icon_user"></ImageView>
 
         <EditText
-            android:id="@+id/edittext_user_name_sign_up"
-
+            android:id="@+id/edittext_id_number_sign_up"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="USER NAME"></EditText>
+            android:hint="ID NUMBER"></EditText>
     </LinearLayout>
 
     <LinearLayout
@@ -79,15 +79,116 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:gravity="center"
             android:hint="PASSWORD"></EditText>
     </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_phone_sign_up"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_user_password"
+        >
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/icon_phone"></ImageView>
+
+
+
+        <EditText
+            android:id="@+id/edittext_phone_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:gravity="center"
+
+            android:hint="PHONE"></EditText>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_address_sign_up"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_phone_sign_up"
+        >
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/icon_address"></ImageView>
+
+
+
+        <EditText
+            android:id="@+id/edittext_address_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:gravity="center"
+
+            android:hint="ADDRESS"></EditText>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_profession_sign_up"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_address_sign_up"
+        >
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/icon_profession"></ImageView>
+
+
+
+        <EditText
+            android:id="@+id/edittext_profession_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:gravity="center"
+
+            android:hint="PROFESSION"></EditText>
+    </LinearLayout>
+
+
 
     <Button
         android:id="@+id/button_sign_up"
         android:layout_marginTop="70dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout_user_password"
+        app:layout_constraintTop_toBottomOf="@id/layout_profession_sign_up"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="SIGN UP"
