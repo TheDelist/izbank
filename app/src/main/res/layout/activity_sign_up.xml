@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/ic_baseline_person_24"></ImageView>
+            android:src="@drawable/icon_user"></ImageView>
 
         <EditText
             android:id="@+id/edittext_user_name_sign_up"
@@ -60,7 +60,7 @@
         <ImageView
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/ic_baseline_lock_24"></ImageView>
+            android:src="@drawable/icon_lock"></ImageView>
 
 
 
