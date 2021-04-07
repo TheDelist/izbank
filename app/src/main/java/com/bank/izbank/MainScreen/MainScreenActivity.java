@@ -49,9 +49,11 @@ public class MainScreenActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new Fragment1()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new Fragment1()).commit();
             }
-        }, 1000);   //0,25 seconds
+        }, 1000);   //1 seconds
+
+
 
 
 

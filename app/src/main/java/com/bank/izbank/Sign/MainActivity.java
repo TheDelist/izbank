@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,29 +19,34 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     EditText userName,userPass;
     public static User mainUser;
+    private List<ParseObject> list;
+    private  ParseQuery<ParseObject> query;
 
     public static String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);//load screen
+        list=new ArrayList<>();
         userName=findViewById(R.id.edittext_id_number_sign_in);
         userPass=findViewById(R.id.edittext_user_password_sign_in);
 
         //remember
         ParseUser parseUser =ParseUser.getCurrentUser();
        if(parseUser !=null ){
-           getUser();
+          //loading screen
+               getUser();
 
 
+               Intent intent=new Intent(MainActivity.this, MainScreenActivity.class);
+               startActivity(intent);
 
-           Intent intent=new Intent(MainActivity.this, MainScreenActivity.class);
-           startActivity(intent);
 
        }
 
@@ -51,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(signUp);
 
     }
-    public void getUser(){
+    public void getUser()  {
         ParseUser parseUser =ParseUser.getCurrentUser();
-        ParseQuery<ParseObject> query=ParseQuery.getQuery("UserInfo");
+        query=ParseQuery.getQuery("UserInfo");
         query.whereEqualTo("username",parseUser.getUsername().toString());
 
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -82,11 +88,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
 
     public void signIn(View view){
-
+        //loading screen
 
 
         ParseUser.logInInBackground(userName.getText().toString(), userPass.getText().toString(), new LogInCallback() {
