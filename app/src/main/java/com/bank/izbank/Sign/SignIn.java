@@ -4,16 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bank.izbank.GifImageView;
-import com.bank.izbank.MainScreen.Fragment1;
-import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
+import com.bank.izbank.splashScreen.splashScreen;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -21,14 +17,11 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class SignIn extends AppCompatActivity {
     EditText userName,userPass;
     public static User mainUser;
-    private List<ParseObject> list;
-    private  ParseQuery<ParseObject> query;
 
 
     public static String name;
@@ -36,49 +29,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);//load screen
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        list=new ArrayList<>();
-        userName=findViewById(R.id.edittext_id_number_sign_in);
-        userPass=findViewById(R.id.edittext_user_password_sign_in);
-
         //remember
         ParseUser parseUser =ParseUser.getCurrentUser();
        if(parseUser !=null ){
           //loading screen
+           getUser(parseUser);
 
-           getUser();
-
-
-           try {
-               setContentView(R.layout.loading_screen_layout);
-
-               Thread.sleep(10000);
-           } catch (InterruptedException e) {
-               e.printStackTrace();
-           }
-
-
-           Intent intent=new Intent(MainActivity.this, MainScreenActivity.class);
+           Intent intent=new Intent(SignIn.this, splashScreen.class);
            startActivity(intent);
 
-
+       }else{
+           setContentView(R.layout.activity_sign_in);//load screen
+           userName=findViewById(R.id.edittext_id_number_sign_in);
+           userPass=findViewById(R.id.edittext_user_password_sign_in);
        }
 
-      // startActivity(new Intent(MainActivity.this, MainScreenActivity.class));
+
     }
     public void signUp(View view){
-        Intent signUp=new Intent(MainActivity.this, SignUpActivity.class);
+        Intent signUp=new Intent(SignIn.this, SignUpActivity.class);
         startActivity(signUp);
 
     }
-    public void getUser()  {
-        ParseUser parseUser =ParseUser.getCurrentUser();
-        query=ParseQuery.getQuery("UserInfo");
+    public void getUser(ParseUser parseUser)  {
+      //  ParseUser parseUser =ParseUser.getCurrentUser();
+        ParseQuery<ParseObject>  query=ParseQuery.getQuery("UserInfo");
         query.whereEqualTo("username",parseUser.getUsername().toString());
 
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -96,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                             Address address = new Address(str[0],str[1],Integer.parseInt(str[2]),Integer.parseInt(str[3]),Integer.parseInt(str[4]),str[5],str[6],str[7]);
                             String profession = object.getString("profession");
 
-                            Toast.makeText(getApplicationContext(),"Welcomexxx "+name,Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
                             mainUser = new User(name, parseUser.getUsername(), phone,address,profession);
                         }
 
@@ -149,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    //intent
-                    Intent intent=new Intent(MainActivity.this,MainScreenActivity.class);
+                    Intent intent=new Intent(SignIn.this, splashScreen.class);
                     startActivity(intent);
+
                 }
             }
         });

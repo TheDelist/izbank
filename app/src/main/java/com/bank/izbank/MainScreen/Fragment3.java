@@ -11,14 +11,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bank.izbank.R;
-import com.bank.izbank.Sign.MainActivity;
+import com.bank.izbank.Sign.SignIn;
 
 public class Fragment3 extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Toast.makeText(getActivity(), "selam " + MainActivity.mainUser.getName(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "selam " + SignIn.mainUser.getName(), Toast.LENGTH_LONG).show();
         return inflater.inflate(R.layout.fragment_3,container,false);
 
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Sign.MainActivity">
+    tools:context=".Sign.SignIn">
 
     <ImageView
         android:layout_marginTop="30dp"

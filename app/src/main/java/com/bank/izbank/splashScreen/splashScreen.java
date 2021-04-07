@@ -1,4 +1,4 @@
-package com.bank.izbank;
+package com.bank.izbank.splashScreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
-import com.bank.izbank.Sign.MainActivity;
+import com.bank.izbank.MainScreen.MainScreenActivity;
+import com.bank.izbank.R;
 import com.felipecsl.gifimageview.library.GifImageView;
 
 import org.apache.commons.io.IOUtils;
@@ -29,7 +30,7 @@ public class splashScreen extends AppCompatActivity {
         progressBar.setVisibility(progressBar.VISIBLE);
 
         try {
-            InputStream inputStream = getAssets().open("denemegif.gif");
+            InputStream inputStream = getAssets().open("deneme2.gif");
             byte[] bytes = IOUtils.toByteArray(inputStream);
             gifImageView.setBytes(bytes);
             gifImageView.startAnimation();
@@ -38,12 +39,14 @@ public class splashScreen extends AppCompatActivity {
 
         }
 
-        new Handler().post(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                splashScreen.this.startActivity(new Intent( splashScreen.this,MainActivity.class));
+                splashScreen.this.startActivity(new Intent( splashScreen.this, MainScreenActivity.class));
                 splashScreen.this.finish();
             }
-        },3000);
+        },5000);
+
+
     }
 }

@@ -1,4 +1,4 @@
-package com.bank.izbank;
+package com.bank.izbank.splashScreen;
 
 import android.content.Context;
 import android.graphics.Canvas;

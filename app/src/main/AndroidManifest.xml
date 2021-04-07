@@ -10,16 +10,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Izbank">
-        <activity android:name=".splashScreen"></activity>
-        <activity android:name=".MainScreen.MainScreenActivity" />
+
+        <activity android:name=".splashScreen.splashScreen" />
         <activity android:name=".Sign.SignUpActivity" />
-        <activity android:name=".Sign.MainActivity">
+        <activity android:name=".Sign.SignIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".MainScreen.MainScreenActivity"></activity>
     </application>
 
 </manifest>
