@@ -51,7 +51,7 @@ public class MainScreenActivity extends AppCompatActivity {
             public void run() {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new Fragment1()).commit();
             }
-        }, 1000);   //1 seconds
+        }, 3000);   //1 seconds
 
 
 

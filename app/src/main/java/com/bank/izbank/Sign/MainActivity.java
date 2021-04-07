@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bank.izbank.GifImageView;
+import com.bank.izbank.MainScreen.Fragment1;
 import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
 import com.parse.FindCallback;
@@ -28,11 +30,18 @@ public class MainActivity extends AppCompatActivity {
     private List<ParseObject> list;
     private  ParseQuery<ParseObject> query;
 
+
     public static String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);//load screen
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         list=new ArrayList<>();
         userName=findViewById(R.id.edittext_id_number_sign_in);
         userPass=findViewById(R.id.edittext_user_password_sign_in);
@@ -41,11 +50,21 @@ public class MainActivity extends AppCompatActivity {
         ParseUser parseUser =ParseUser.getCurrentUser();
        if(parseUser !=null ){
           //loading screen
-               getUser();
+
+           getUser();
 
 
-               Intent intent=new Intent(MainActivity.this, MainScreenActivity.class);
-               startActivity(intent);
+           try {
+               setContentView(R.layout.loading_screen_layout);
+
+               Thread.sleep(10000);
+           } catch (InterruptedException e) {
+               e.printStackTrace();
+           }
+
+
+           Intent intent=new Intent(MainActivity.this, MainScreenActivity.class);
+           startActivity(intent);
 
 
        }
@@ -92,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void signIn(View view){
         //loading screen
+
 
 
         ParseUser.logInInBackground(userName.getText().toString(), userPass.getText().toString(), new LogInCallback() {

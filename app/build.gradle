@@ -43,4 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     compile 'com.parse:parse-android:1.17.3'
+
+    compile 'com.felipecsl:gifimageview:2.1.0'
+    compile 'commons-io:commons-io:2.4'
 }
