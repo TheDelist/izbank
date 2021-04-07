@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/genel">
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/layout_user_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="30dp"
+        android:background="@color/genel"
+
+        android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,31 +22,156 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_bank">
+            android:background="@drawable/icon_bank_whiteback">
 
         </ImageView>
 
-        <TextView
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:text="METEHAN ALPER ELMAS"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"></TextView>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_date_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DATE"
+                android:layout_gravity="center"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"></TextView>
+
+            <TextView
+                android:id="@+id/text_view_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HELLO, METEHAN."
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"></TextView>
+        </LinearLayout>
 
 
-        <TextView
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="ŞİRİNYER"
-            android:textColor="@color/black"></TextView>
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_dolar"
+                android:layout_gravity="center"></ImageView>
 
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1234,321"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"></TextView>
+        </LinearLayout>
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/layout_functions_main_screen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout_user_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        android:background="@drawable/user1_corner_rounded"
+        android:gravity=""
+        android:padding="20dp">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            >
+
+            <ImageView
+
+
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/icon_money_transfer"
+
+
+                ></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SEND"
+                android:textColor="@color/white"
+                android:textStyle="bold"></TextView>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            >
+
+            <ImageView
+
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/icon_request"
+
+
+                ></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REQUEST"
+                android:textColor="@color/white"
+                android:textStyle="bold"></TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            >
+
+            <ImageView
+
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/icon_history"
+
+
+                ></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HISTORY"
+                android:textColor="@color/white"
+                android:textStyle="bold"></TextView>
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_portfolio"
@@ -58,7 +183,7 @@
         app:layout_constraintBottom_toTopOf="@id/layout_credit_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_user_profile">
+        app:layout_constraintTop_toBottomOf="@id/layout_functions_main_screen">
 
         <TextView
             android:layout_width="wrap_content"

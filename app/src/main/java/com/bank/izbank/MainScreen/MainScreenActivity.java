@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,25 +19,44 @@ import com.bank.izbank.MainScreen.Fragment3;
 import com.bank.izbank.MainScreen.Fragment4;
 import com.bank.izbank.MainScreen.Fragment5;
 import com.bank.izbank.R;
+import com.bank.izbank.Sign.Address;
 import com.bank.izbank.Sign.MainActivity;
+import com.bank.izbank.Sign.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.FindCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class MainScreenActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private Fragment tempFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new Fragment1()).commit();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new Fragment1()).commit();
+            }
+        }, 1000);   //0,25 seconds
+
+
+
+
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

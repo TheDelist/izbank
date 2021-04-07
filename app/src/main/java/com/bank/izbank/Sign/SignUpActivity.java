@@ -43,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
                 userIdText.getText().toString(),
                 userPassText.getText().toString(),
                 userPhoneText.getText().toString(),
-                new Address("TPAO ","ss",13,2,4,"Kırklareli","Lüleburgaz","Turkey"),
+                new Address("TPAO","ss",13,2,4,"Kırklareli","Lüleburgaz","Turkey"),
                 userProfText.getText().toString());
 
         ParseUser parseUser=new ParseUser();

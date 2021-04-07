@@ -19,6 +19,15 @@ public class User {
         this.profession = profession;
     }
 
+    public User(String name, String id,String phoneNumber, Address address, String profession) {
+        this.name = name;
+        this.id=id;
+        this.pass=null;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.profession = profession;
+    }
+
     public String getPass() {
         return pass;
     }
