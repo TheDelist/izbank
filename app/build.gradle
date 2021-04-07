@@ -42,6 +42,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation "com.parse:parse-android:$parseVersion"
-    implementation "com.parse:parse-fcm-android:$parseVersion"
+    compile 'com.parse:parse-android:1.17.3'
 }

@@ -71,36 +71,10 @@ public class MainScreenActivity extends AppCompatActivity {
 
     }
 
-    //menu gözükmüyo ona bi bak
-    //kullanıcı bilgilerini sonraki sayfada al(son bişe dene sonra)
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
 
 
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.main_screen_log_out){
-            ParseUser.logOutInBackground(new LogOutCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e !=null){
-                        Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
-                    }else{
-                        Intent intent=new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            });
-        }
 
 
-        return super.onOptionsItemSelected(item);
-    }
     public void logOut(View view){
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
