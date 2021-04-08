@@ -9,19 +9,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bank.izbank.R;
+import com.bank.izbank.Sign.CreditCard;
 import com.bank.izbank.Sign.SignIn;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.Date;
 
 public class Fragment1 extends Fragment {
 
-
+    RecyclerView recyclerView;
     TextView text_view_name, date;
+    ArrayList<CreditCard> myCreditCard;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,6 +44,21 @@ public class Fragment1 extends Fragment {
 
         text_view_name.setText("HELLO, " + SignIn.mainUser.getName().toUpperCase()+".");
 
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        myCreditCard = new ArrayList<>();
+        myCreditCard.add(new CreditCard(2000 ));
+        myCreditCard.add(new CreditCard(2000 ));
+        myCreditCard.add(new CreditCard(2000 ));
+        myCreditCard.add(new CreditCard(2000 ));
+
+
+        MyCreditCardAdapter myMovieAdapter = new MyCreditCardAdapter(myCreditCard,getActivity() );
+        recyclerView.setAdapter(myMovieAdapter);
+
     }
 
     public void define(){
@@ -46,6 +66,7 @@ public class Fragment1 extends Fragment {
 
         text_view_name = getView().findViewById(R.id.text_view_name);
         date = getView().findViewById(R.id.text_view_date_main);
+        recyclerView = getView().findViewById(R.id.recyclerview);
 
 
     }

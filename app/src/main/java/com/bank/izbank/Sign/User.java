@@ -1,5 +1,7 @@
 package com.bank.izbank.Sign;
 
+import java.util.ArrayList;
+
 public class User {
     private String name;
     private String id;
@@ -9,6 +11,7 @@ public class User {
     private Address address;
     private String profession;
     private String addressSum;
+    private ArrayList<CreditCard> creditcards;
 
     public User(String name, String id,String pass,String phoneNumber, Address address, String profession) {
         this.name = name;
@@ -26,6 +29,15 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.profession = profession;
+        this.creditcards = new ArrayList<>();
+    }
+
+    public void addCreditCard(CreditCard creditcard){
+        creditcards.add(creditcard);
+    }
+
+    public ArrayList<CreditCard> getCreditcards() {
+        return creditcards;
     }
 
     public String getPass() {

@@ -174,142 +174,174 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_portfolio"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/layout_credit_card"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_functions_main_screen"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_functions_main_screen">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="PORTFOLIO"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold"></TextView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        >
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_functions_main_screen"
+            android:id="@+id/text_view_portfolio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PORTFOLIO"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="25dp"></TextView>
 
-            <ImageView
+        <LinearLayout
+            android:id="@+id/layout_portfolio"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/text_view_credit_cards"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_portfolio">
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_save_money">
 
-            </ImageView>
 
 
             <LinearLayout
-
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-                <TextView
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:text="$1023,25"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"></TextView>
+                    android:background="@drawable/icon_save_money">
+
+                </ImageView>
 
 
-                <TextView
+                <LinearLayout
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="TR50 2525 0202 2525 2525"
-                    android:textColor="@color/black"></TextView>
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="$1023,25"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"></TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="TR50 2525 0202 2525 2525"
+                        android:textColor="@color/black"></TextView>
+
+                </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
 
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_credit_card"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_portfolio">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="CREDIT CARDS"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold"></TextView>
+        </LinearLayout>
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/icon_credit_card">
+                android:orientation="horizontal"
+                >
 
-            </ImageView>
+                <TextView
+
+
+                    android:id="@+id/text_view_credit_cards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CREDIT CARDS"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="25dp"></TextView>
+
+
+                <ImageView
+                    android:id="@+id/image_view_add_credit_card"
+
+                    android:layout_marginLeft="120dp"
+
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon_plus"></ImageView>
+
+
+            </LinearLayout>
 
 
             <LinearLayout
+                android:id="@+id/layout_credit_card"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+
+
+                <androidx.recyclerview.widget.RecyclerView
+
+
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:text="$1023,25"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"></TextView>
+                    tools:layout_editor_absoluteX="167dp"
+                    tools:layout_editor_absoluteY="213dp"
+
+                    >
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="2551 5158 9562 8547"
-                    android:textColor="@color/black"></TextView>
+                </androidx.recyclerview.widget.RecyclerView>
+
 
             </LinearLayout>
+
+
         </LinearLayout>
 
 
     </LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
