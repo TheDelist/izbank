@@ -23,8 +23,8 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
     ArrayList<CreditCard> MyCreditCardData;
     Activity context;
 
-    public MyCreditCardAdapter(ArrayList<CreditCard> myMovieData,Activity activity) {
-        this.MyCreditCardData = myMovieData;
+    public MyCreditCardAdapter(ArrayList<CreditCard> myCreditCardData,Activity activity) {
+        this.MyCreditCardData = myCreditCardData;
         this.context = activity;
     }
 

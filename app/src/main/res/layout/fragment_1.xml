@@ -185,88 +185,62 @@
 
 
         <LinearLayout
+            android:layout_margin="5dp"
+            android:background="@drawable/frame"
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_weight="1">
 
-            <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_functions_main_screen"
-            android:id="@+id/text_view_portfolio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PORTFOLIO"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="25dp"></TextView>
-
             <LinearLayout
-                android:id="@+id/layout_portfolio"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 >
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+
+
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/text_view_portfolio"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/icon_save_money">
-
-                    </ImageView>
+                    android:text="CREDIT CARDS"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="25dp"></TextView>
 
 
-                    <LinearLayout
+                <ImageView
+                    android:id="@+id/image_view_add_bank_account"
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                    android:layout_marginLeft="120dp"
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:text="$1023,25"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"></TextView>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="TR50 2525 0202 2525 2525"
-                            android:textColor="@color/black"></TextView>
-
-                </LinearLayout>
-            </LinearLayout>
-
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon_plus"></ImageView>
 
 
             </LinearLayout>
 
 
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_bank_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="167dp"
+                tools:layout_editor_absoluteY="213dp"/>
 
         </LinearLayout>
 
 
         <LinearLayout
-
+            android:layout_margin="5dp"
+            android:background="@drawable/frame"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -281,6 +255,7 @@
                 <TextView
 
 
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/text_view_credit_cards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -305,7 +280,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_credit_card"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="167dp"
+                tools:layout_editor_absoluteY="213dp"
+                />
 
 
         </LinearLayout>
