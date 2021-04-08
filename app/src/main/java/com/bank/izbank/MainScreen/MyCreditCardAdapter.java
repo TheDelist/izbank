@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bank.izbank.R;
@@ -59,12 +60,14 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
         ImageView imageCreditCard;
         TextView textCreditCardLimit;
         TextView textCreditCardNo;
+        private CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageCreditCard = itemView.findViewById(R.id.image_view_add_credit_card);
             textCreditCardLimit = itemView.findViewById(R.id.text_view_credit_card_limit);
             textCreditCardNo = itemView.findViewById(R.id.text_view_credit_card_no);
+            cardView = itemView.findViewById(R.id.card_view_credit_card);
 
         }
     }

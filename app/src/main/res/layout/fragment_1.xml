@@ -186,7 +186,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_weight="1">
 
@@ -201,67 +201,63 @@
             android:textStyle="bold"
             android:textSize="25dp"></TextView>
 
-        <LinearLayout
-            android:id="@+id/layout_portfolio"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/text_view_credit_cards"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_portfolio">
-
-
-
-
             <LinearLayout
+                android:id="@+id/layout_portfolio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/icon_save_money">
-
-                </ImageView>
-
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
 
                 <LinearLayout
-
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <TextView
+                    <ImageView
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:text="$1023,25"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"></TextView>
+                        android:background="@drawable/icon_save_money">
+
+                    </ImageView>
 
 
-                    <TextView
+                    <LinearLayout
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="TR50 2525 0202 2525 2525"
-                        android:textColor="@color/black"></TextView>
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:text="$1023,25"
+                            android:textColor="@color/black"
+                            android:textSize="20dp"></TextView>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="TR50 2525 0202 2525 2525"
+                            android:textColor="@color/black"></TextView>
 
                 </LinearLayout>
             </LinearLayout>
 
 
-        </LinearLayout>
+
+            </LinearLayout>
 
 
 
@@ -270,8 +266,9 @@
 
 
         <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_weight="1">
 
@@ -305,35 +302,10 @@
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/layout_credit_card"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_credit_card"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@color/white"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                >
-
-
-
-
-                <androidx.recyclerview.widget.RecyclerView
-
-
-                    android:id="@+id/recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:layout_editor_absoluteX="167dp"
-                    tools:layout_editor_absoluteY="213dp"
-
-                    >
-
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-
-            </LinearLayout>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>

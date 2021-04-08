@@ -54,6 +54,9 @@ public class Fragment1 extends Fragment {
         myCreditCard.add(new CreditCard(2000 ));
         myCreditCard.add(new CreditCard(2000 ));
         myCreditCard.add(new CreditCard(2000 ));
+        myCreditCard.add(new CreditCard(2000 ));
+        myCreditCard.add(new CreditCard(2000 ));
+        myCreditCard.add(new CreditCard(2000 ));
 
 
         MyCreditCardAdapter myMovieAdapter = new MyCreditCardAdapter(myCreditCard,getActivity() );
@@ -66,7 +69,7 @@ public class Fragment1 extends Fragment {
 
         text_view_name = getView().findViewById(R.id.text_view_name);
         date = getView().findViewById(R.id.text_view_date_main);
-        recyclerView = getView().findViewById(R.id.recyclerview);
+        recyclerView = getView().findViewById(R.id.recyclerview_credit_card);
 
 
     }
