@@ -1,4 +1,4 @@
-package com.bank.izbank.MainScreen;
+package com.bank.izbank.Adapters;
 
 import android.app.Activity;
 
@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bank.izbank.R;
-import com.bank.izbank.Sign.BankAccount;
+import com.bank.izbank.UserInfo.BankAccount;
 
 
 import java.util.ArrayList;

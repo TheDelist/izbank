@@ -1,4 +1,4 @@
-package com.bank.izbank.Sign;
+package com.bank.izbank.UserInfo;
 
 import java.util.ArrayList;
 

@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bank.izbank.R;
+import com.bank.izbank.UserInfo.Address;
+import com.bank.izbank.UserInfo.User;
 import com.bank.izbank.splashScreen.splashScreen;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;

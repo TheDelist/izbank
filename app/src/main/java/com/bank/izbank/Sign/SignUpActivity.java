@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
-import com.parse.Parse;
+import com.bank.izbank.UserInfo.Address;
+import com.bank.izbank.UserInfo.User;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;

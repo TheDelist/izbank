@@ -12,9 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bank.izbank.Adapters.MyBankAccountAdapter;
+import com.bank.izbank.Adapters.MyCreditCardAdapter;
 import com.bank.izbank.R;
-import com.bank.izbank.Sign.BankAccount;
-import com.bank.izbank.Sign.CreditCard;
+import com.bank.izbank.UserInfo.BankAccount;
+import com.bank.izbank.UserInfo.CreditCard;
 import com.bank.izbank.Sign.SignIn;
 
 import java.text.SimpleDateFormat;

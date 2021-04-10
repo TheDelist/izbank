@@ -56,8 +56,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
         return inflater.inflate(R.layout.fragment_4,container,false);
 
 
-
-
     }
 
     @Override

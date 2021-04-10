@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.bank.izbank.R;
 
 public class Fragment5 extends Fragment {
-   private  Button button;
+
 
     @Nullable
     @Override
