@@ -28,7 +28,7 @@ public class splashScreen extends AppCompatActivity {
         gifImageView = findViewById(R.id.GifImageView);
         progressBar = findViewById(R.id.progress_barr);
         progressBar.setVisibility(progressBar.VISIBLE);
-
+        //deneme
         try {
             InputStream inputStream = getAssets().open("deneme2.gif");
             byte[] bytes = IOUtils.toByteArray(inputStream);
