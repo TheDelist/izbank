@@ -202,12 +202,12 @@
 
                 <TextView
 
-
+                    android:layout_weight="1.0"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/text_view_portfolio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CREDIT CARDS"
+                    android:text="BANK ACCOUNTS"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="25dp"></TextView>
@@ -216,7 +216,7 @@
                 <ImageView
                     android:id="@+id/image_view_add_bank_account"
 
-                    android:layout_marginLeft="120dp"
+
 
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -254,7 +254,7 @@
 
                 <TextView
 
-
+                    android:layout_weight="1.0"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/text_view_credit_cards"
                     android:layout_width="wrap_content"
@@ -268,7 +268,7 @@
                 <ImageView
                     android:id="@+id/image_view_add_credit_card"
 
-                    android:layout_marginLeft="120dp"
+
 
                     android:layout_width="40dp"
                     android:layout_height="40dp"
