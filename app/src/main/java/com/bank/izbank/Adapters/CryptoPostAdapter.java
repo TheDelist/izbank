@@ -74,7 +74,6 @@ public class CryptoPostAdapter  extends RecyclerView.Adapter<CryptoPostAdapter.P
 
 
 
-
     }
 
     @Override
