@@ -22,11 +22,10 @@ import com.parse.ParseUser;
 import java.util.List;
 
 public class SignIn extends AppCompatActivity {
-    EditText userName,userPass;
+    private EditText userName,userPass;
     public static User mainUser;
-
-
     public static String name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,7 @@
 package com.bank.izbank.Adapters;
 
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ahmadrosid.svgloader.SvgLoader;
 import com.bank.izbank.MainScreen.FinanceScreen.CryptoModel;
 import com.bank.izbank.R;
 import com.squareup.picasso.Picasso;
@@ -22,6 +24,7 @@ public class CryptoPostAdapter  extends RecyclerView.Adapter<CryptoPostAdapter.P
     class PostHolder extends RecyclerView.ViewHolder{
         private TextView cryptoNameText,cryptoSymbolText,cryptoPriceText;
         private ImageView cryptoImageView;
+
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
@@ -36,10 +39,11 @@ public class CryptoPostAdapter  extends RecyclerView.Adapter<CryptoPostAdapter.P
 
 
     private ArrayList<CryptoModel> models;
+    private Activity activity;
 
-
-    public CryptoPostAdapter(ArrayList<CryptoModel> models) {
+    public CryptoPostAdapter(ArrayList<CryptoModel> models, Activity activity) {
         this.models = models;
+        this.activity=activity;
     }
 
     @NonNull
@@ -58,7 +62,19 @@ public class CryptoPostAdapter  extends RecyclerView.Adapter<CryptoPostAdapter.P
         holder.cryptoSymbolText.setText(models.get(position).getCurrencySymbol());
         holder.cryptoPriceText.setText(models.get(position).getPrice());
         holder.cryptoImageView.setImageBitmap(models.get(position).getImage());
-        Picasso.get().load(models.get(position).getLogoUrl()).into(holder.cryptoImageView);
+
+        if(models.get(position).getLogoUrl().substring(models.get(position).getLogoUrl().length()-3).equalsIgnoreCase("svg")){
+            SvgLoader.pluck()
+                    .with(activity)
+                    .setPlaceHolder(R.mipmap.ic_launcher, R.mipmap.ic_launcher)
+                    .load(models.get(position).getLogoUrl(),holder.cryptoImageView);
+        }else{
+            Picasso.get().load(models.get(position).getLogoUrl()).into(holder.cryptoImageView);
+        }
+
+
+
+
     }
 
     @Override

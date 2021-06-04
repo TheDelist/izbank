@@ -43,11 +43,11 @@ public class FinanceFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-            // foroların indirildiği zaman bak indirilme yerini loading screene taşı
+
 
         recyclerView=view.findViewById(R.id.recyclerView_finance);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        cryptoPostAdapter = new CryptoPostAdapter(cryptoModels);
+        cryptoPostAdapter = new CryptoPostAdapter(cryptoModels,getActivity());
         recyclerView.setAdapter(cryptoPostAdapter);
         cryptoPostAdapter.notifyDataSetChanged();
 

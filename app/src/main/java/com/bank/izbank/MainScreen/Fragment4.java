@@ -58,6 +58,8 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
 
     }
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
