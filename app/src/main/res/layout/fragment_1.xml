@@ -67,6 +67,7 @@
                 android:layout_gravity="center"></ImageView>
 
             <TextView
+                android:id="@+id/text_view_total_money"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,6 +122,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linear_layout_request_money"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_weight="1"

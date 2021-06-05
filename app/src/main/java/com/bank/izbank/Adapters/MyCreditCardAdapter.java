@@ -1,29 +1,44 @@
 package com.bank.izbank.Adapters;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bank.izbank.Bill.BillAdapter;
+import com.bank.izbank.Bill.ElectricBill;
+import com.bank.izbank.Bill.GasBill;
+import com.bank.izbank.Bill.InternetBill;
+import com.bank.izbank.Bill.PhoneBill;
+import com.bank.izbank.Bill.WaterBill;
 import com.bank.izbank.R;
+import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
 
 import java.util.ArrayList;
 
 public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapter.ViewHolder> {
-
-    ArrayList<CreditCard> MyCreditCardData;
+    ArrayList<BankAccount> MyBankAccounts;
+    ArrayList<CreditCard> MyCreditCards;
     Activity context;
+    RecyclerView recyclerViewbankaccount;
+    TextView text_view_total_money;
 
-    public MyCreditCardAdapter(ArrayList<CreditCard> myCreditCardData,Activity activity) {
-        this.MyCreditCardData = myCreditCardData;
+    public MyCreditCardAdapter(ArrayList<CreditCard> myCreditCardData,Activity activity,ArrayList<BankAccount> MyBankAccounts,RecyclerView recyclerViewbankaccount) {
+        this.MyCreditCards = myCreditCardData;
         this.context = activity;
+        this.MyBankAccounts = MyBankAccounts;
+        this.recyclerViewbankaccount = recyclerViewbankaccount;
     }
 
     @NonNull
@@ -40,17 +55,181 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final CreditCard CreditCard = MyCreditCardData.get(position);
+        text_view_total_money = context.findViewById(R.id.text_view_total_money);
+        final CreditCard CreditCard = MyCreditCards.get(position);
         holder.textCreditCardNo.setText(CreditCard.getCreditCardNo());
         holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (MyBankAccounts.size()==0){
+                    AlertDialog.Builder ad = new AlertDialog.Builder(context);
+                    ad.setTitle("You dont have any bank account. Please add one before pay off credit card debt.");
+                    ad.setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int i){
 
+                        }
+                    });
+                    ad.create().show();
+                }
+                else{
+                    final EditText editText = new EditText(context);
+                    editText.setHint("How much do you want to pay?");
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                    AlertDialog.Builder ad = new AlertDialog.Builder(context);
+
+                    ad.setTitle("Which Bank Account Do You Want to Pay with?");
+                    ad.setIcon(R.drawable.icon_credit_card);
+                    ad.setView(editText);
+                    String[] items = new String[MyBankAccounts.size()];
+                    for (int i =0; i<MyBankAccounts.size();i++){
+                        String data= MyBankAccounts.get(i).getAccountno() + "  $" + Integer.toString(MyBankAccounts.get(i).getCash());
+                        items[i] = data;
+                    }
+                    final int[] checkedItem = {0};
+                    ad.setSingleChoiceItems(items, checkedItem[0], new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            switch (i) {
+                                case 0:
+                                    checkedItem[0] =i;
+
+
+                                    break;
+                                case 1:
+
+                                    checkedItem[0] =i;
+
+                                    break;
+                                case 2:
+
+                                    checkedItem[0] =i;
+
+                                    break;
+                                case 3:
+
+                                    checkedItem[0] =i;
+
+                                    break;
+                                case 4:
+
+                                    checkedItem[0] =i;
+                                    break;
+                            }
+                        }
+                    });
+                    ad.setNegativeButton("Pay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            i= checkedItem[0];
+                            switch (i) {
+                                case 0:
+
+                                    try {
+                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
+                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
+                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        setTotalMoney(MyBankAccounts);
+                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
+                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+
+                                    }catch (NumberFormatException e){
+
+                                    }
+
+
+                                    break;
+                                case 1:
+
+
+                                    try {
+                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
+                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
+                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        setTotalMoney(MyBankAccounts);
+                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
+                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+
+
+                                    }catch (NumberFormatException e){
+
+                                    }
+
+
+                                    break;
+                                case 2:
+
+                                    try {
+                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
+                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
+                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        setTotalMoney(MyBankAccounts);
+                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
+                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+
+
+
+                                    }catch (NumberFormatException e){
+
+                                    }
+                                    break;
+                                case 3:
+
+                                    try {
+                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
+                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
+                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        setTotalMoney(MyBankAccounts);
+                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
+                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+
+
+
+                                    }catch (NumberFormatException e){
+
+                                    }
+                                    break;
+                                case 4:
+                                    try {
+                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
+                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
+                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        setTotalMoney(MyBankAccounts);
+                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
+                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+
+
+                                    }catch (NumberFormatException e){
+
+                                    }
+                                    break;
+                            }
+
+
+
+                        }
+                    });
+                    ad.create().show();
+                }
+
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return MyCreditCardData.size();
+        return MyCreditCards.size();
+    }
+    public void setTotalMoney(ArrayList<BankAccount> MyBankAccounts){
+        int totalmoney = 0;
+        for (int i = 0; i<MyBankAccounts.size();i++){
+            totalmoney += MyBankAccounts.get(i).getCash();
+        }
+        text_view_total_money.setText(Integer.toString(totalmoney));
     }
 
 
