@@ -1,6 +1,7 @@
 package com.bank.izbank.MainScreen.FinanceScreen;
 
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -13,13 +14,13 @@ public class CryptoModel {
     private String price;
     @SerializedName("logo_url")
     private String logoUrl;
-    private Bitmap image;
+    private ImageView image;
 
-    public Bitmap getImage() {
+    public ImageView getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(ImageView image) {
         this.image = image;
     }
 
