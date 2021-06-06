@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bank.izbank.Bill.Bill;
+import com.bank.izbank.Bill.Date;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.User;
@@ -19,12 +21,18 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SignIn extends AppCompatActivity {
     private EditText userName,userPass;
     public static User mainUser;
     public static String name;
+    public String billType;
+    public String billAmount;
+    public String billDate;
+    public ArrayList<Bill> bills;
+    public Intent intent ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +44,7 @@ public class SignIn extends AppCompatActivity {
           //loading screen
            getUser(parseUser);
 
-           Intent intent=new Intent(SignIn.this, splashScreen.class);
-           startActivity(intent);
+
 
        }else{
            setContentView(R.layout.activity_sign_in);//load screen
@@ -77,8 +84,61 @@ public class SignIn extends AppCompatActivity {
                         }
 
 
+
                     }
                 }
+
+            }
+        });
+
+        ParseQuery<ParseObject> queryBill=ParseQuery.getQuery("Bill");
+        queryBill.whereEqualTo("username",parseUser.getUsername().toString());
+        queryBill.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    bills = new ArrayList<>();
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+
+                            billType=object.getString("type");
+                            billAmount=object.getString("amount");
+                            billDate=object.getString("date");
+
+                            String [] date = billDate.split("/");
+
+                            Date tempdate = new Date(date[0],date[1],date[2]);
+
+                            Bill tempBill = new Bill(billType,Integer.parseInt(billAmount),tempdate);
+
+
+
+                            bills.add(tempBill);
+
+
+                        }
+
+
+
+
+
+
+
+
+
+
+
+                    }
+                }
+                intent = new Intent(SignIn.this, splashScreen.class);
+
+                intent.putExtra("billList",bills);
+
+
+
+                startActivity(intent);
 
             }
         });
@@ -99,6 +159,7 @@ public class SignIn extends AppCompatActivity {
                 if(e !=null){
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
                 }else{
+
                     ParseQuery<ParseObject> query=ParseQuery.getQuery("UserInfo");
                     query.whereEqualTo("username",userName.getText().toString());
                     query.findInBackground(new FindCallback<ParseObject>() {
@@ -107,9 +168,12 @@ public class SignIn extends AppCompatActivity {
                             if(e!=null){
                                 e.printStackTrace();
                             }else{
+
                                 if(objects.size()>0){
                                     for(ParseObject object:objects){
                                         name=object.getString("userRealName");
+
+
 
 
                                         Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
@@ -125,8 +189,71 @@ public class SignIn extends AppCompatActivity {
 
 
 
-                    Intent intent=new Intent(SignIn.this, splashScreen.class);
-                    startActivity(intent);
+
+
+                    ParseQuery<ParseObject> queryBill=ParseQuery.getQuery("Bill");
+                    queryBill.whereEqualTo("username",userName.getText().toString());
+                    queryBill.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if(e!=null){
+                                e.printStackTrace();
+                            }else{
+                                 bills = new ArrayList<>();
+                                if(objects.size()>0){
+                                    for(ParseObject object:objects){
+
+                                        billType=object.getString("type");
+                                        billAmount=object.getString("amount");
+                                        billDate=object.getString("date");
+
+                                        String [] date = billDate.split("/");
+
+                                        Date tempdate = new Date(date[0],date[1],date[2]);
+
+                                        Bill tempBill = new Bill(billType,Integer.parseInt(billAmount),tempdate);
+
+
+
+                                        bills.add(tempBill);
+
+
+                                    }
+
+
+
+
+
+
+
+
+
+
+
+
+                                }
+                            }
+
+                            intent = new Intent(SignIn.this, splashScreen.class);
+
+                            intent.putExtra("billList",bills);
+
+                            startActivity(intent);
+
+                        }
+                    });
+
+
+
+
+
+
+
+
+
+
+
+
 
                 }
             }

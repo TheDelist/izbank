@@ -1,6 +1,8 @@
 package com.bank.izbank.Bill;
 
-public class Bill {
+import java.io.Serializable;
+
+public class Bill implements Serializable {
 
     private String type;
     private int amount;
@@ -18,6 +20,9 @@ public class Bill {
     public Bill(String type, int amount) {
         this.type = type;
         this.amount = amount;
+        date.setYear("0");
+        date.setMonth("0");
+        date.setDay("0");
     }
 
     public String getType() {

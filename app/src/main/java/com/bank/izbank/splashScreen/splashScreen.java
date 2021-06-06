@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
 import com.felipecsl.gifimageview.library.GifImageView;
@@ -15,11 +17,13 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class splashScreen extends AppCompatActivity {
 
     private GifImageView gifImageView;
     private ProgressBar progressBar;
+    public ArrayList<Bill> bills;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +43,17 @@ public class splashScreen extends AppCompatActivity {
 
         }
 
+        bills = (ArrayList<Bill>)getIntent().getSerializableExtra("billList");
+
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                splashScreen.this.startActivity(new Intent( splashScreen.this, MainScreenActivity.class));
+                Intent splashIntent = new Intent( splashScreen.this, MainScreenActivity.class);
+                splashIntent.putExtra("billList",bills);
+                splashScreen.this.startActivity(splashIntent);
+                //splashScreen.this.startActivity(new Intent( splashScreen.this, MainScreenActivity.class));
                 splashScreen.this.finish();
             }
         },5000);

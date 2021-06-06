@@ -1,6 +1,8 @@
 package com.bank.izbank.Bill;
 
-public class ElectricBill extends Bill{
+import java.io.Serializable;
+
+public class ElectricBill extends Bill implements Serializable {
     private final String type = "Electric Bill";
     private int amount;
     private Date date;

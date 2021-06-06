@@ -1,6 +1,8 @@
 package com.bank.izbank.Bill;
 
-public class PhoneBill extends Bill {
+import java.io.Serializable;
+
+public class PhoneBill extends Bill implements Serializable {
     private final String type="Phone Bill";
     private int amount;
     private Date date;

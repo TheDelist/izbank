@@ -1,6 +1,8 @@
 package com.bank.izbank.Bill;
 
-public class WaterBill extends Bill{
+import java.io.Serializable;
+
+public class WaterBill extends Bill implements Serializable {
 
     private final String type = "Water Bill";
     private int amount;

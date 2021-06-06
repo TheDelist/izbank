@@ -1,6 +1,8 @@
 package com.bank.izbank.Bill;
 
-public class InternetBill extends Bill {
+import java.io.Serializable;
+
+public class InternetBill extends Bill implements Serializable {
 
     private final String type ="Internet Bill";
     private int amount;

@@ -1,6 +1,8 @@
 package com.bank.izbank.Bill;
 
-public class Date {
+import java.io.Serializable;
+
+public class Date implements Serializable {
     private String day;
     private String month;
     private String year;

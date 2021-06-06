@@ -33,12 +33,18 @@ import com.bank.izbank.Bill.InternetBill;
 import com.bank.izbank.Bill.PhoneBill;
 import com.bank.izbank.Bill.WaterBill;
 import com.bank.izbank.R;
+import com.bank.izbank.Sign.SignIn;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static com.parse.Parse.getApplicationContext;
 
 public class Fragment4 extends Fragment implements SearchView.OnQueryTextListener{
 
@@ -48,6 +54,8 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
     private BillAdapter billAdapter;
     private FloatingActionButton floatingActionButtonBill;
     private Bill bill;
+
+
 
 
     @Nullable
@@ -84,13 +92,13 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        list = new ArrayList<>();
 
-        Date date = new Date("10","10","2012");
 
-        Bill deneme = new WaterBill(150,date);
+        Bundle results = getArguments();
 
-        list.add(deneme);
+
+        list = (ArrayList<Bill>)results.getSerializable("bills");
+
 
         billAdapter = new BillAdapter(getContext(),list);
 
@@ -101,14 +109,7 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
             public void onClick(View view) {
 
 
-                /*Bill deneme = new WaterBill(200);
 
-                setDate(deneme);
-
-                list.add(deneme);
-                billAdapter = new BillAdapter(getContext(),list);
-
-                recyclerView.setAdapter(billAdapter);*/
 
                 final EditText editText = new EditText(getContext());
                 editText.setHint("type amount");
@@ -170,12 +171,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                                 try {
 
                                     bill=new ElectricBill();
-                                    bill.setAmount(Integer.parseInt(editText.getText().toString()));
-                                    setDate(bill);
-                                    list.add(bill);
-                                    billAdapter = new BillAdapter(getContext(),list);
-
-                                    recyclerView.setAdapter(billAdapter);
 
 
                                 }catch (NumberFormatException e){
@@ -190,12 +185,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                                 try {
 
                                     bill=new GasBill();
-                                    bill.setAmount(Integer.parseInt(editText.getText().toString()));
-                                    setDate(bill);
-                                    list.add(bill);
-                                    billAdapter = new BillAdapter(getContext(),list);
-
-                                    recyclerView.setAdapter(billAdapter);
 
 
                                 }catch (NumberFormatException e){
@@ -209,12 +198,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                                 try {
 
                                     bill=new InternetBill();
-                                    bill.setAmount(Integer.parseInt(editText.getText().toString()));
-                                    setDate(bill);
-                                    list.add(bill);
-                                    billAdapter = new BillAdapter(getContext(),list);
-
-                                    recyclerView.setAdapter(billAdapter);
 
 
                                 }catch (NumberFormatException e){
@@ -226,12 +209,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                                 try {
 
                                     bill=new PhoneBill();
-                                    bill.setAmount(Integer.parseInt(editText.getText().toString()));
-                                    setDate(bill);
-                                    list.add(bill);
-                                    billAdapter = new BillAdapter(getContext(),list);
-
-                                    recyclerView.setAdapter(billAdapter);
 
 
                                 }catch (NumberFormatException e){
@@ -242,18 +219,29 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                                 try {
 
                                     bill=new WaterBill();
-                                    bill.setAmount(Integer.parseInt(editText.getText().toString()));
-                                    setDate(bill);
-                                    list.add(bill);
-                                    billAdapter = new BillAdapter(getContext(),list);
-
-                                    recyclerView.setAdapter(billAdapter);
 
 
                                 }catch (NumberFormatException e){
 
                                 }
                                 break;
+                        }
+
+                        try {
+
+
+                            bill.setAmount(Integer.parseInt(editText.getText().toString()));
+                            setDate(bill);
+                            billToDatabase(bill);
+                            list.add(bill);
+                            billAdapter = new BillAdapter(getContext(),list);
+                            Toast.makeText(getContext(), "buraaa", Toast.LENGTH_SHORT).show();
+
+                            recyclerView.setAdapter(billAdapter);
+
+
+                        }catch (NumberFormatException e){
+
                         }
 
 
@@ -272,17 +260,28 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
 
     }
 
-    /*public void CreateBill(View view){
 
-        bill = new Bill()
 
+    public void billToDatabase(Bill bill){
         ParseObject object=new ParseObject("Bill");
-        object.put("type",);
-        object.put("username",);
-        object.put("amount",);
-        object.put("date",);
+        object.put("type",bill.getType());
+        object.put("username", SignIn.mainUser.getId());
+        object.put("amount",String.valueOf(bill.getAmount()));
+        object.put("date",bill.getDate().getDay()+"/"+bill.getDate().getMonth()+"/"+bill.getDate().getYear());
 
-    }*/
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    //  Toast.makeText(getApplicationContext(),"oldu galiba",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
 
     public void setDate(Bill newBill){
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
