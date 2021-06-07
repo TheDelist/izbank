@@ -21,18 +21,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bank.izbank.Adapters.MyBankAccountAdapter;
 import com.bank.izbank.Adapters.MyCreditCardAdapter;
+import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.BillAdapter;
 import com.bank.izbank.Bill.PhoneBill;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
 import com.bank.izbank.Sign.SignIn;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.Date;
+import java.util.List;
+
+import static com.parse.Parse.getApplicationContext;
 
 public class Fragment1 extends Fragment {
     LinearLayout linear_layout_request_money;
@@ -54,7 +63,7 @@ public class Fragment1 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         myCreditCard = new ArrayList<>();
-        myBankAccount = new ArrayList<>();
+        myBankAccount = SignIn.mainUser.getBankAccounts();
         define();
         setDate();
         click();
@@ -102,6 +111,59 @@ public class Fragment1 extends Fragment {
         }
         text_view_total_money.setText(Integer.toString(totalmoney));
     }
+    public void accountsToDatabase(BankAccount bankAc){
+        ParseObject object=new ParseObject("BankAccount");
+        object.put("accountNo",bankAc.getAccountno());
+        object.put("userId", SignIn.mainUser.getId());
+
+        object.put("cash",String.valueOf(bankAc.getCash()));
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                      Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
+    public void updateBankAccount(BankAccount bankac){
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
+        queryBankAccount.whereEqualTo("accountNo", bankac.getAccountno());
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+                            object.deleteInBackground();
+                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+                            accountsToDatabase(bankac);
+
+
+
+
+
+                        }
+
+
+                    }
+
+                }
+
+
+            }
+        });
+    }
 
     public void click(){
         add_bank_account.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +199,7 @@ public class Fragment1 extends Fragment {
                                 setTotalMoney(myBankAccount);
 
                             }
+                            accountsToDatabase(myBankAccount.get(myBankAccount.size()-1));
 
 
 
@@ -267,7 +330,7 @@ public class Fragment1 extends Fragment {
 
                                     try {
                                         myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
-
+                                        updateBankAccount(myBankAccount.get(i));
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
                                         setTotalMoney(myBankAccount);
@@ -282,6 +345,7 @@ public class Fragment1 extends Fragment {
 
                                     try {
                                         myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(myBankAccount.get(i));
 
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
@@ -298,6 +362,7 @@ public class Fragment1 extends Fragment {
 
                                     try {
                                         myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(myBankAccount.get(i));
 
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
@@ -314,6 +379,7 @@ public class Fragment1 extends Fragment {
                                     try {
 
                                         myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(myBankAccount.get(i));
 
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
@@ -327,6 +393,7 @@ public class Fragment1 extends Fragment {
                                 case 4:
                                     try {
                                         myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(myBankAccount.get(i));
 
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);

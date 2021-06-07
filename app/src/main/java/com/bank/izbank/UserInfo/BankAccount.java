@@ -11,6 +11,10 @@ public class BankAccount {
         this.cash = cash;
         this.accountno = setBankAccountNo();
     }
+    public BankAccount(String no,int cash) {
+        this.cash = cash;
+        this.accountno = no;
+    }
 
     public String setBankAccountNo(){
         String no= "";

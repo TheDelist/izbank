@@ -11,19 +11,27 @@ import android.widget.Toast;
 import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
+import com.bank.izbank.Sign.SignIn;
+import com.bank.izbank.UserInfo.BankAccount;
 import com.felipecsl.gifimageview.library.GifImageView;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class splashScreen extends AppCompatActivity {
 
     private GifImageView gifImageView;
     private ProgressBar progressBar;
     public ArrayList<Bill> bills;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,4 +68,6 @@ public class splashScreen extends AppCompatActivity {
 
 
     }
+
+
 }

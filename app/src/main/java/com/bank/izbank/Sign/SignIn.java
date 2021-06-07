@@ -12,6 +12,7 @@ import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.Date;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
+import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.User;
 import com.bank.izbank.splashScreen.splashScreen;
 import com.parse.FindCallback;
@@ -32,6 +33,8 @@ public class SignIn extends AppCompatActivity {
     public String billAmount;
     public String billDate;
     public ArrayList<Bill> bills;
+    public ArrayList<BankAccount> bankAccounts;
+    String bankCash,bankAccountNo;
     public Intent intent ;
 
     @Override
@@ -81,6 +84,34 @@ public class SignIn extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
                             mainUser = new User(name, parseUser.getUsername(), phone,address,profession);
+                            ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
+                            queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
+                            queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+                                @Override
+                                public void done(List<ParseObject> objects, ParseException e) {
+                                    if(e!=null){
+                                        e.printStackTrace();
+                                    }else{
+                                        bankAccounts = new ArrayList<>();
+                                        if(objects.size()>0){
+                                            for(ParseObject object:objects){
+
+                                                bankAccountNo=object.getString("accountNo");
+                                                bankCash=object.getString("cash");
+
+                                                bankAccounts.add(new BankAccount(bankAccountNo,Integer.parseInt(bankCash)));
+
+
+                                            }
+
+
+                                        }
+                                        SignIn.mainUser.setBankAccounts(bankAccounts);
+                                    }
+
+
+                                }
+                            });
                         }
 
 
@@ -90,6 +121,9 @@ public class SignIn extends AppCompatActivity {
 
             }
         });
+
+
+
 
         ParseQuery<ParseObject> queryBill=ParseQuery.getQuery("Bill");
         queryBill.whereEqualTo("username",parseUser.getUsername().toString());
@@ -137,11 +171,19 @@ public class SignIn extends AppCompatActivity {
                 intent.putExtra("billList",bills);
 
 
-
                 startActivity(intent);
+
 
             }
         });
+
+
+
+
+        //  intent.putExtra("bankAcList",bankAccounts);
+
+
+
 
 
     }

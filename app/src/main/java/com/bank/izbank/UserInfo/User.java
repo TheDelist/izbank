@@ -12,6 +12,7 @@ public class User {
     private String profession;
     private String addressSum;
     private ArrayList<CreditCard> creditcards;
+    private ArrayList<BankAccount> bankAccounts;
 
     public User(String name, String id,String pass,String phoneNumber, Address address, String profession) {
         this.name = name;
@@ -20,6 +21,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.profession = profession;
+        this.bankAccounts = new ArrayList<>();
     }
 
     public User(String name, String id,String phoneNumber, Address address, String profession) {
@@ -30,6 +32,15 @@ public class User {
         this.address = address;
         this.profession = profession;
         this.creditcards = new ArrayList<>();
+        this.bankAccounts = new ArrayList<>();
+    }
+
+    public ArrayList<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(ArrayList<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
 
     public void addCreditCard(CreditCard creditcard){

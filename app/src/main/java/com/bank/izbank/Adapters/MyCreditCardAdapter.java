@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -22,10 +23,19 @@ import com.bank.izbank.Bill.InternetBill;
 import com.bank.izbank.Bill.PhoneBill;
 import com.bank.izbank.Bill.WaterBill;
 import com.bank.izbank.R;
+import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.parse.Parse.getApplicationContext;
 
 public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapter.ViewHolder> {
     ArrayList<BankAccount> MyBankAccounts;
@@ -132,6 +142,7 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
                                         MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
                                         holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
                                         MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(MyBankAccounts.get(i));
                                         setTotalMoney(MyBankAccounts);
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
@@ -149,6 +160,7 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
                                         MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
                                         holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
                                         MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(MyBankAccounts.get(i));
                                         setTotalMoney(MyBankAccounts);
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
@@ -166,6 +178,7 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
                                         MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
                                         holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
                                         MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(MyBankAccounts.get(i));
                                         setTotalMoney(MyBankAccounts);
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
@@ -182,6 +195,7 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
                                         MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
                                         holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
                                         MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(MyBankAccounts.get(i));
                                         setTotalMoney(MyBankAccounts);
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
@@ -197,6 +211,7 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
                                         MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
                                         holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
                                         MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                                        updateBankAccount(MyBankAccounts.get(i));
                                         setTotalMoney(MyBankAccounts);
                                         MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
                                         recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
@@ -230,6 +245,60 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
             totalmoney += MyBankAccounts.get(i).getCash();
         }
         text_view_total_money.setText(Integer.toString(totalmoney));
+    }
+
+    public void accountsToDatabase(BankAccount bankAc){
+        ParseObject object=new ParseObject("BankAccount");
+        object.put("accountNo",bankAc.getAccountno());
+        object.put("userId", SignIn.mainUser.getId());
+
+        object.put("cash",String.valueOf(bankAc.getCash()));
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
+    public void updateBankAccount(BankAccount bankac){
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
+        queryBankAccount.whereEqualTo("accountNo", bankac.getAccountno());
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+                            object.deleteInBackground();
+                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+                            accountsToDatabase(bankac);
+
+
+
+
+
+                        }
+
+
+                    }
+
+                }
+
+
+            }
+        });
     }
 
 
