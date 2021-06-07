@@ -45,7 +45,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
     public ArrayList<Bill> bills;
 
-    final Fragment fragment1 = new Fragment1();
+    Fragment fragment1 = new Fragment1();
     final Fragment fragment2 = new Fragment2();
     final Fragment fragment4 = new Fragment4();
     final Fragment fragment5 = new Fragment5();
@@ -95,12 +95,16 @@ public class MainScreenActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.menu1:
-                       fm.beginTransaction().hide(tempFragment).show(fragment1).commit();
+                        fragment1 = new Fragment1();
+                        fm.beginTransaction().add(R.id.fragment_container,fragment1,"1").commit();
+                        fm.beginTransaction().hide(tempFragment).show(fragment1).commit();
                         tempFragment = fragment1;
                         break;
                     case R.id.menu2:
+
                         fm.beginTransaction().hide(tempFragment).show(fragment2).commit();
                         tempFragment = fragment2;
+
                         break;
                     case R.id.menu3:
                         getSupportFragmentManager().beginTransaction().hide(tempFragment).add(R.id.fragment_container,tempFragment=new FinanceFragment(cryptoModels)).show(tempFragment).commit();

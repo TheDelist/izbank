@@ -53,7 +53,7 @@ public class Fragment1 extends Fragment {
     TextView text_view_name, date,text_view_total_money;
     ArrayList<CreditCard> myCreditCard;
     ArrayList<BankAccount> myBankAccount;
-    private boolean shouldRefreshOnResume;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class Fragment1 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         myCreditCard = SignIn.mainUser.getCreditcards();
         myBankAccount = SignIn.mainUser.getBankAccounts();
-        shouldRefreshOnResume=false;
+
         define();
         setDate();
         click();

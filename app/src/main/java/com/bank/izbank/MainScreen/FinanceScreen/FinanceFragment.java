@@ -55,6 +55,8 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
     private ItemClickListener itemClickListener;
     private Toolbar toolbar;
     private String decMoney;
+    private String currentMoney;
+    int index;
 
     public FinanceFragment(ArrayList<CryptoModel> list){
         this.cryptoModels=list;
@@ -197,7 +199,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
 
     }
         public void buyCrypto(int decMoney){
-        int index=0;
+        index=0;
         for (BankAccount bankAc:SignIn.mainUser.getBankAccounts()){
             if(bankAc.getCash()> decMoney){
                 index=SignIn.mainUser.getBankAccounts().indexOf(bankAc);
@@ -216,7 +218,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                         if(objects.size()>0){
                             for(ParseObject object:objects){
                                 ParseObject cryptoBuy=objects.get(0);
-                                String currentMoney=cryptoBuy.getString("cash");
+                                currentMoney=cryptoBuy.getString("cash");
                                currentMoney= String.valueOf( Integer.parseInt(currentMoney)-decMoney);
                                 cryptoBuy.put("cash",currentMoney);
 
@@ -228,6 +230,8 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                                         }
                                         else{
                                             Toast.makeText(getApplicationContext(),"crypto parası düşüldü",Toast.LENGTH_LONG).show();
+                                            SignIn.mainUser.getBankAccounts().get(index).setCash(Integer.parseInt(currentMoney));
+
 
                                         }
                                     }

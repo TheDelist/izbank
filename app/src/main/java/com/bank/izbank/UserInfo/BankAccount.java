@@ -3,6 +3,7 @@ package com.bank.izbank.UserInfo;
 import java.util.Random;
 
 public class BankAccount {
+
     private int cash;
     private  String accountno;
 
