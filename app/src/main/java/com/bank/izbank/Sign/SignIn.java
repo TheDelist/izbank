@@ -13,6 +13,7 @@ import com.bank.izbank.Bill.Date;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.BankAccount;
+import com.bank.izbank.UserInfo.CreditCard;
 import com.bank.izbank.UserInfo.User;
 import com.bank.izbank.splashScreen.splashScreen;
 import com.parse.FindCallback;
@@ -34,7 +35,9 @@ public class SignIn extends AppCompatActivity {
     public String billDate;
     public ArrayList<Bill> bills;
     public ArrayList<BankAccount> bankAccounts;
+    public ArrayList<CreditCard> creditCards;
     String bankCash,bankAccountNo;
+    String cardNo, cardLimit;
     public Intent intent ;
 
     @Override
@@ -84,34 +87,11 @@ public class SignIn extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
                             mainUser = new User(name, parseUser.getUsername(), phone,address,profession);
-                            ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
-                            queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
-                            queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
-                                @Override
-                                public void done(List<ParseObject> objects, ParseException e) {
-                                    if(e!=null){
-                                        e.printStackTrace();
-                                    }else{
-                                        bankAccounts = new ArrayList<>();
-                                        if(objects.size()>0){
-                                            for(ParseObject object:objects){
 
-                                                bankAccountNo=object.getString("accountNo");
-                                                bankCash=object.getString("cash");
-
-                                                bankAccounts.add(new BankAccount(bankAccountNo,Integer.parseInt(bankCash)));
+                            getBankAccounts();
+                            getCreditCards();
 
 
-                                            }
-
-
-                                        }
-                                        SignIn.mainUser.setBankAccounts(bankAccounts);
-                                    }
-
-
-                                }
-                            });
                         }
 
 
@@ -186,6 +166,67 @@ public class SignIn extends AppCompatActivity {
 
 
 
+    }
+    public void getCreditCards(){
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("CreditCard");
+        queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    creditCards = new ArrayList<>();
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+
+                            cardNo=object.getString("creditCardNo");
+                            cardLimit=object.getString("limit");
+
+                            creditCards.add(new CreditCard(cardNo,Integer.parseInt(cardLimit)));
+
+
+                        }
+
+
+                    }
+                    SignIn.mainUser.setCreditcards(creditCards);
+                }
+
+
+            }
+        });
+    }
+
+    public void getBankAccounts(){
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
+        queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    bankAccounts = new ArrayList<>();
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+
+                            bankAccountNo=object.getString("accountNo");
+                            bankCash=object.getString("cash");
+
+                            bankAccounts.add(new BankAccount(bankAccountNo,Integer.parseInt(bankCash)));
+
+
+                        }
+
+
+                    }
+                    SignIn.mainUser.setBankAccounts(bankAccounts);
+                }
+
+
+            }
+        });
     }
 
 

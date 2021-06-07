@@ -21,6 +21,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.profession = profession;
+        this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
     }
 
@@ -43,8 +44,8 @@ public class User {
         this.bankAccounts = bankAccounts;
     }
 
-    public void addCreditCard(CreditCard creditcard){
-        creditcards.add(creditcard);
+    public void setCreditcards(ArrayList<CreditCard> creditcards) {
+        this.creditcards = creditcards;
     }
 
     public ArrayList<CreditCard> getCreditcards() {

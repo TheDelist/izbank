@@ -62,7 +62,7 @@ public class Fragment1 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        myCreditCard = new ArrayList<>();
+        myCreditCard = SignIn.mainUser.getCreditcards();
         myBankAccount = SignIn.mainUser.getBankAccounts();
         define();
         setDate();
@@ -127,6 +127,28 @@ public class Fragment1 extends Fragment {
                 }
                 else{
                       Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
+    public void cardsToDatabase(CreditCard card){
+        ParseObject object=new ParseObject("CreditCard");
+        object.put("creditCardNo",card.getCreditCardNo());
+        object.put("userId", SignIn.mainUser.getId());
+
+        object.put("limit",String.valueOf(card.getLimit()));
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"kart datada",Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -247,6 +269,7 @@ public class Fragment1 extends Fragment {
                                 recyclerView.setAdapter(myCreditCardAdapter);
 
                             }
+                            cardsToDatabase(myCreditCard.get(myCreditCard.size()-1));
 
 
 

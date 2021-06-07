@@ -10,6 +10,10 @@ public class CreditCard {
         this.limit = limit;
         this.creditCardNo = setCreditCardNo();
     }
+    public CreditCard(String no, int limit) {
+        this.limit = limit;
+        this.creditCardNo = no;
+    }
 
     public int getLimit() {
         return limit;

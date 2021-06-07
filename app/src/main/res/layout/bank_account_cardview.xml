@@ -27,7 +27,7 @@
 
         <LinearLayout
 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -36,7 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:gravity="center"
+
                 android:text="$1023,25"
                 android:textColor="@color/black"
                 android:textSize="20dp"></TextView>
@@ -46,7 +47,8 @@
                 android:id="@+id/text_view_bank_account_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text="TR50 2525 0202 2525 2525"
                 android:textColor="@color/black"></TextView>
