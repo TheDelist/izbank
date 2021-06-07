@@ -30,20 +30,22 @@
         android:id="@+id/textView99"
         android:layout_width="56dp"
         android:layout_height="26dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Value : "
         app:layout_constraintBottom_toTopOf="@+id/textView8"
         app:layout_constraintEnd_toStartOf="@+id/CryptovalueTextView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/CryptovalueTextView"
         android:layout_width="143dp"
         android:layout_height="28dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CrytoNameTextView" />
 
@@ -71,22 +73,23 @@
 
     <TextView
         android:id="@+id/CrytoSymbolTextView"
-        android:layout_width="66dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="57dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="9dp"
         android:text="BTC : "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/CryptoAmountTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CyrptoBuyAmountEditText" />
 
     <TextView
         android:id="@+id/CryptoAmountTextView"
-        android:layout_width="163dp"
+        android:layout_width="157dp"
         android:layout_height="32dp"
         android:layout_marginTop="9dp"
         android:text="0.00000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/CrytoSymbolTextView"
         app:layout_constraintTop_toBottomOf="@+id/CyrptoBuyAmountEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.bank.izbank.MainScreen;
 
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,6 +53,7 @@ public class Fragment1 extends Fragment {
     TextView text_view_name, date,text_view_total_money;
     ArrayList<CreditCard> myCreditCard;
     ArrayList<BankAccount> myBankAccount;
+    private boolean shouldRefreshOnResume;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class Fragment1 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         myCreditCard = SignIn.mainUser.getCreditcards();
         myBankAccount = SignIn.mainUser.getBankAccounts();
+        shouldRefreshOnResume=false;
         define();
         setDate();
         click();
@@ -77,11 +81,6 @@ public class Fragment1 extends Fragment {
 
         recyclerViewbankaccount.setHasFixedSize(true);
         recyclerViewbankaccount.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
-
-
-
 
         MyCreditCardAdapter myCreditCardAdapter = new MyCreditCardAdapter(myCreditCard,getActivity(),myBankAccount ,recyclerViewbankaccount);
         recyclerView.setAdapter(myCreditCardAdapter);
@@ -253,11 +252,7 @@ public class Fragment1 extends Fragment {
                     ad.setNegativeButton("ADD", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
                             try {
-
-
-
                                 myCreditCard.add(new CreditCard(Integer.parseInt(editText.getText().toString())));
                                 MyCreditCardAdapter myCreditCardAdapter = new MyCreditCardAdapter(myCreditCard,getActivity(),myBankAccount ,recyclerViewbankaccount);
                                 recyclerView.setAdapter(myCreditCardAdapter);
@@ -270,9 +265,6 @@ public class Fragment1 extends Fragment {
 
                             }
                             cardsToDatabase(myCreditCard.get(myCreditCard.size()-1));
-
-
-
 
                         }
                     });
@@ -434,10 +426,13 @@ public class Fragment1 extends Fragment {
                         }
                     });
                     ad.create().show();
+
                 }
 
             }
         });
+
+
     }
 
     public void setDate(){
@@ -446,4 +441,25 @@ public class Fragment1 extends Fragment {
         date.setText(format.format(currentTime));
 
     }
+
+
+   /*
+    @Override
+    public void onStop() {
+        super.onStop();
+        shouldRefreshOnResume = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (shouldRefreshOnResume) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.setReorderingAllowed(false);
+            transaction.detach(this).attach(this).commitAllowingStateLoss();
+            shouldRefreshOnResume=false;
+        }
+    }
+
+    */
 }

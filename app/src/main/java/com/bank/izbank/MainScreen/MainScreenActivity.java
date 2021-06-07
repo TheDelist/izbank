@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -94,7 +95,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.menu1:
-                        fm.beginTransaction().hide(tempFragment).show(fragment1).commit();
+                       fm.beginTransaction().hide(tempFragment).show(fragment1).commit();
                         tempFragment = fragment1;
                         break;
                     case R.id.menu2:
@@ -138,7 +139,6 @@ public class MainScreenActivity extends AppCompatActivity {
                     List<CryptoModel> responseList=response.body();
                     cryptoModels=new ArrayList<>(responseList);
 
-
                 }
             }
 
@@ -164,4 +164,6 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

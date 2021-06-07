@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,10 +31,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bank.izbank.Adapters.CryptoPostAdapter;
 import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.BillAdapter;
+import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
+import com.bank.izbank.UserInfo.BankAccount;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.parse.Parse.getApplicationContext;
 
@@ -45,6 +54,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
     private CryptoPostAdapter cryptoPostAdapter ,searchAdapter;
     private ItemClickListener itemClickListener;
     private Toolbar toolbar;
+    private String decMoney;
 
     public FinanceFragment(ArrayList<CryptoModel> list){
         this.cryptoModels=list;
@@ -65,7 +75,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
         super.onViewCreated(view, savedInstanceState);
         toolbar = getView().findViewById(R.id.toolbar);
         toolbar.setTitle("Search ");
-        //toolbar.setLogo(R.drawable.icon_bill);
+        toolbar.setLogo(R.drawable.icons_bitcoin);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
@@ -112,6 +122,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                             amount.setText("0.0000");
                         }else{
                             amount.setText(String.valueOf((double) (Integer.parseInt(s.toString()) / Double.parseDouble(item.getPrice()))));
+                            decMoney=s.toString();
                         }
 
                     }
@@ -120,6 +131,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                 buyCryptoPopup.setPositiveButton("Buy", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        buyCrypto(Integer.parseInt(decMoney));
                         Toast.makeText(getActivity(), "buyed", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -184,7 +196,55 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
 
 
     }
+        public void buyCrypto(int decMoney){
+        int index=0;
+        for (BankAccount bankAc:SignIn.mainUser.getBankAccounts()){
+            if(bankAc.getCash()> decMoney){
+                index=SignIn.mainUser.getBankAccounts().indexOf(bankAc);
+                break;
+            }
+        }
 
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("BankAccount");
+            query.whereEqualTo("accountNo", SignIn.mainUser.getBankAccounts().get(index).getAccountno());
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    if(e!=null){
+                        e.printStackTrace();
+                    }else{
+                        if(objects.size()>0){
+                            for(ParseObject object:objects){
+                                ParseObject cryptoBuy=objects.get(0);
+                                String currentMoney=cryptoBuy.getString("cash");
+                               currentMoney= String.valueOf( Integer.parseInt(currentMoney)-decMoney);
+                                cryptoBuy.put("cash",currentMoney);
+
+                                object.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if(e != null){
+                                            Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                                        }
+                                        else{
+                                            Toast.makeText(getApplicationContext(),"crypto parası düşüldü",Toast.LENGTH_LONG).show();
+
+                                        }
+                                    }
+                                });
+
+
+
+
+                            }
+
+
+                        }
+
+                    }
+                }
+            });
+        }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
