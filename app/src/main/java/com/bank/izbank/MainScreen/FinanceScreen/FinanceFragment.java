@@ -1,6 +1,7 @@
 package com.bank.izbank.MainScreen.FinanceScreen;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -28,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bank.izbank.Adapters.CryptoLookAdapter;
 import com.bank.izbank.Adapters.CryptoPostAdapter;
 import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.BillAdapter;
@@ -35,6 +37,7 @@ import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -49,13 +52,17 @@ import static com.parse.Parse.getApplicationContext;
 public class FinanceFragment extends Fragment implements SearchView.OnQueryTextListener {
         //exchange https://nomics.com/docs/#tag/Exchange-Rates
         //https://api.nomics.com/v1/exchange-rates?key=c5d0683b83dc6e2dbd00841b72f7c86c
-    private ArrayList<CryptoModel> cryptoModels, searchList;
-    private RecyclerView recyclerView;
+    private ArrayList<CryptoModel> cryptoModels, searchList,ownCryptos;
+    private RecyclerView recyclerView,ownCryptoPopup;
     private CryptoPostAdapter cryptoPostAdapter ,searchAdapter;
     private ItemClickListener itemClickListener;
     private Toolbar toolbar;
     private String decMoney;
     private String currentMoney;
+    private FloatingActionButton floatingActionButtonCrypto;
+    private CryptoModel buyedCrypto;
+    private String buyedCrptoAmount;
+    private CryptoLookAdapter cryptoLookPopup;
     int index;
 
     public FinanceFragment(ArrayList<CryptoModel> list){
@@ -78,12 +85,15 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
         toolbar = getView().findViewById(R.id.toolbar);
         toolbar.setTitle("Search ");
         toolbar.setLogo(R.drawable.icons_bitcoin);
-
+        floatingActionButtonCrypto = getView().findViewById(R.id.floatingActionButton_crypto);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
-
+        ownCryptos=new ArrayList<>();
+        cryptoDatabase();
         recyclerView=view.findViewById(R.id.recyclerView_finance);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         itemClickListener=new ItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView.ViewHolder vh, CryptoModel item, int pos) {
@@ -94,7 +104,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                 buyCryptoPopup.setTitle("Crypto Currency Buy");
                 Drawable d = item.getImage().getDrawable();
                 buyCryptoPopup.setIcon(d);
-
+                buyedCrypto=cryptoModels.get(pos);
                 buyCryptoPopup.setView(R.layout.finance_screen_cryto_buy_popup);
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View dialogView= inflater.inflate(R.layout.finance_screen_cryto_buy_popup, null);
@@ -102,9 +112,11 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                 TextView name= dialogView.findViewById(R.id.CrytoNameTextView);
                 TextView value= dialogView.findViewById(R.id.CryptovalueTextView);
                 TextView amount= dialogView.findViewById(R.id.CryptoAmountTextView);
+                TextView cryptoSymbol= dialogView.findViewById(R.id.CrytoSymbolTextView);
                 EditText buyAmount= dialogView.findViewById(R.id.CyrptoBuyAmountEditText);
                 name.setText(item.getCurrencyName());
                 value.setText(item.getPrice());
+                cryptoSymbol.setText(item.getCurrencySymbol());
 
 
                 buyAmount.addTextChangedListener(new TextWatcher() {
@@ -123,7 +135,8 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                         if(s.toString().equals("")){
                             amount.setText("0.0000");
                         }else{
-                            amount.setText(String.valueOf((double) (Integer.parseInt(s.toString()) / Double.parseDouble(item.getPrice()))));
+                           buyedCrptoAmount= String.valueOf((double) (Integer.parseInt(s.toString()) / Double.parseDouble(item.getPrice())));
+                            amount.setText(buyedCrptoAmount);
                             decMoney=s.toString();
                         }
 
@@ -133,8 +146,10 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                 buyCryptoPopup.setPositiveButton("Buy", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        buyCrypto(Integer.parseInt(decMoney));
+
+                        buyCrypto(Integer.parseInt(decMoney),buyedCrptoAmount, buyedCrypto);
                         Toast.makeText(getActivity(), "buyed", Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 buyCryptoPopup.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -151,6 +166,30 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
         cryptoPostAdapter = new CryptoPostAdapter(cryptoModels, getActivity(), getContext(), itemClickListener);
 
         recyclerView.setAdapter(cryptoPostAdapter);
+
+
+
+        floatingActionButtonCrypto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder buyCryptoPopup=new AlertDialog.Builder(getContext());
+
+                buyCryptoPopup.setTitle("Crypto Currency Buy");
+
+                buyCryptoPopup.setView(R.layout.finance_screen_look_own_crypto_popup);
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View dialogView= inflater.inflate(R.layout.finance_screen_look_own_crypto_popup, null);
+                buyCryptoPopup.setView(dialogView);
+                ownCryptoPopup =(RecyclerView)dialogView.findViewById(R.id.recyclerView_finance_look);
+                ownCryptoPopup.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                cryptoLookPopup=new CryptoLookAdapter(ownCryptos,getActivity(),getContext());
+                ownCryptoPopup.setAdapter(cryptoLookPopup);
+                cryptoLookPopup.notifyDataSetChanged();
+                buyCryptoPopup.create().show();
+            }
+        });
         cryptoPostAdapter.notifyDataSetChanged();
 
 
@@ -182,9 +221,6 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
         }
         else {
             for(CryptoModel cryptoModel: list){
-
-
-
                 if( cryptoModel.getCurrencyName().toLowerCase().contains(string.toLowerCase())
                         || String.valueOf(cryptoModel.getPrice()).toLowerCase().contains(string.toLowerCase()) || cryptoModel.getCurrencySymbol().toLowerCase().contains(string.toLowerCase())){
                     returnList.add(cryptoModel);
@@ -198,7 +234,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
 
 
     }
-        public void buyCrypto(int decMoney){
+        public void buyCrypto(int decMoney,String buyedCrptoAmount,CryptoModel buyedCrypto){
         index=0;
         for (BankAccount bankAc:SignIn.mainUser.getBankAccounts()){
             if(bankAc.getCash()> decMoney){
@@ -206,10 +242,71 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                 break;
             }
         }
-
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("BankAccount");
-            query.whereEqualTo("accountNo", SignIn.mainUser.getBankAccounts().get(index).getAccountno());
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("CryptoAmount");
+            query.whereEqualTo("username", SignIn.mainUser.getId());
             query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    if(e!=null){
+                        e.printStackTrace();
+                    }else{
+                        if(objects.size()>0){
+                            for(ParseObject object:objects){
+                                ParseObject cryptoBuy=objects.get(0);
+                               String cryptoAmount=cryptoBuy.getString(buyedCrypto.getCurrencySymbol());
+                               if(cryptoAmount==null){
+                                   cryptoAmount="0";
+                               }
+
+                                cryptoAmount= String.valueOf( Double.parseDouble(cryptoAmount)+Double.parseDouble(buyedCrptoAmount));
+                                cryptoBuy.put(buyedCrypto.getCurrencySymbol().toUpperCase(),cryptoAmount);
+
+                                object.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if(e != null){
+                                            Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                                        }
+                                        else{
+                                            Toast.makeText(getApplicationContext(),"crypto databasede",Toast.LENGTH_LONG).show();
+
+
+                                        }
+                                    }
+                                });
+
+
+
+
+                            }
+
+
+                        }else{
+                            ParseObject object=new ParseObject("CryptoAmount");
+                            object.put(buyedCrypto.getCurrencySymbol().toUpperCase(),buyedCrptoAmount);
+                            object.put("username",SignIn.mainUser.getId());
+                            object.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if(e != null){
+                                        Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                          Toast.makeText(getApplicationContext(),"oldu galiba",Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                            });
+                        }
+
+                    }
+                }
+            });
+
+
+            ParseQuery<ParseObject> query2 = ParseQuery.getQuery("BankAccount");
+            query2.whereEqualTo("accountNo", SignIn.mainUser.getBankAccounts().get(index).getAccountno());
+            query2.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
                     if(e!=null){
@@ -231,7 +328,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                                         else{
                                             Toast.makeText(getApplicationContext(),"crypto parası düşüldü",Toast.LENGTH_LONG).show();
                                             SignIn.mainUser.getBankAccounts().get(index).setCash(Integer.parseInt(currentMoney));
-
+                                            cryptoDatabase();
 
                                         }
                                     }
@@ -260,5 +357,36 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
     public boolean onQueryTextChange(String newText) {
         toolbarSearch(newText);
         return false;
+    }
+    private void cryptoDatabase(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("CryptoAmount");
+        query.whereEqualTo("username", SignIn.mainUser.getId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+                            ParseObject cryptoLook=objects.get(0);
+                            for (int i=0; i<25; i++){
+                                String ownCrypto=cryptoLook.getString(cryptoModels.get(i).getCurrencySymbol().toUpperCase());
+                                if(ownCrypto!=null){
+                                    Double price=Double.parseDouble(ownCrypto) *Double.parseDouble( cryptoModels.get(i).getPrice());
+
+                                    ownCryptos.add(new CryptoModel(cryptoModels.get(i).getCurrencySymbol(),cryptoModels.get(i).getCurrencyName(),String.valueOf(price),cryptoModels.get(i).getImage(),ownCrypto,cryptoModels.get(i).getLogoUrl()));
+                                }
+
+                            }
+
+                        }
+
+
+                    }
+
+                }
+            }
+        });
     }
 }

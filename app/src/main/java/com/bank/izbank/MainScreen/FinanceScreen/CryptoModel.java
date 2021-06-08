@@ -15,6 +15,24 @@ public class CryptoModel {
     @SerializedName("logo_url")
     private String logoUrl;
     private ImageView image;
+    private String amount;
+
+    public CryptoModel(String currencySymbol, String currencyName, String price, ImageView image,String amount,String logoUrl) {
+        this.currencySymbol = currencySymbol;
+        this.currencyName = currencyName;
+        this.price = price;
+        this.image = image;
+        this.amount=amount;
+        this.logoUrl=logoUrl;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
     public ImageView getImage() {
         return image;

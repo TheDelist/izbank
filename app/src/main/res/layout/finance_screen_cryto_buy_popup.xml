@@ -30,32 +30,32 @@
         android:id="@+id/textView99"
         android:layout_width="56dp"
         android:layout_height="26dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="20dp"
         android:text="Value : "
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
+
         app:layout_constraintEnd_toStartOf="@+id/CryptovalueTextView"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
     <TextView
         android:id="@+id/CryptovalueTextView"
         android:layout_width="143dp"
         android:layout_height="28dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CrytoNameTextView" />
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="232dp"
-        android:layout_height="37dp"
+        android:layout_width="171dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="7dp"
         android:hint="Enter money amount"
-        android:text="          How much will you want ?"
+        android:text="How much will you want ?"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CryptovalueTextView" />

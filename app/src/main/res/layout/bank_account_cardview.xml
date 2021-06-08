@@ -18,6 +18,7 @@
 
         <ImageView
 
+            android:id="@+id/bank_account_ImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/icon_save_money">

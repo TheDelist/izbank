@@ -1,19 +1,17 @@
 package com.bank.izbank.Adapters;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ahmadrosid.svgloader.SvgLoader;
@@ -24,15 +22,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class CryptoPostAdapter  extends RecyclerView.Adapter<CryptoPostAdapter.PostHolder> {
+public class CryptoLookAdapter extends RecyclerView.Adapter<CryptoLookAdapter.PostHolder> {
     private Context context;
     private ArrayList<CryptoModel> models;
     private Activity activity;
-    private ItemClickListener itemClickListener;
 
     class PostHolder extends RecyclerView.ViewHolder{
         private  Context context;
-        private TextView cryptoNameText,cryptoSymbolText,cryptoPriceText;
+        private TextView cryptoNameText,cryptoSymbolText,cryptoAmountText,cryptoPriceText;
         private ImageView cryptoImageView;
 
 
@@ -40,10 +37,10 @@ public class CryptoPostAdapter  extends RecyclerView.Adapter<CryptoPostAdapter.P
             super(itemView);
             this.context=context;
 
-            cryptoNameText=itemView.findViewById(R.id.crypto_name_text);
-            cryptoSymbolText=itemView.findViewById(R.id.crypto_symbol_text);
-            cryptoPriceText=itemView.findViewById(R.id.crypto_price_text_view);
+            cryptoNameText=itemView.findViewById(R.id.crypto_symbol_text);
+            cryptoAmountText=itemView.findViewById(R.id.crypto_name_text);
             cryptoImageView=itemView.findViewById(R.id.crypto_imageview);
+            cryptoPriceText=itemView.findViewById(R.id.crypto_price_text_view);
         }
     }
 
@@ -51,30 +48,28 @@ public class CryptoPostAdapter  extends RecyclerView.Adapter<CryptoPostAdapter.P
 
 
 
-    public CryptoPostAdapter(ArrayList<CryptoModel> models, Activity activity, Context context, ItemClickListener itemClickListener) {
+    public CryptoLookAdapter(ArrayList<CryptoModel> models, Activity activity, Context context) {
         this.models = models;
         this.activity=activity;
         this.context=context;
-        this.itemClickListener=itemClickListener;
-
     }
 
 
     @NonNull
     @Override
-    public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CryptoLookAdapter.PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
         View view =layoutInflater.inflate(R.layout.custom_view,parent,false);
 
 
-        return new PostHolder(view,context);
+        return new CryptoLookAdapter.PostHolder(view,context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostHolder holder, int position) {
         holder.cryptoNameText.setText(models.get(position).getCurrencyName());
-        holder.cryptoSymbolText.setText(models.get(position).getCurrencySymbol());
-        holder.cryptoPriceText.setText(models.get(position).getPrice());
+        holder. cryptoAmountText.setText(models.get(position).getAmount());
+        holder. cryptoPriceText.setText(models.get(position).getPrice()+" USD");
 
         //for .svg image file
         if(models.get(position).getLogoUrl().substring(models.get(position).getLogoUrl().length()-3).equalsIgnoreCase("svg")){
@@ -87,21 +82,10 @@ public class CryptoPostAdapter  extends RecyclerView.Adapter<CryptoPostAdapter.P
         }else{//for all image file without .svg
             Picasso.get().load(models.get(position).getLogoUrl()).into(holder.cryptoImageView);
         }
-        models.get(position).setImage(holder.cryptoImageView);
-
-        final CryptoModel cryptoModel = models.get(position);
-        // set click listener
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClickListener.onItemClicked(holder, cryptoModel, position);
-
-            }
-        });
-
 
 
     }
+
 
     @Override
     public int getItemCount() {
