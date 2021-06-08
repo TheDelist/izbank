@@ -93,6 +93,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linear_layout_send_money"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_weight="1"

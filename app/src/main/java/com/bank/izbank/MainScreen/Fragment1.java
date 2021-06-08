@@ -27,9 +27,11 @@ import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.BillAdapter;
 import com.bank.izbank.Bill.PhoneBill;
 import com.bank.izbank.R;
+import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
 import com.bank.izbank.Sign.SignIn;
+import com.bank.izbank.UserInfo.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -46,13 +48,15 @@ import java.util.List;
 import static com.parse.Parse.getApplicationContext;
 
 public class Fragment1 extends Fragment {
-    LinearLayout linear_layout_request_money;
+    LinearLayout linear_layout_request_money,linear_layout_send_money;
     ImageView add_bank_account, add_credit_card;
     RecyclerView recyclerView;
     RecyclerView recyclerViewbankaccount;
     TextView text_view_name, date,text_view_total_money;
     ArrayList<CreditCard> myCreditCard;
     ArrayList<BankAccount> myBankAccount;
+    BankAccount sendUser = null;
+    String userIdAnother = null;
 
     @Nullable
     @Override
@@ -101,6 +105,7 @@ public class Fragment1 extends Fragment {
         add_credit_card = getView().findViewById(R.id.image_view_add_credit_card);
         linear_layout_request_money = getView().findViewById(R.id.linear_layout_request_money);
         text_view_total_money = getView().findViewById(R.id.text_view_total_money);
+        linear_layout_send_money = getView().findViewById(R.id.linear_layout_send_money);
 
     }
     public void setTotalMoney(ArrayList<BankAccount> MyBankAccounts){
@@ -169,22 +174,55 @@ public class Fragment1 extends Fragment {
                             object.deleteInBackground();
                             Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
                             accountsToDatabase(bankac);
-
-
-
-
-
                         }
-
-
                     }
-
                 }
-
-
             }
         });
     }
+    public void updateBankAccountAnotherUser(BankAccount bankac, String userId){
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
+        queryBankAccount.whereEqualTo("accountNo", bankac.getAccountno());
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+                            object.deleteInBackground();
+                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+                            accountsToDatabaseAnotherUser(bankac,userId);
+                        }
+                    }
+                }
+            }
+        });
+    }
+    public void accountsToDatabaseAnotherUser(BankAccount bankAc,String userId){
+        ParseObject object=new ParseObject("BankAccount");
+        object.put("accountNo",bankAc.getAccountno());
+        object.put("userId", userId);
+
+        object.put("cash",String.valueOf(bankAc.getCash()));
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
 
     public void click(){
         add_bank_account.setOnClickListener(new View.OnClickListener() {
@@ -307,32 +345,7 @@ public class Fragment1 extends Fragment {
                     ad.setSingleChoiceItems(items, checkedItem[0], new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            switch (i) {
-                                case 0:
-                                    checkedItem[0] =i;
-
-
-                                    break;
-                                case 1:
-
-                                    checkedItem[0] =i;
-
-                                    break;
-                                case 2:
-
-                                    checkedItem[0] =i;
-
-                                    break;
-                                case 3:
-
-                                    checkedItem[0] =i;
-
-                                    break;
-                                case 4:
-
-                                    checkedItem[0] =i;
-                                    break;
-                            }
+                            checkedItem[0] =i;
                         }
                     });
                     ad.setNegativeButton("Request", new DialogInterface.OnClickListener() {
@@ -340,86 +353,11 @@ public class Fragment1 extends Fragment {
                         public void onClick(DialogInterface dialogInterface, int i) {
 
                             i= checkedItem[0];
-                            switch (i) {
-                                case 0:
-
-                                    try {
-                                        myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(myBankAccount.get(i));
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-                                        setTotalMoney(myBankAccount);
-                                    }catch (NumberFormatException e){
-
-                                    }
-
-
-                                    break;
-                                case 1:
-
-
-                                    try {
-                                        myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(myBankAccount.get(i));
-
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-                                        setTotalMoney(myBankAccount);
-
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-
-
-                                    break;
-                                case 2:
-
-                                    try {
-                                        myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(myBankAccount.get(i));
-
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-                                        setTotalMoney(myBankAccount);
-
-
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-                                    break;
-                                case 3:
-
-                                    try {
-
-                                        myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(myBankAccount.get(i));
-
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-                                        setTotalMoney(myBankAccount);
-
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-                                    break;
-                                case 4:
-                                    try {
-                                        myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(myBankAccount.get(i));
-
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-                                        setTotalMoney(myBankAccount);
-
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-                                    break;
-                            }
+                            myBankAccount.get(i).setCash(myBankAccount.get(i).getCash() + Integer.parseInt(editText.getText().toString()));
+                            updateBankAccount(myBankAccount.get(i));
+                            MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
+                            recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+                            setTotalMoney(myBankAccount);
 
 
 
@@ -429,6 +367,214 @@ public class Fragment1 extends Fragment {
 
                 }
 
+            }
+        });
+
+        linear_layout_send_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder ad = new AlertDialog.Builder(getContext());
+                ad.setTitle("What Do You Want to Do?");
+                ad.setIcon(R.drawable.icon_save_money);
+                String arr[] = {("SEND MONEY TO ONE OF YOUR ACCOUNTS") , "SEND ANOTHER PERSON"};
+                ad.setItems(arr, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                AlertDialog.Builder ad2 = new AlertDialog.Builder(getContext());
+
+                                ad2.setTitle("Which Bank Account Do You Want to Send From?");
+                                ad2.setIcon(R.drawable.icon_save_money);
+
+                                String[] items = new String[myBankAccount.size()];
+                                for (int i =0; i<myBankAccount.size();i++){
+                                    String data= myBankAccount.get(i).getAccountno() + "  $" + Integer.toString(myBankAccount.get(i).getCash());
+                                    items[i] = data;
+                                }
+                                final int[] from = {0};
+                                ad2.setSingleChoiceItems(items, from[0], new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        from[0] =i;
+                                    }
+                                });
+                                ad2.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        AlertDialog.Builder ad3 = new AlertDialog.Builder(getContext());
+
+                                        ad3.setTitle("Which Bank Account Do You Want to Send to?");
+                                        ad3.setIcon(R.drawable.icon_save_money);
+
+                                        String[] items = new String[myBankAccount.size()];
+                                        for (int i =0; i<myBankAccount.size();i++){
+                                            String data= myBankAccount.get(i).getAccountno() + "  $" + Integer.toString(myBankAccount.get(i).getCash());
+                                            items[i] = data;
+                                        }
+                                        final int[] to = {0};
+                                        ad3.setSingleChoiceItems(items, to[0], new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                to[0] =i;
+                                            }
+                                        });
+                                        ad3.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                final EditText editText = new EditText(getContext());
+                                                editText.setHint("0");
+                                                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                                                AlertDialog.Builder ad4 = new AlertDialog.Builder(getContext());
+
+                                                ad4.setTitle("How Much Do You Want To Send?");
+                                                ad4.setIcon(R.drawable.icon_credit_card);
+                                                ad4.setView(editText);
+                                                ad4.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        try {
+                                                            int toint = to[0];
+                                                            int fromint = from[0];
+                                                            if (Integer.parseInt(editText.getText().toString())<= myBankAccount.get(fromint).getCash()){
+                                                                myBankAccount.get(toint).setCash(myBankAccount.get(toint).getCash()+Integer.parseInt(editText.getText().toString()));
+                                                                myBankAccount.get(fromint).setCash(myBankAccount.get(fromint).getCash() - Integer.parseInt(editText.getText().toString()));
+                                                                MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
+                                                                recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+                                                                updateBankAccount(myBankAccount.get(fromint));
+                                                                updateBankAccount(myBankAccount.get(toint));
+
+                                                            }
+                                                            else{
+                                                                Toast.makeText(getApplicationContext(),"yeterince paranız yok",Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }catch (NumberFormatException e){
+                                                            Toast.makeText(getApplicationContext(),"Para Girmedin",Toast.LENGTH_LONG).show();
+                                                        }
+
+                                                    }
+                                                });
+                                                ad4.create().show();
+
+                                            }
+                                        });
+                                        ad3.create().show();
+                                    }
+                                });
+                                ad2.create().show();
+                                break;
+
+                            case 1:
+
+                                final EditText editText = new EditText(getContext());
+                                editText.setHint("UserId");
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                                AlertDialog.Builder typeUserId = new AlertDialog.Builder(getContext());
+
+                                typeUserId.setTitle("Type Id who do you want to send.");
+                                typeUserId.setIcon(R.drawable.icon_save_money);
+                                typeUserId.setView(editText);
+                                typeUserId.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ParseQuery<ParseObject>  query=ParseQuery.getQuery("BankAccount");
+                                        query.whereEqualTo("userId",editText.getText().toString());
+                                        userIdAnother = editText.getText().toString();
+                                        query.findInBackground(new FindCallback<ParseObject>() {
+                                            @Override
+                                            public void done(List<ParseObject> objects, ParseException e) {
+                                                if(e!=null){
+                                                    e.printStackTrace();
+                                                }else{
+                                                    if(objects.size()>0){
+                                                        for(ParseObject object:objects){
+
+
+                                                            String bankno=object.getString("accountNo");
+                                                            String cash = object.getString("cash");
+                                                            sendUser = new BankAccount(bankno, Integer.parseInt(cash));
+                                                            break;
+
+                                                        }
+
+
+
+                                                    }
+                                                    else {
+                                                        Toast.makeText(getApplicationContext(),"yanlış id girdin",Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+
+                                            }
+                                        });
+
+                                        AlertDialog.Builder adFrom = new AlertDialog.Builder(getContext());
+
+                                        adFrom.setTitle("Which Bank Account Do You Want to Send From?");
+                                        adFrom.setIcon(R.drawable.icon_save_money);
+
+                                        String[] items = new String[myBankAccount.size()];
+                                        for (int i =0; i<myBankAccount.size();i++){
+                                            String data= myBankAccount.get(i).getAccountno() + "  $" + Integer.toString(myBankAccount.get(i).getCash());
+                                            items[i] = data;
+                                        }
+                                        final int[] from = {0};
+                                        adFrom.setSingleChoiceItems(items, from[0], new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                from[0] =i;
+                                            }
+                                        });
+                                        adFrom.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                final EditText editText = new EditText(getContext());
+                                                editText.setHint("0");
+                                                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                                                AlertDialog.Builder adTypeMoney = new AlertDialog.Builder(getContext());
+
+                                                adTypeMoney.setTitle("How Much Do You Want To Send?");
+                                                adTypeMoney.setIcon(R.drawable.icon_credit_card);
+                                                adTypeMoney.setView(editText);
+                                                adTypeMoney.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        if (sendUser !=null){
+                                                            if (myBankAccount.get(from[0]).getCash()>=Integer.parseInt(editText.getText().toString())){
+                                                                sendUser.setCash(sendUser.getCash() + Integer.parseInt(editText.getText().toString()));
+                                                                myBankAccount.get(from[0]).setCash(myBankAccount.get(from[0]).getCash()- Integer.parseInt(editText.getText().toString()));
+                                                                updateBankAccountAnotherUser(sendUser,userIdAnother);
+                                                                updateBankAccount(myBankAccount.get(from[0]));
+                                                                Toast.makeText(getApplicationContext(),"gönderildi",Toast.LENGTH_LONG).show();
+                                                                MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
+                                                                recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+                                                            }
+                                                            else {
+                                                                Toast.makeText(getApplicationContext(),"para yetersiz",Toast.LENGTH_LONG).show();
+                                                            }
+
+                                                        }
+                                                        else{
+                                                            Toast.makeText(getApplicationContext(),"yanlış id girdin",Toast.LENGTH_LONG).show();
+                                                        }
+                                                    }
+                                                });
+                                                adTypeMoney.create().show();
+                                            }
+                                        });
+                                        adFrom.create().show();
+
+                                    }
+                                });
+                                typeUserId.create().show();
+
+
+                        }
+                    }
+                });
+                ad.create().show();
             }
         });
 
