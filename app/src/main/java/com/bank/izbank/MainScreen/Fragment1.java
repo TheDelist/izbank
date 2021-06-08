@@ -1,7 +1,6 @@
 package com.bank.izbank.MainScreen;
 
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -17,21 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bank.izbank.Adapters.MyBankAccountAdapter;
 import com.bank.izbank.Adapters.MyCreditCardAdapter;
-import com.bank.izbank.Bill.Bill;
-import com.bank.izbank.Bill.BillAdapter;
-import com.bank.izbank.Bill.PhoneBill;
 import com.bank.izbank.R;
-import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
 import com.bank.izbank.Sign.SignIn;
-import com.bank.izbank.UserInfo.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -56,7 +49,8 @@ public class Fragment1 extends Fragment {
     ArrayList<CreditCard> myCreditCard;
     ArrayList<BankAccount> myBankAccount;
     BankAccount sendUser = null;
-    String userIdAnother = null;
+    String bankAccountAnother = null;
+    String anotherUserid;
 
     @Nullable
     @Override
@@ -467,20 +461,20 @@ public class Fragment1 extends Fragment {
                             case 1:
 
                                 final EditText editText = new EditText(getContext());
-                                editText.setHint("UserId");
+                                editText.setHint("Bank Account No");
                                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-                                AlertDialog.Builder typeUserId = new AlertDialog.Builder(getContext());
+                                AlertDialog.Builder typeAccountNo = new AlertDialog.Builder(getContext());
 
-                                typeUserId.setTitle("Type Id who do you want to send.");
-                                typeUserId.setIcon(R.drawable.icon_save_money);
-                                typeUserId.setView(editText);
-                                typeUserId.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
+                                typeAccountNo.setTitle("Type Account No Which you want to send.");
+                                typeAccountNo.setIcon(R.drawable.icon_save_money);
+                                typeAccountNo.setView(editText);
+                                typeAccountNo.setNegativeButton("CONTINUE", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         ParseQuery<ParseObject>  query=ParseQuery.getQuery("BankAccount");
-                                        query.whereEqualTo("userId",editText.getText().toString());
-                                        userIdAnother = editText.getText().toString();
+                                        query.whereEqualTo("accountNo",editText.getText().toString());
+                                        bankAccountAnother = editText.getText().toString();
                                         query.findInBackground(new FindCallback<ParseObject>() {
                                             @Override
                                             public void done(List<ParseObject> objects, ParseException e) {
@@ -490,7 +484,7 @@ public class Fragment1 extends Fragment {
                                                     if(objects.size()>0){
                                                         for(ParseObject object:objects){
 
-
+                                                            anotherUserid = object.getString("userId");
                                                             String bankno=object.getString("accountNo");
                                                             String cash = object.getString("cash");
                                                             sendUser = new BankAccount(bankno, Integer.parseInt(cash));
@@ -502,7 +496,7 @@ public class Fragment1 extends Fragment {
 
                                                     }
                                                     else {
-                                                        Toast.makeText(getApplicationContext(),"yanlış id girdin",Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getApplicationContext(),"yanlış bank no girdin",Toast.LENGTH_LONG).show();
                                                     }
                                                 }
 
@@ -545,7 +539,7 @@ public class Fragment1 extends Fragment {
                                                             if (myBankAccount.get(from[0]).getCash()>=Integer.parseInt(editText.getText().toString())){
                                                                 sendUser.setCash(sendUser.getCash() + Integer.parseInt(editText.getText().toString()));
                                                                 myBankAccount.get(from[0]).setCash(myBankAccount.get(from[0]).getCash()- Integer.parseInt(editText.getText().toString()));
-                                                                updateBankAccountAnotherUser(sendUser,userIdAnother);
+                                                                updateBankAccountAnotherUser(sendUser, anotherUserid);
                                                                 updateBankAccount(myBankAccount.get(from[0]));
                                                                 Toast.makeText(getApplicationContext(),"gönderildi",Toast.LENGTH_LONG).show();
                                                                 MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
@@ -568,7 +562,7 @@ public class Fragment1 extends Fragment {
 
                                     }
                                 });
-                                typeUserId.create().show();
+                                typeAccountNo.create().show();
 
 
                         }
