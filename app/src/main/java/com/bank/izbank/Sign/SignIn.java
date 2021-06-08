@@ -66,7 +66,7 @@ public class SignIn extends AppCompatActivity {
 
     }
     public void getUser(ParseUser parseUser)  {
-      //  ParseUser parseUser =ParseUser.getCurrentUser();
+
         ParseQuery<ParseObject>  query=ParseQuery.getQuery("UserInfo");
         query.whereEqualTo("username",parseUser.getUsername().toString());
 
@@ -254,8 +254,20 @@ public class SignIn extends AppCompatActivity {
 
                                 if(objects.size()>0){
                                     for(ParseObject object:objects){
-                                        name=object.getString("userRealName");
+                                      //  name=object.getString("userRealName");
+                                        String name=object.getString("userRealName");
+                                        String phone=object.getString("phone");
+                                        String userId=object.getString("username");
+                                        String address_string= object.getString("address");
+                                        String[] str = address_string.split(" ");
+                                        Address address = new Address(str[0],str[1],Integer.parseInt(str[2]),Integer.parseInt(str[3]),Integer.parseInt(str[4]),str[5],str[6],str[7]);
+                                        String profession = object.getString("profession");
 
+                                        Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
+                                        mainUser = new User(name,userId, phone,address,profession);
+
+                                        getBankAccounts();
+                                        getCreditCards();
 
 
 
