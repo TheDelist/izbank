@@ -34,15 +34,19 @@ import com.bank.izbank.Bill.PhoneBill;
 import com.bank.izbank.Bill.WaterBill;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
+import com.bank.izbank.UserInfo.BankAccount;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static com.parse.Parse.getApplicationContext;
 
@@ -92,12 +96,7 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-
-        Bundle results = getArguments();
-
-
-        list = (ArrayList<Bill>)results.getSerializable("bills");
+        list = SignIn.mainUser.getUserbills();
 
 
         billAdapter = new BillAdapter(getContext(),list);
@@ -232,12 +231,10 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
 
                             bill.setAmount(Integer.parseInt(editText.getText().toString()));
                             setDate(bill);
-                            billToDatabase(bill);
-                            list.add(bill);
-                            billAdapter = new BillAdapter(getContext(),list);
-                            Toast.makeText(getContext(), "buraaa", Toast.LENGTH_SHORT).show();
 
-                            recyclerView.setAdapter(billAdapter);
+
+                            payBill(bill);
+
 
 
                         }catch (NumberFormatException e){
@@ -260,6 +257,87 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
 
     }
 
+    public void payBill(Bill bill){
+
+        int max=Integer.MIN_VALUE;
+        int index=-1;
+
+        for(int i =0;i<SignIn.mainUser.getBankAccounts().size();i++){
+
+            if(SignIn.mainUser.getBankAccounts().get(i).getCash()>max){
+                max=SignIn.mainUser.getBankAccounts().get(i).getCash();
+                index=i;
+            }
+
+        }
+
+        if(bill.getAmount()<=SignIn.mainUser.getBankAccounts().get(index).getCash()){
+
+            SignIn.mainUser.getBankAccounts().get(index).setCash(SignIn.mainUser.getBankAccounts().get(index).getCash()-bill.getAmount());
+
+            updateBankAccount(SignIn.mainUser.getBankAccounts().get(index));
+
+            Toast.makeText(getApplicationContext(),"ÖDENDİ",Toast.LENGTH_LONG).show();
+
+            billToDatabase(bill);
+            list.add(bill);
+            billAdapter = new BillAdapter(getContext(),list);
+
+
+            recyclerView.setAdapter(billAdapter);
+
+
+        }
+        else {
+
+            Toast.makeText(getApplicationContext(),"yeterisz bakiye",Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+    public void updateBankAccount(BankAccount bankac){
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
+        queryBankAccount.whereEqualTo("accountNo", bankac.getAccountno());
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+                            object.deleteInBackground();
+                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+                            accountsToDatabase(bankac);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void accountsToDatabase(BankAccount bankAc){
+        ParseObject object=new ParseObject("BankAccount");
+        object.put("accountNo",bankAc.getAccountno());
+        object.put("userId", SignIn.mainUser.getId());
+
+        object.put("cash",String.valueOf(bankAc.getCash()));
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
 
 
     public void billToDatabase(Bill bill){
@@ -276,7 +354,7 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    //  Toast.makeText(getApplicationContext(),"oldu galiba",Toast.LENGTH_LONG).show();
+
 
                 }
             }

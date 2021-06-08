@@ -30,7 +30,7 @@ public class splashScreen extends AppCompatActivity {
 
     private GifImageView gifImageView;
     private ProgressBar progressBar;
-    public ArrayList<Bill> bills;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class splashScreen extends AppCompatActivity {
 
         }
 
-        bills = (ArrayList<Bill>)getIntent().getSerializableExtra("billList");
+
 
 
 
@@ -59,7 +59,7 @@ public class splashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 Intent splashIntent = new Intent( splashScreen.this, MainScreenActivity.class);
-                splashIntent.putExtra("billList",bills);
+                //splashIntent.putExtra("billList",bills);
                 splashScreen.this.startActivity(splashIntent);
                 //splashScreen.this.startActivity(new Intent( splashScreen.this, MainScreenActivity.class));
                 splashScreen.this.finish();

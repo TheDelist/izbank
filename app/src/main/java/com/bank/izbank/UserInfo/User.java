@@ -1,5 +1,7 @@
 package com.bank.izbank.UserInfo;
 
+import com.bank.izbank.Bill.Bill;
+
 import java.util.ArrayList;
 
 public class User {
@@ -13,6 +15,7 @@ public class User {
     private String addressSum;
     private ArrayList<CreditCard> creditcards;
     private ArrayList<BankAccount> bankAccounts;
+    private ArrayList<Bill> userbills;
 
     public User(String name, String id,String pass,String phoneNumber, Address address, String profession) {
         this.name = name;
@@ -103,5 +106,13 @@ public class User {
     public String addressWrite(){
      addressSum= address.getStreet()+" "+address.getNeighborhood()+" "+address.getApartmentNumber()+" "+address.getFloor()+" "+address.getHomeNumber()+" "+address.getCity()+" "+address.getProvince()+" "+address.getCountry();
      return addressSum;
+    }
+
+    public ArrayList<Bill> getUserbills() {
+        return userbills;
+    }
+
+    public void setUserbills(ArrayList<Bill> userbills) {
+        this.userbills = userbills;
     }
 }

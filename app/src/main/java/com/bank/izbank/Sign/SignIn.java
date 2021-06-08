@@ -91,12 +91,15 @@ public class SignIn extends AppCompatActivity {
                             getBankAccounts();
                             getCreditCards();
 
+                            getUserBills();
 
                         }
 
 
-
                     }
+
+                    intent = new Intent(SignIn.this, splashScreen.class);
+                    startActivity(intent);
                 }
 
             }
@@ -104,9 +107,11 @@ public class SignIn extends AppCompatActivity {
 
 
 
+    }
 
+    public void getUserBills(){
         ParseQuery<ParseObject> queryBill=ParseQuery.getQuery("Bill");
-        queryBill.whereEqualTo("username",parseUser.getUsername().toString());
+        queryBill.whereEqualTo("username",SignIn.mainUser.getId());
         queryBill.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -127,46 +132,24 @@ public class SignIn extends AppCompatActivity {
 
                             Bill tempBill = new Bill(billType,Integer.parseInt(billAmount),tempdate);
 
-
-
                             bills.add(tempBill);
 
 
                         }
 
 
-
-
-
-
-
-
-
-
-
                     }
+                    SignIn.mainUser.setUserbills(bills);
                 }
-                intent = new Intent(SignIn.this, splashScreen.class);
-
-                intent.putExtra("billList",bills);
-
-
-                startActivity(intent);
-
 
             }
         });
 
 
 
-
-        //  intent.putExtra("bankAcList",bankAccounts);
-
-
-
-
-
     }
+
+
     public void getCreditCards(){
         ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("CreditCard");
         queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
@@ -197,6 +180,9 @@ public class SignIn extends AppCompatActivity {
             }
         });
     }
+
+
+
 
     public void getBankAccounts(){
         ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
@@ -269,6 +255,8 @@ public class SignIn extends AppCompatActivity {
                                         getBankAccounts();
                                         getCreditCards();
 
+                                        getUserBills();
+
 
 
                                         Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
@@ -282,71 +270,8 @@ public class SignIn extends AppCompatActivity {
                     });
 
 
-
-
-
-
-                    ParseQuery<ParseObject> queryBill=ParseQuery.getQuery("Bill");
-                    queryBill.whereEqualTo("username",userName.getText().toString());
-                    queryBill.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(List<ParseObject> objects, ParseException e) {
-                            if(e!=null){
-                                e.printStackTrace();
-                            }else{
-                                 bills = new ArrayList<>();
-                                if(objects.size()>0){
-                                    for(ParseObject object:objects){
-
-                                        billType=object.getString("type");
-                                        billAmount=object.getString("amount");
-                                        billDate=object.getString("date");
-
-                                        String [] date = billDate.split("/");
-
-                                        Date tempdate = new Date(date[0],date[1],date[2]);
-
-                                        Bill tempBill = new Bill(billType,Integer.parseInt(billAmount),tempdate);
-
-
-
-                                        bills.add(tempBill);
-
-
-                                    }
-
-
-
-
-
-
-
-
-
-
-
-
-                                }
-                            }
-
-                            intent = new Intent(SignIn.this, splashScreen.class);
-
-                            intent.putExtra("billList",bills);
-
-                            startActivity(intent);
-
-                        }
-                    });
-
-
-
-
-
-
-
-
-
-
+                    intent = new Intent(SignIn.this, splashScreen.class);
+                    startActivity(intent);
 
 
 

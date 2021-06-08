@@ -43,7 +43,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
-    public ArrayList<Bill> bills;
+
 
     Fragment fragment1 = new Fragment1();
     final Fragment fragment2 = new Fragment2();
@@ -82,12 +82,6 @@ public class MainScreenActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.fragment_container,fragment2,"2").hide(fragment2).commit();
         fm.beginTransaction().add(R.id.fragment_container,fragment1,"1").commit();
 
-
-        loadBills();
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bills",bills);
-        fragment4.setArguments(bundle);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -128,10 +122,6 @@ public class MainScreenActivity extends AppCompatActivity {
 
     }
 
-    public void loadBills(){
-
-        bills = (ArrayList<Bill>)getIntent().getSerializableExtra("billList");
-    }
 
     private void loadData(){
         ICryptoAPI cryptoAPI=retrofit.create(ICryptoAPI.class);
