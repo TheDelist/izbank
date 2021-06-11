@@ -1,6 +1,7 @@
 package com.bank.izbank.UserInfo;
 
 import com.bank.izbank.Bill.Bill;
+import com.bank.izbank.Job.Job;
 
 import java.util.ArrayList;
 
@@ -11,30 +12,42 @@ public class User {
   //  private String surname;
     private String phoneNumber;
     private Address address;
-    private String profession;
     private String addressSum;
     private ArrayList<CreditCard> creditcards;
     private ArrayList<BankAccount> bankAccounts;
     private ArrayList<Bill> userbills;
+    private Job job;
 
-    public User(String name, String id,String pass,String phoneNumber, Address address, String profession) {
+
+    public User(String name, String id,String pass,String phoneNumber, Address address, Job job) {
         this.name = name;
         this.id=id;
         this.pass=pass;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.profession = profession;
+        this.job = job;
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
     }
 
-    public User(String name, String id,String phoneNumber, Address address, String profession) {
+    public User(String name, String id,String pass,String phoneNumber, Address address) {
+        this.name = name;
+        this.id=id;
+        this.pass=pass;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+
+        this.creditcards = new ArrayList<>();
+        this.bankAccounts = new ArrayList<>();
+    }
+
+    public User(String name, String id,String phoneNumber, Address address, Job job) {
         this.name = name;
         this.id=id;
         this.pass=null;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.profession = profession;
+        this.job = job;
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
     }
@@ -96,13 +109,14 @@ public class User {
         this.address = address;
     }
 
-    public String getProfession() {
-        return profession;
+    public Job getJob() {
+        return job;
     }
 
-    public void setProfession(String profession) {
-        this.profession = profession;
+    public void setJob(Job job) {
+        this.job = job;
     }
+
     public String addressWrite(){
      addressSum= address.getStreet()+" "+address.getNeighborhood()+" "+address.getApartmentNumber()+" "+address.getFloor()+" "+address.getHomeNumber()+" "+address.getCity()+" "+address.getProvince()+" "+address.getCountry();
      return addressSum;

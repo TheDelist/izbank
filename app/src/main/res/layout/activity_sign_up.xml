@@ -195,16 +195,13 @@
             android:layout_height="45dp"
             android:src="@drawable/icon_profession"></ImageView>
 
-
-
-        <EditText
-            android:id="@+id/edittext_profession_sign_up"
+        <Spinner
+            android:id="@+id/jobSpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+             />
 
-            android:gravity="center"
 
-            android:hint="PROFESSION"></EditText>
     </LinearLayout>
 
 

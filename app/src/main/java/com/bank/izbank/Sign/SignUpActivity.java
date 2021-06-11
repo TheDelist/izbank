@@ -5,9 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bank.izbank.Job.Contractor;
+import com.bank.izbank.Job.Doctor;
+import com.bank.izbank.Job.Driver;
+import com.bank.izbank.Job.Engineer;
+import com.bank.izbank.Job.Entrepreneur;
+import com.bank.izbank.Job.Farmer;
+import com.bank.izbank.Job.Job;
+import com.bank.izbank.Job.Police;
+import com.bank.izbank.Job.Soldier;
+import com.bank.izbank.Job.Sportsman;
+import com.bank.izbank.Job.Student;
+import com.bank.izbank.Job.Teacher;
+import com.bank.izbank.Job.Waiter;
+import com.bank.izbank.Job.Worker;
 import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
@@ -18,10 +35,18 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import static com.bank.izbank.Sign.SignIn.mainUser;
+
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText userNameText , userPassText ,userIdText,userPhoneText,userAddressText,userProfText;
-    private User user;
+    private EditText userNameText , userPassText ,userIdText,userPhoneText,userAddressText;
+
+    private Spinner spinner;
+    private ArrayAdapter<String> jobArrayAdapter;
+    private String [] jobs;
+    private Job [] defaultJobs;
+    public Job tempJob ;
+    public String job;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +56,13 @@ public class SignUpActivity extends AppCompatActivity {
         userIdText=findViewById(R.id.edittext_id_number_sign_up);
         userPhoneText=findViewById(R.id.edittext_phone_sign_up);
         userAddressText=findViewById(R.id.edittext_address_sign_up);
-        userProfText=findViewById(R.id.edittext_profession_sign_up);
+        spinner = findViewById(R.id.jobSpinner);
+
+
+
+        defineJobSpinner();
+
+
 
 
 
@@ -39,24 +70,67 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    public void defineJobSpinner(){
+
+        defaultJobs = new Job[]{new Contractor(),new Doctor(),new Driver(),new Engineer(),new Entrepreneur(),
+        new Farmer(),new Police(),new Soldier(),new Sportsman(),new Student(),new Teacher(),new Waiter(),new Worker()};
+
+        jobs = new String[] {"Contractor","Doctor","Driver","Engineer","Entrepreneur","Farmer","Police","Soldier",
+                "Sportsman","Student","Teacher","Waiter","Worker"};
+
+        jobArrayAdapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,jobs);
+
+        spinner.setAdapter(jobArrayAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                job = adapterView.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+    }
+
     public void signUp(View view){
-        user=new User(userNameText.getText().toString(),
+        mainUser=new User(userNameText.getText().toString(),
                 userIdText.getText().toString(),
                 userPassText.getText().toString(),
                 userPhoneText.getText().toString(),
-                new Address("TPAO","ss",13,2,4,"Kırklareli","Lüleburgaz","Turkey"),
-                userProfText.getText().toString());
+                new Address("TPAO","ss",13,2,4,"Kırklareli","Lüleburgaz","Turkey")
+                );
 
         ParseUser parseUser=new ParseUser();
-        parseUser.setUsername(user.getId());
-        parseUser.setPassword(user.getPass());
+        parseUser.setUsername(mainUser.getId());
+        parseUser.setPassword(mainUser.getPass());
+
 
         ParseObject object=new ParseObject("UserInfo");
-        object.put("userRealName",user.getName());
-        object.put("phone",user.getPhoneNumber());
-        object.put("address",user.addressWrite());
-        object.put("profession",user.getProfession());
-        object.put("username", user.getId());
+        object.put("userRealName",mainUser.getName());
+        object.put("phone",mainUser.getPhoneNumber());
+        object.put("address",mainUser.addressWrite());
+        object.put("username", mainUser.getId());
+
+
+        for(Job x:defaultJobs){
+            if(x.getName().equals(job)){
+                tempJob=x;
+                break;
+            }
+        }
+
+        mainUser.setJob(tempJob);
+        object.put("job",tempJob.getName());
+        object.put("maxCreditAmount",tempJob.getMaxCreditAmount());
+        object.put("maxCreditInstallment",tempJob.getMaxCreditInstallment());
 
         object.saveInBackground(new SaveCallback() {
             @Override
@@ -86,8 +160,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-
-
 
 
     }

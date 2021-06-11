@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.Date;
+import com.bank.izbank.Job.Job;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.BankAccount;
@@ -39,6 +40,7 @@ public class SignIn extends AppCompatActivity {
     String bankCash,bankAccountNo;
     String cardNo, cardLimit;
     public Intent intent ;
+    public Job userJob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +85,13 @@ public class SignIn extends AppCompatActivity {
                             String address_string= object.getString("address");
                             String[] str = address_string.split(" ");
                             Address address = new Address(str[0],str[1],Integer.parseInt(str[2]),Integer.parseInt(str[3]),Integer.parseInt(str[4]),str[5],str[6],str[7]);
-                            String profession = object.getString("profession");
+                            String jobName = object.getString("job");
+                            String maxCreditAmount = object.getString("maxCreditAmount");
+                            String maxCreditInstallment = object.getString("maxCreditInstallment");
+                            Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment);
 
                             Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
-                            mainUser = new User(name, parseUser.getUsername(), phone,address,profession);
+                            mainUser = new User(name, parseUser.getUsername(), phone,address,tempJob);
 
                             getBankAccounts();
                             getCreditCards();
@@ -247,10 +252,15 @@ public class SignIn extends AppCompatActivity {
                                         String address_string= object.getString("address");
                                         String[] str = address_string.split(" ");
                                         Address address = new Address(str[0],str[1],Integer.parseInt(str[2]),Integer.parseInt(str[3]),Integer.parseInt(str[4]),str[5],str[6],str[7]);
-                                        String profession = object.getString("profession");
+                                        String jobName = object.getString("job");
+                                        String maxCreditAmount = object.getString("maxCreditAmount");
+                                        String maxCreditInstallment = object.getString("maxCreditInstallment");
+                                        Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment);
 
                                         Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
-                                        mainUser = new User(name,userId, phone,address,profession);
+
+                                        Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
+                                        mainUser = new User(name,userId, phone,address,tempJob);
 
                                         getBankAccounts();
                                         getCreditCards();
