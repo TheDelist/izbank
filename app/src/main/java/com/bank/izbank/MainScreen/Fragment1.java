@@ -25,6 +25,7 @@ import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
 import com.bank.izbank.Sign.SignIn;
+import com.bank.izbank.UserInfo.History;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -152,6 +153,27 @@ public class Fragment1 extends Fragment {
             }
         });
     }
+    public void historyToDatabase(History history){
+        ParseObject object=new ParseObject("History");
+        object.put("process",history.getProcess());
+        object.put("userId", SignIn.mainUser.getId());
+
+        object.put("date",history.getDate());
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"history datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
 
     public void updateBankAccount(BankAccount bankac){
         ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
@@ -253,6 +275,11 @@ public class Fragment1 extends Fragment {
 
                             }
                             accountsToDatabase(myBankAccount.get(myBankAccount.size()-1));
+                            History hs = new History(SignIn.mainUser.getId(),"New Bank Account Added.",getDate() );
+                            SignIn.mainUser.getHistory().push(hs);
+                            historyToDatabase(hs);
+
+
 
 
 
@@ -580,6 +607,11 @@ public class Fragment1 extends Fragment {
         Date currentTime = Calendar.getInstance().getTime();
         date.setText(format.format(currentTime));
 
+    }
+    public Date getDate(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentTime = Calendar.getInstance().getTime();
+        return currentTime;
     }
 
 

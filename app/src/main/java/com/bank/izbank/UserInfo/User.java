@@ -4,6 +4,7 @@ import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Job.Job;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class User {
     private String name;
@@ -17,6 +18,7 @@ public class User {
     private ArrayList<BankAccount> bankAccounts;
     private ArrayList<Bill> userbills;
     private Job job;
+    private Stack<History> history;
 
 
     public User(String name, String id,String pass,String phoneNumber, Address address, Job job) {
@@ -28,6 +30,7 @@ public class User {
         this.job = job;
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
+        this.history = new Stack<>();
     }
 
     public User(String name, String id,String pass,String phoneNumber, Address address) {
@@ -39,6 +42,7 @@ public class User {
 
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
+        this.history = new Stack<>();
     }
 
     public User(String name, String id,String phoneNumber, Address address, Job job) {
@@ -50,6 +54,15 @@ public class User {
         this.job = job;
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
+        this.history = new Stack<>();
+    }
+
+    public Stack<History> getHistory() {
+        return history;
+    }
+
+    public void setHistory(Stack<History> history) {
+        this.history = history;
     }
 
     public ArrayList<BankAccount> getBankAccounts() {

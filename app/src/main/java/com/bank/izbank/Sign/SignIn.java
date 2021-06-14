@@ -15,6 +15,7 @@ import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
+import com.bank.izbank.UserInfo.History;
 import com.bank.izbank.UserInfo.User;
 import com.bank.izbank.splashScreen.splashScreen;
 import com.parse.FindCallback;
@@ -26,6 +27,7 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class SignIn extends AppCompatActivity {
     private EditText userName,userPass;
@@ -36,6 +38,7 @@ public class SignIn extends AppCompatActivity {
     public String billDate;
     public ArrayList<Bill> bills;
     public ArrayList<BankAccount> bankAccounts;
+    private Stack<History> history;
     public ArrayList<CreditCard> creditCards;
     String bankCash,bankAccountNo;
     String cardNo, cardLimit;
@@ -95,6 +98,7 @@ public class SignIn extends AppCompatActivity {
 
                             getBankAccounts();
                             getCreditCards();
+                            getHistory();
 
                             getUserBills();
 
@@ -145,6 +149,7 @@ public class SignIn extends AppCompatActivity {
 
                     }
                     SignIn.mainUser.setUserbills(bills);
+
                 }
 
             }
@@ -219,6 +224,39 @@ public class SignIn extends AppCompatActivity {
             }
         });
     }
+    public void getHistory(){
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("History");
+        queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    history = new Stack<>();
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+
+
+                            String id = object.getString("userId");
+                            String process = object.getString("process");
+                            java.util.Date date = object.getDate("date");
+                            history.push(new History(id,process,date));
+
+
+
+                        }
+
+
+                    }
+                    SignIn.mainUser.setHistory(history);
+                    Toast.makeText(getApplicationContext(),"history alındı",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+    }
 
 
 
@@ -264,7 +302,7 @@ public class SignIn extends AppCompatActivity {
 
                                         getBankAccounts();
                                         getCreditCards();
-
+                                        getHistory();
                                         getUserBills();
 
 
