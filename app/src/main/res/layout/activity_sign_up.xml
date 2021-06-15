@@ -162,16 +162,17 @@
             android:layout_height="45dp"
             android:src="@drawable/icon_address"></ImageView>
 
+        <TextView
+            android:id="@+id/signup_address"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="changeAddress"
+            android:paddingTop="15dp"
+            android:text="ADDRESS"
+            android:textAlignment="center" />
 
 
-        <EditText
-            android:id="@+id/edittext_address_sign_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:gravity="center"
-
-            android:hint="ADDRESS"></EditText>
     </LinearLayout>
 
 

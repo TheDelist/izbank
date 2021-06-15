@@ -47,25 +47,32 @@ import com.bank.izbank.Job.Worker;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.Address;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
+import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.bank.izbank.Sign.SignIn.mainUser;
 
-public class Fragment5 extends Fragment {
+public class SettingFragment extends Fragment {
    private TextView name,phone,userId,userAdress,prof;
     private Bitmap selectedImage;
     private ImageView imageView;
     private Spinner spinner;
     private ArrayAdapter<String> jobArrayAdapter;
-    private  RelativeLayout relativeLayoutMobileRow,relativeLayoutNameRow,relativeLayoutAddressRow;
+    private  RelativeLayout relativeLayoutMobileRow,relativeLayoutNameRow,relativeLayoutAddressRow,relativeLayoutPassRow,relativeLayoutDeleteRow;
     private String newChangeItem ="";
     private Address newAddress;
     private String [] jobs;
@@ -86,6 +93,8 @@ public class Fragment5 extends Fragment {
         relativeLayoutMobileRow=rootView.findViewById(R.id.account_mobile_row);
         relativeLayoutNameRow=rootView.findViewById(R.id.account_setting_name_row);
         relativeLayoutAddressRow=rootView.findViewById(R.id.settings_addres_row);
+        relativeLayoutPassRow=rootView.findViewById(R.id.settings_change_pass_row);
+        relativeLayoutDeleteRow=rootView.findViewById(R.id.settings_account_delete_row);
 
         spinner = rootView.findViewById(R.id.jobSpinner);
         name.setText(mainUser.getName());
@@ -93,7 +102,9 @@ public class Fragment5 extends Fragment {
         userId.setText(mainUser.getId());
         userAdress.setText(mainUser.addressWrite());
         prof.setText(mainUser.getJob().getName());
-        imageView.setImageBitmap(mainUser.getPhoto());
+        if(mainUser.getPhoto()!=null){
+            imageView.setImageBitmap(mainUser.getPhoto());
+        }
         defineJobSpinner();
         return rootView;
     }
@@ -121,6 +132,12 @@ public class Fragment5 extends Fragment {
                 selectImage(v);
             }
         });
+        relativeLayoutPassRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePass(v);
+            }
+        });
 
 relativeLayoutAddressRow.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -128,7 +145,12 @@ relativeLayoutAddressRow.setOnClickListener(new View.OnClickListener() {
         changeAddress(v);
     }
 });
-
+relativeLayoutDeleteRow.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        deleteAccount(v);
+    }
+});
 
     }
 
@@ -149,6 +171,44 @@ relativeLayoutAddressRow.setOnClickListener(new View.OnClickListener() {
                 change( newChangeItem,"userRealName");
                 name.setText( newChangeItem);
                 mainUser.setName( newChangeItem);
+            }
+        });
+        ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getContext(),"Canceled",Toast.LENGTH_SHORT).show();
+            }
+        });
+        ad.create().show();
+
+    }
+    public void changePass(View v){
+
+        final EditText editText = new EditText(getContext());
+        editText.setHint("Enter new Password");
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(getContext());
+
+        ad.setTitle("Change Password");
+        ad.setIcon(R.drawable.ic_user_def);
+        ad.setView(editText);
+        ad.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                newChangeItem=editText.getText().toString();
+                ParseUser user=ParseUser.getCurrentUser();
+               user.setPassword(newChangeItem);
+               user.saveInBackground(new SaveCallback() {
+                   @Override
+                   public void done(ParseException e) {
+                       if(e ==null ) {
+
+                           Toast.makeText(getContext(),"Password changed",Toast.LENGTH_SHORT).show();
+                       } else {
+                           Toast.makeText(getContext(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                       }
+                   }
+               });
             }
         });
         ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -191,23 +251,33 @@ relativeLayoutAddressRow.setOnClickListener(new View.OnClickListener() {
     }
     public void changeAddress(View v){
 
-        final EditText editTextPhone = new EditText(getContext());
-        editTextPhone.setHint("Enter new Address");
-
         AlertDialog.Builder ad = new AlertDialog.Builder(getContext());
 
         ad.setTitle("Change Address");
         ad.setIcon(R.drawable.ic_address);
-        ad.setView(editTextPhone);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView= inflater.inflate(R.layout.settings_address_popup, null);
+        ad.setView(dialogView);
         ad.setPositiveButton("Change", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                newChangeItem =editTextPhone.getText().toString();
-                String[] str= newChangeItem.split(" ");
-                newAddress= new Address(str[0],str[1],Integer.parseInt(str[2]),Integer.parseInt(str[3]),Integer.parseInt(str[4]),str[5],str[6],str[7]);
-                mainUser.setAddress(newAddress);
-                userAdress.setText(mainUser.addressWrite());
-                change(mainUser.addressWrite(),"address");
+               TextView street=dialogView.findViewById(R.id.setting_address_street);
+                TextView blockNo=dialogView.findViewById(R.id.setting_address_block);
+                TextView floor=dialogView.findViewById(R.id.setting_address_floor);
+                TextView houseNo=dialogView.findViewById(R.id.setting_address_house);
+                TextView country=dialogView.findViewById(R.id.setting_address_country);
+                TextView neighborhood=dialogView.findViewById(R.id.setting_address_neigh);
+                TextView town=dialogView.findViewById(R.id.setting_address_town);
+                TextView state=dialogView.findViewById(R.id.setting_address_state);
+                if(street.getText().toString() !=null &&neighborhood.getText().toString()!=null && blockNo.getText().toString()!=null&&floor.getText().toString()!=null &&houseNo.getText().toString()!=null&& town.getText().toString()!=null &&state.getText().toString()!=null&& country.getText().toString()!=null){
+                    newAddress= new Address(street.getText().toString(),neighborhood.getText().toString(),Integer.parseInt(blockNo.getText().toString()),Integer.parseInt(floor.getText().toString()),Integer.parseInt(houseNo.getText().toString()),town.getText().toString(),state.getText().toString(),country.getText().toString());
+                    mainUser.setAddress(newAddress);
+                    userAdress.setText(mainUser.addressWrite());
+                    change(mainUser.addressWrite(),"address");
+                }else{
+                    Toast.makeText(getContext(),"Please Fill the all field",Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -220,6 +290,21 @@ relativeLayoutAddressRow.setOnClickListener(new View.OnClickListener() {
         ad.create().show();
 
 
+    }
+
+
+    private void deleteAccount(View v){
+        ParseUser user = ParseUser.getCurrentUser();
+        user.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(com.parse.ParseException e) {
+                if (e == null) {
+                    Toast.makeText(getContext(),user.getUsername()+" deleted",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(),user.getUsername()+"not deleted",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void change(String changeItem,String changeColumName){

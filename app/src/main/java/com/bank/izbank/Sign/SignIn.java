@@ -300,16 +300,19 @@ public class SignIn extends AppCompatActivity {
                                         Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment);
                                         mainUser = new User(name,userId, phone,address,tempJob);
                                         ParseFile parseFile=(ParseFile)object.get("images");
-                                        parseFile.getDataInBackground(new GetDataCallback() {
-                                            @Override
-                                            public void done(byte[] data, ParseException e) {
-                                                if(data!=null && e==null){
-                                                    Bitmap downloadedImage= BitmapFactory.decodeByteArray(data,0,data.length);
-                                                    mainUser.setPhoto(downloadedImage);
+                                       if( parseFile!=null){
+                                           parseFile.getDataInBackground(new GetDataCallback() {
+                                               @Override
+                                               public void done(byte[] data, ParseException e) {
+                                                   if(data!=null && e==null){
+                                                       Bitmap downloadedImage= BitmapFactory.decodeByteArray(data,0,data.length);
+                                                       mainUser.setPhoto(downloadedImage);
 
-                                                }
-                                            }
-                                        });
+                                                   }
+                                               }
+                                           });
+                                       }
+
 
                                         Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
 

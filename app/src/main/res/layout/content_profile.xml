@@ -67,6 +67,27 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/settings_change_pass_row"
+
+                style="@style/profileDetailsLayout">
+
+                <ImageView
+                    android:id="@+id/dobImageView"
+                    style="@style/profileDetailsImage"
+                    android:src="@drawable/ic_dob"
+
+                    />
+
+                <TextView
+                    style="@style/profileDetailsTextMain"
+                    android:layout_toRightOf="@id/dobImageView"
+                    android:text="Change Password"
+
+                    />
+
+            </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
@@ -75,37 +96,7 @@
 
             />
 
-            <RelativeLayout
-                android:id="@+id/account_mobile_row"
-                style="@style/profileDetailsLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
 
-                <ImageView
-                    android:id="@+id/mobileImageView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:src="@drawable/ic_mobile" />
-
-                <TextView
-                    style="@style/profileDetailsTextMain"
-                    android:layout_toRightOf="@id/mobileImageView"
-                    android:text="Mobile" />
-
-                <TextView
-                    android:id="@+id/settings_phoneTextView"
-                    style="@style/profileDetailsMiniText"
-                    android:layout_toRightOf="@id/mobileImageView"
-                    android:text="+91-8129999999" />
-
-            </RelativeLayout>
-
-            <View style="@style/profileDetailsView"
-
-                />
 
 
             <RelativeLayout
@@ -139,35 +130,43 @@
             <View style="@style/profileDetailsView"
 
                 />
-            <RelativeLayout style="@style/profileDetailsLayout"
 
-                >
-                <ImageView
-                    android:id="@+id/dobImageView"
-                    android:src="@drawable/ic_dob"
-                    style="@style/profileDetailsImage"
-
-                    />
-
-                <TextView
-                    android:text="D.O.B"
-                    android:layout_toRightOf="@id/dobImageView"
-                    style="@style/profileDetailsTextMain"
-
-                    />
-
-                <TextView
-                    android:text="12-05-1990"
-                    android:layout_toRightOf="@id/dobImageView"
-                    style="@style/profileDetailsMiniText"
-
-                    />
-
-            </RelativeLayout>
 
             <View style="@style/profileDetailsView"
 
                 />
+
+            <RelativeLayout
+                android:id="@+id/account_mobile_row"
+                style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/mobileImageView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_mobile" />
+
+                <TextView
+                    style="@style/profileDetailsTextMain"
+                    android:layout_toRightOf="@id/mobileImageView"
+                    android:text="Mobile" />
+
+                <TextView
+                    android:id="@+id/settings_phoneTextView"
+                    style="@style/profileDetailsMiniText"
+                    android:layout_toRightOf="@id/mobileImageView"
+                    android:text="+91-8129999999" />
+
+            </RelativeLayout>
+            <View style="@style/profileDetailsView"
+
+                />
+
             <View style="@style/profileDetailsView"
 
                 />
@@ -220,6 +219,26 @@
             <View style="@style/profileDetailsView"
 
                 />
+            <RelativeLayout
+                android:id="@+id/settings_account_delete_row"
+
+                style="@style/profileDetailsLayout">
+
+                <ImageView
+                    android:id="@+id/deleteImageView"
+                    style="@style/profileDetailsImage"
+                    android:src="@drawable/icons_delete"
+
+                    />
+
+                <TextView
+                    style="@style/profileDetailsTextMain"
+                    android:layout_toRightOf="@id/deleteImageView"
+                    android:text="Account Delete"
+
+                    />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

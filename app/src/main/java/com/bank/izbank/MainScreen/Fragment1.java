@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
+import static com.bank.izbank.Sign.SignIn.mainUser;
 import static com.parse.Parse.getApplicationContext;
 
 public class Fragment1 extends Fragment {
@@ -67,15 +68,15 @@ public class Fragment1 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        myCreditCard = SignIn.mainUser.getCreditcards();
-        myBankAccount = SignIn.mainUser.getBankAccounts();
+        myCreditCard = mainUser.getCreditcards();
+        myBankAccount = mainUser.getBankAccounts();
 
         define();
         setDate();
         click();
         setTotalMoney(myBankAccount);
 
-        text_view_name.setText("HELLO, " + SignIn.mainUser.getName().toUpperCase()+".");
+        text_view_name.setText("HELLO, " + mainUser.getName().toUpperCase()+".");
 
 
         recyclerView.setHasFixedSize(true);
@@ -117,7 +118,7 @@ public class Fragment1 extends Fragment {
     public void accountsToDatabase(BankAccount bankAc){
         ParseObject object=new ParseObject("BankAccount");
         object.put("accountNo",bankAc.getAccountno());
-        object.put("userId", SignIn.mainUser.getId());
+        object.put("userId", mainUser.getId());
 
         object.put("cash",String.valueOf(bankAc.getCash()));
 
@@ -139,7 +140,7 @@ public class Fragment1 extends Fragment {
     public void cardsToDatabase(CreditCard card){
         ParseObject object=new ParseObject("CreditCard");
         object.put("creditCardNo",card.getCreditCardNo());
-        object.put("userId", SignIn.mainUser.getId());
+        object.put("userId", mainUser.getId());
 
         object.put("limit",String.valueOf(card.getLimit()));
 
@@ -160,7 +161,7 @@ public class Fragment1 extends Fragment {
     public void historyToDatabase(History history){
         ParseObject object=new ParseObject("History");
         object.put("process",history.getProcess());
-        object.put("userId", SignIn.mainUser.getId());
+        object.put("userId", mainUser.getId());
 
         object.put("date",history.getDateDate());
 
@@ -259,7 +260,7 @@ public class Fragment1 extends Fragment {
                 recyclerViewHistory =(RecyclerView)dialogView.findViewById(R.id.history_recycler_view);
                 recyclerViewHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                historyAdapter=new HistoryAdapter(stackToArrayList(SignIn.mainUser.getHistory()),getActivity(),getContext());
+                historyAdapter=new HistoryAdapter(stackToArrayList(mainUser.getHistory()),getActivity(),getContext());
                 recyclerViewHistory.setAdapter(historyAdapter);
                 historyAdapter.notifyDataSetChanged();
                 history_popup.create().show();
@@ -299,8 +300,8 @@ public class Fragment1 extends Fragment {
 
                             }
                             accountsToDatabase(myBankAccount.get(myBankAccount.size()-1));
-                            History hs = new History(SignIn.mainUser.getId(),"New Bank Account Added.",getDate() );
-                            SignIn.mainUser.getHistory().push(hs);
+                            History hs = new History(mainUser.getId(),"New Bank Account Added.",getDate() );
+                            mainUser.getHistory().push(hs);
                             historyToDatabase(hs);
 
 
@@ -632,7 +633,7 @@ public class Fragment1 extends Fragment {
              arraylistHistory.add(stack.pop());
          }
          for (int i =arraylistHistory.size()-1;i>=0; i-- ) {
-             SignIn.mainUser.getHistory().push(arraylistHistory.get(i));
+             mainUser.getHistory().push(arraylistHistory.get(i));
         }
          return arraylistHistory;
     }

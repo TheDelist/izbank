@@ -1,16 +1,20 @@
 package com.bank.izbank.Sign;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bank.izbank.Job.Contractor;
@@ -31,20 +35,23 @@ import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.User;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import static com.bank.izbank.Sign.SignIn.mainUser;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText userNameText , userPassText ,userIdText,userPhoneText,userAddressText;
+    private EditText userNameText , userPassText ,userIdText,userPhoneText;
 
     private Spinner spinner;
     private ArrayAdapter<String> jobArrayAdapter;
@@ -53,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
     public Job tempJob ;
     public String job;
     private ImageView imageView;
+    private Address newAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +69,6 @@ public class SignUpActivity extends AppCompatActivity {
         userPassText=findViewById(R.id.edittext_user_password_sign_up);
         userIdText=findViewById(R.id.edittext_id_number_sign_up);
         userPhoneText=findViewById(R.id.edittext_phone_sign_up);
-        userAddressText=findViewById(R.id.edittext_address_sign_up);
         spinner = findViewById(R.id.jobSpinner);
         imageView=findViewById(R.id.fragment5_ImageView);
 
@@ -103,8 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
         mainUser=new User(userNameText.getText().toString(),
                 userIdText.getText().toString(),
                 userPassText.getText().toString(),
-                userPhoneText.getText().toString(),
-                new Address("TPAO","ss",13,2,4,"Kırklareli","Lüleburgaz","Turkey")
+                userPhoneText.getText().toString(),newAddress
                 );
 
         ParseUser parseUser=new ParseUser();
@@ -131,6 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
         object.put("job",tempJob.getName());
         object.put("maxCreditAmount",tempJob.getMaxCreditAmount());
         object.put("maxCreditInstallment",tempJob.getMaxCreditInstallment());
+        object.put("address",mainUser.addressWrite());
 
         object.saveInBackground(new SaveCallback() {
             @Override
@@ -160,4 +167,47 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }
+
+
+    public void changeAddress(View v){
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(this);
+
+        ad.setTitle("Change Address");
+        ad.setIcon(R.drawable.ic_address);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView= inflater.inflate(R.layout.settings_address_popup, null);
+        ad.setView(dialogView);
+        ad.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                TextView street=dialogView.findViewById(R.id.setting_address_street);
+                TextView blockNo=dialogView.findViewById(R.id.setting_address_block);
+                TextView floor=dialogView.findViewById(R.id.setting_address_floor);
+                TextView houseNo=dialogView.findViewById(R.id.setting_address_house);
+                TextView country=dialogView.findViewById(R.id.setting_address_country);
+                TextView neighborhood=dialogView.findViewById(R.id.setting_address_neigh);
+                TextView town=dialogView.findViewById(R.id.setting_address_town);
+                TextView state=dialogView.findViewById(R.id.setting_address_state);
+                if(street.getText().toString() !=null &&neighborhood.getText().toString()!=null && blockNo.getText().toString()!=null&&floor.getText().toString()!=null &&houseNo.getText().toString()!=null&& town.getText().toString()!=null &&state.getText().toString()!=null&& country.getText().toString()!=null){
+                    newAddress= new Address(street.getText().toString(),neighborhood.getText().toString(),Integer.parseInt(blockNo.getText().toString()),Integer.parseInt(floor.getText().toString()),Integer.parseInt(houseNo.getText().toString()),town.getText().toString(),state.getText().toString(),country.getText().toString());
+
+
+                }else{
+                    Toast.makeText(getApplicationContext(),"Please Fill the all field",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"Canceled",Toast.LENGTH_SHORT).show();
+            }
+        });
+        ad.create().show();
+
+
+    }
+
+
 }
