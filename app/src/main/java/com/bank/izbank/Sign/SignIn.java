@@ -3,6 +3,8 @@ package com.bank.izbank.Sign;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -19,8 +21,10 @@ import com.bank.izbank.UserInfo.History;
 import com.bank.izbank.UserInfo.User;
 import com.bank.izbank.splashScreen.splashScreen;
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -50,18 +54,18 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //remember
-        ParseUser parseUser =ParseUser.getCurrentUser();
-       if(parseUser !=null ){
+     //   ParseUser parseUser =ParseUser.getCurrentUser();
+     //  if(parseUser !=null parseUser. ){
           //loading screen
-           getUser(parseUser);
+    //       getUser(parseUser);
 
 
 
-       }else{
+     //  }else{
            setContentView(R.layout.activity_sign_in);//load screen
            userName=findViewById(R.id.edittext_id_number_sign_in);
            userPass=findViewById(R.id.edittext_user_password_sign_in);
-       }
+     //  }
 
 
     }
@@ -294,11 +298,23 @@ public class SignIn extends AppCompatActivity {
                                         String maxCreditAmount = object.getString("maxCreditAmount");
                                         String maxCreditInstallment = object.getString("maxCreditInstallment");
                                         Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment);
-
-                                        Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
-
-                                        Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
                                         mainUser = new User(name,userId, phone,address,tempJob);
+                                        ParseFile parseFile=(ParseFile)object.get("images");
+                                        parseFile.getDataInBackground(new GetDataCallback() {
+                                            @Override
+                                            public void done(byte[] data, ParseException e) {
+                                                if(data!=null && e==null){
+                                                    Bitmap downloadedImage= BitmapFactory.decodeByteArray(data,0,data.length);
+                                                    mainUser.setPhoto(downloadedImage);
+
+                                                }
+                                            }
+                                        });
+
+                                        Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
+
+
+
 
                                         getBankAccounts();
                                         getCreditCards();

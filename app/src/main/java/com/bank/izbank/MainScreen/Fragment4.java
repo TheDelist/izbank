@@ -98,7 +98,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
 
         list = SignIn.mainUser.getUserbills();
 
-
         billAdapter = new BillAdapter(getContext(),list);
 
         recyclerView.setAdapter(billAdapter);
@@ -106,9 +105,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
         floatingActionButtonBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
 
                 final EditText editText = new EditText(getContext());
                 editText.setHint("type amount");
@@ -120,7 +116,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                 ad.setIcon(R.drawable.icon_bill);
                 ad.setView(editText);
 
-
                 String[] items = {"Electric","Gas","Internet","Phone","Water"};
 
                 final int[] checkedItem = {0};
@@ -131,95 +126,59 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                         switch (i) {
                             case 0:
                                 checkedItem[0] =i;
-
-
                                 break;
                             case 1:
-
                                 checkedItem[0] =i;
-
                                 break;
                             case 2:
-
                                 checkedItem[0] =i;
-
                                 break;
                             case 3:
-
                                 checkedItem[0] =i;
-
                                 break;
                             case 4:
-
                                 checkedItem[0] =i;
                                 break;
                         }
                     }
                 });
 
-
-
                 ad.setNegativeButton("Pay", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         i= checkedItem[0];
                         switch (i) {
                             case 0:
-
                                 try {
-
                                     bill=new ElectricBill();
-
-
                                 }catch (NumberFormatException e){
 
                                 }
-
-
                                 break;
                             case 1:
-
-
                                 try {
-
                                     bill=new GasBill();
-
-
                                 }catch (NumberFormatException e){
 
                                 }
-
-
                                 break;
                             case 2:
-
                                 try {
-
                                     bill=new InternetBill();
-
-
                                 }catch (NumberFormatException e){
 
                                 }
                                 break;
                             case 3:
-
                                 try {
-
                                     bill=new PhoneBill();
-
-
                                 }catch (NumberFormatException e){
 
                                 }
                                 break;
                             case 4:
                                 try {
-
                                     bill=new WaterBill();
-
-
                                 }catch (NumberFormatException e){
 
                                 }
@@ -246,14 +205,10 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
                     }
                 });
 
-
                 ad.create().show();
-
-
 
             }
         });
-
 
     }
 
@@ -285,7 +240,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
 
 
             recyclerView.setAdapter(billAdapter);
-
 
         }
         else {
@@ -372,7 +326,6 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
         newBill.getDate().setMonth(date[1]);
         newBill.getDate().setYear(date[2]);
 
-
     }
 
     @Override
@@ -421,25 +374,18 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
             }
             return returnList;
         }
-
-
-
-
     }
-
 
 
     @Override
     public boolean onQueryTextSubmit(String query) {
         toolbarSearch(query);
-
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         toolbarSearch(newText);
-
         return false;
     }
 }

@@ -1,5 +1,7 @@
 package com.bank.izbank.UserInfo;
 
+import android.graphics.Bitmap;
+
 import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Job.Job;
 
@@ -18,6 +20,7 @@ public class User {
     private ArrayList<BankAccount> bankAccounts;
     private ArrayList<Bill> userbills;
     private Job job;
+    private Bitmap photo;
     private Stack<History> history;
 
 
@@ -39,10 +42,9 @@ public class User {
         this.pass=pass;
         this.phoneNumber = phoneNumber;
         this.address = address;
-
+        this.history = new Stack<>();
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
-        this.history = new Stack<>();
     }
 
     public User(String name, String id,String phoneNumber, Address address, Job job) {
@@ -56,13 +58,19 @@ public class User {
         this.bankAccounts = new ArrayList<>();
         this.history = new Stack<>();
     }
-
     public Stack<History> getHistory() {
         return history;
     }
 
     public void setHistory(Stack<History> history) {
         this.history = history;
+    }
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 
     public ArrayList<BankAccount> getBankAccounts() {
@@ -142,4 +150,7 @@ public class User {
     public void setUserbills(ArrayList<Bill> userbills) {
         this.userbills = userbills;
     }
+
+
+
 }

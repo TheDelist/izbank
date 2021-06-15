@@ -3,11 +3,13 @@ package com.bank.izbank.Sign;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,10 +32,13 @@ import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.User;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
+import java.io.ByteArrayOutputStream;
 
 import static com.bank.izbank.Sign.SignIn.mainUser;
 
@@ -47,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Job [] defaultJobs;
     public Job tempJob ;
     public String job;
+    private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,16 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
         userPhoneText=findViewById(R.id.edittext_phone_sign_up);
         userAddressText=findViewById(R.id.edittext_address_sign_up);
         spinner = findViewById(R.id.jobSpinner);
-
-
+        imageView=findViewById(R.id.fragment5_ImageView);
 
         defineJobSpinner();
-
-
-
-
-
-
 
     }
 
@@ -113,6 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
         parseUser.setPassword(mainUser.getPass());
 
 
+
         ParseObject object=new ParseObject("UserInfo");
         object.put("userRealName",mainUser.getName());
         object.put("phone",mainUser.getPhoneNumber());
@@ -138,10 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if(e != null){
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
-                else{
-                  //  Toast.makeText(getApplicationContext(),"oldu galiba",Toast.LENGTH_LONG).show();
 
-                }
             }
         });
 

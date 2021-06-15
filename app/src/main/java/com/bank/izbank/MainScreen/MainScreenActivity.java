@@ -1,17 +1,31 @@
 package com.bank.izbank.MainScreen;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -25,11 +39,16 @@ import com.bank.izbank.service.ICryptoAPI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.parse.FindCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +57,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.bank.izbank.Sign.SignIn.mainUser;
+import static com.parse.Parse.getApplicationContext;
 
 public class MainScreenActivity extends AppCompatActivity {
 
@@ -160,4 +182,51 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
 
+
+    /*
+public void getUserInfo(){
+
+    ParseQuery<ParseObject> query2 = ParseQuery.getQuery("UserInfo");
+    query2.whereEqualTo("userName", SignIn.mainUser.getId());
+    query2.findInBackground(new FindCallback<ParseObject>() {
+        @Override
+        public void done(List<ParseObject> objects, ParseException e) {
+            if(e!=null){
+                e.printStackTrace();
+            }else{
+                if(objects.size()>0){
+                    for(ParseObject object:objects){
+                        ParseObject objectsOne=objects.get(0);
+                        currentMoney=objects.getString("");
+                        currentMoney= String.valueOf( Integer.parseInt(currentMoney)-decMoney);
+                        objectsOne.put("cash",currentMoney);
+
+                        objectsOne.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e != null){
+                                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(),"crypto parası düşüldü",Toast.LENGTH_LONG).show();
+                                    SignIn.mainUser.getBankAccounts().get(index).setCash(Integer.parseInt(currentMoney));
+                                    cryptoDatabase();
+
+                                }
+                            }
+                        });
+
+
+
+
+                    }
+
+
+                }
+
+            }
+        }
+    });
+}
+*/
 }

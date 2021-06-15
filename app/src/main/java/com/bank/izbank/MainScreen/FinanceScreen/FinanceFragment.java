@@ -1,14 +1,11 @@
 package com.bank.izbank.MainScreen.FinanceScreen;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,16 +21,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bank.izbank.Adapters.CryptoLookAdapter;
 import com.bank.izbank.Adapters.CryptoPostAdapter;
-import com.bank.izbank.Bill.Bill;
-import com.bank.izbank.Bill.BillAdapter;
-import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;
@@ -159,7 +152,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                     }
                 });
                 buyCryptoPopup.create().show();
-                //   Toast.makeText(getActivity(), "Item clicked: " + pos+" item"+item.getCurrencyName(), Toast.LENGTH_SHORT).show();
+
             }
         };
 
@@ -205,14 +198,14 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
     }
     public void toolbarSearch(String searchWord){
 
-         searchList = searchBill(cryptoModels, searchWord);
+         searchList = searchCrypto(cryptoModels, searchWord);
 
         searchAdapter = new CryptoPostAdapter(searchList,getActivity(),getContext(),itemClickListener);
         recyclerView.setAdapter(searchAdapter);
 
     }
 
-    public ArrayList<CryptoModel> searchBill(ArrayList<CryptoModel> list, String string){
+    public ArrayList<CryptoModel> searchCrypto(ArrayList<CryptoModel> list, String string){
 
         ArrayList<CryptoModel> returnList = new ArrayList<>();
 

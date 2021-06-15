@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/settings_nameTextView"
         android:layout_width="54dp"
         android:layout_height="28dp"
         android:layout_marginTop="16dp"
@@ -37,7 +37,7 @@
 
         app:layout_constraintEnd_toStartOf="@+id/CryptovalueTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_nameTextView" />
 
     <TextView
         android:id="@+id/CryptovalueTextView"
