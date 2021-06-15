@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bank.izbank.Adapters.HistoryAdapter;
 import com.bank.izbank.Adapters.MyBankAccountAdapter;
 import com.bank.izbank.Adapters.MyCreditCardAdapter;
 import com.bank.izbank.R;
@@ -38,20 +39,22 @@ import java.util.Calendar;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 
 import static com.parse.Parse.getApplicationContext;
 
 public class Fragment1 extends Fragment {
-    LinearLayout linear_layout_request_money,linear_layout_send_money;
+    LinearLayout linear_layout_request_money,linear_layout_send_money, linear_layout_history;
     ImageView add_bank_account, add_credit_card;
     RecyclerView recyclerView;
-    RecyclerView recyclerViewbankaccount;
+    RecyclerView recyclerViewbankaccount, recyclerViewHistory;
     TextView text_view_name, date,text_view_total_money;
     ArrayList<CreditCard> myCreditCard;
     ArrayList<BankAccount> myBankAccount;
     BankAccount sendUser = null;
     String bankAccountAnother = null;
     String anotherUserid;
+    private HistoryAdapter historyAdapter;
 
     @Nullable
     @Override
@@ -101,6 +104,7 @@ public class Fragment1 extends Fragment {
         linear_layout_request_money = getView().findViewById(R.id.linear_layout_request_money);
         text_view_total_money = getView().findViewById(R.id.text_view_total_money);
         linear_layout_send_money = getView().findViewById(R.id.linear_layout_send_money);
+        linear_layout_history = getView().findViewById(R.id.linear_layout_history);
 
     }
     public void setTotalMoney(ArrayList<BankAccount> MyBankAccounts){
@@ -158,7 +162,7 @@ public class Fragment1 extends Fragment {
         object.put("process",history.getProcess());
         object.put("userId", SignIn.mainUser.getId());
 
-        object.put("date",history.getDate());
+        object.put("date",history.getDateDate());
 
 
         object.saveInBackground(new SaveCallback() {
@@ -241,6 +245,26 @@ public class Fragment1 extends Fragment {
 
 
     public void click(){
+        linear_layout_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder history_popup=new AlertDialog.Builder(getContext());
+
+                history_popup.setTitle("HISTORY");
+
+                history_popup.setView(R.layout.history_popup);
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View dialogView= inflater.inflate(R.layout.history_popup, null);
+                history_popup.setView(dialogView);
+                recyclerViewHistory =(RecyclerView)dialogView.findViewById(R.id.history_recycler_view);
+                recyclerViewHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                historyAdapter=new HistoryAdapter(stackToArrayList(SignIn.mainUser.getHistory()),getActivity(),getContext());
+                recyclerViewHistory.setAdapter(historyAdapter);
+                historyAdapter.notifyDataSetChanged();
+                history_popup.create().show();
+            }
+        });
         add_bank_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -600,6 +624,17 @@ public class Fragment1 extends Fragment {
         });
 
 
+    }
+
+    public ArrayList<History> stackToArrayList(Stack<History> stack){
+         ArrayList<History> arraylistHistory = new ArrayList<>();
+         while (stack.size() !=0){
+             arraylistHistory.add(stack.pop());
+         }
+         for (int i =arraylistHistory.size()-1;i>=0; i-- ) {
+             SignIn.mainUser.getHistory().push(arraylistHistory.get(i));
+        }
+         return arraylistHistory;
     }
 
     public void setDate(){

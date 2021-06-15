@@ -1,5 +1,6 @@
 package com.bank.izbank.UserInfo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class History {
@@ -13,8 +14,13 @@ public class History {
         this.date = date;
     }
 
-    public Date getDate() {
+    public Date getDateDate() {
+
         return date;
+    }
+    public String getDateString() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(date);
     }
 
     public void setDate(Date date) {
