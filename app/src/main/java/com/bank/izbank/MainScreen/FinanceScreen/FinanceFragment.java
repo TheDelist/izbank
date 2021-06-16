@@ -30,6 +30,7 @@ import com.bank.izbank.Adapters.CryptoPostAdapter;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;
+import com.bank.izbank.UserInfo.History;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -37,8 +38,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 
 import static com.bank.izbank.Sign.SignIn.mainUser;
 import static com.parse.Parse.getApplicationContext;
@@ -265,6 +270,9 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                                             Toast.makeText(getApplicationContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
                                         } else {
                                             Toast.makeText(getActivity(), "Buyed", Toast.LENGTH_SHORT).show();
+                                            History hs = new History(mainUser.getId(),"Crypto Buyed.("+ buyedCrypto.getCurrencyName()+")",getDate() );
+                                            mainUser.getHistory().push(hs);
+                                            historyToDatabase(hs);
 
 
                                         }
@@ -286,6 +294,9 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                                         Toast.makeText(getApplicationContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
                                     } else {
                                         Toast.makeText(getApplicationContext(), "Buyed", Toast.LENGTH_LONG).show();
+                                        History hs = new History(mainUser.getId(),"Crypto Buyed.(" + buyedCrypto.getCurrencyName()+")",getDate() );
+                                        mainUser.getHistory().push(hs);
+                                        historyToDatabase(hs);
 
                                     }
                                 }
@@ -381,5 +392,35 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                 }
             }
         });
+    }
+
+
+    public void historyToDatabase(History history){
+        ParseObject object=new ParseObject("History");
+        object.put("process",history.getProcess());
+        object.put("userId", mainUser.getId());
+
+        object.put("date",history.getDateDate());
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"history datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
+
+    public Date getDate(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentTime = Calendar.getInstance().getTime();
+        return currentTime;
     }
 }

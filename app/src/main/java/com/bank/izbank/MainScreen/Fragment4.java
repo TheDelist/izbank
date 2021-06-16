@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.BillAdapter;
-import com.bank.izbank.Bill.Date;
 import com.bank.izbank.Bill.ElectricBill;
 import com.bank.izbank.Bill.GasBill;
 import com.bank.izbank.Bill.InternetBill;
@@ -35,6 +34,7 @@ import com.bank.izbank.Bill.WaterBill;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;
+import com.bank.izbank.UserInfo.History;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -46,8 +46,10 @@ import com.parse.SaveCallback;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import static com.bank.izbank.Sign.SignIn.mainUser;
 import static com.parse.Parse.getApplicationContext;
 
 public class Fragment4 extends Fragment implements SearchView.OnQueryTextListener{
@@ -240,6 +242,9 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
 
 
             recyclerView.setAdapter(billAdapter);
+            History hs = new History(mainUser.getId(),"Bill Paid.(" + bill.getType()+")",getDateRealTime() );
+            mainUser.getHistory().push(hs);
+            historyToDatabase(hs);
 
         }
         else {
@@ -374,6 +379,35 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
             }
             return returnList;
         }
+    }
+
+    public void historyToDatabase(History history){
+        ParseObject object=new ParseObject("History");
+        object.put("process",history.getProcess());
+        object.put("userId", mainUser.getId());
+
+        object.put("date",history.getDateDate());
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"history datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
+
+    public java.util.Date getDateRealTime(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentTime = Calendar.getInstance().getTime();
+        return currentTime;
     }
 
 

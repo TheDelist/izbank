@@ -349,6 +349,9 @@ public class Fragment1 extends Fragment {
 
                             }
                             cardsToDatabase(myCreditCard.get(myCreditCard.size()-1));
+                            History hs = new History(mainUser.getId(),"New Credit Card Added.",getDate() );
+                            mainUser.getHistory().push(hs);
+                            historyToDatabase(hs);
 
                         }
                     });
@@ -404,6 +407,9 @@ public class Fragment1 extends Fragment {
                             MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
                             recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
                             setTotalMoney(myBankAccount);
+                            History hs = new History(mainUser.getId(),"Money Requested.",getDate() );
+                            mainUser.getHistory().push(hs);
+                            historyToDatabase(hs);
 
 
 
@@ -489,6 +495,9 @@ public class Fragment1 extends Fragment {
                                                                 recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
                                                                 updateBankAccount(myBankAccount.get(fromint));
                                                                 updateBankAccount(myBankAccount.get(toint));
+                                                                History hs = new History(mainUser.getId(),"Money Sent to Your Account.",getDate() );
+                                                                mainUser.getHistory().push(hs);
+                                                                historyToDatabase(hs);
 
                                                             }
                                                             else{
@@ -540,6 +549,7 @@ public class Fragment1 extends Fragment {
                                                             String bankno=object.getString("accountNo");
                                                             String cash = object.getString("cash");
                                                             sendUser = new BankAccount(bankno, Integer.parseInt(cash));
+
                                                             break;
 
                                                         }
@@ -596,6 +606,9 @@ public class Fragment1 extends Fragment {
                                                                 Toast.makeText(getApplicationContext(),"gönderildi",Toast.LENGTH_LONG).show();
                                                                 MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
                                                                 recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+                                                                History hs = new History(mainUser.getId(),"Money Sent to Another User.",getDate() );
+                                                                mainUser.getHistory().push(hs);
+                                                                historyToDatabase(hs);
                                                             }
                                                             else {
                                                                 Toast.makeText(getApplicationContext(),"para yetersiz",Toast.LENGTH_LONG).show();

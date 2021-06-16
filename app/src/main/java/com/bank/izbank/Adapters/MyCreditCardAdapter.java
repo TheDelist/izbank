@@ -26,15 +26,21 @@ import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
+import com.bank.izbank.UserInfo.History;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 
+import static com.bank.izbank.Sign.SignIn.mainUser;
 import static com.parse.Parse.getApplicationContext;
 
 public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapter.ViewHolder> {
@@ -135,99 +141,17 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
                         public void onClick(DialogInterface dialogInterface, int i) {
 
                             i= checkedItem[0];
-                            switch (i) {
-                                case 0:
-
-                                    try {
-                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
-                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
-                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(MyBankAccounts.get(i));
-                                        updateCreditCards(MyCreditCards.get(position));
-
-                                        setTotalMoney(MyBankAccounts);
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-
-
-                                    break;
-                                case 1:
-
-
-                                    try {
-                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
-                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
-                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(MyBankAccounts.get(i));
-                                        updateCreditCards(MyCreditCards.get(position));
-                                        setTotalMoney(MyBankAccounts);
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-
-
-                                    break;
-                                case 2:
-
-                                    try {
-                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
-                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
-                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(MyBankAccounts.get(i));
-                                        updateCreditCards(MyCreditCards.get(position));
-                                        setTotalMoney(MyBankAccounts);
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-
-
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-                                    break;
-                                case 3:
-
-                                    try {
-                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
-                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
-                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(MyBankAccounts.get(i));
-                                        updateCreditCards(MyCreditCards.get(position));
-                                        setTotalMoney(MyBankAccounts);
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-
-
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-                                    break;
-                                case 4:
-                                    try {
-                                        MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
-                                        holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
-                                        MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
-                                        updateBankAccount(MyBankAccounts.get(i));
-                                        updateCreditCards(MyCreditCards.get(position));
-                                        setTotalMoney(MyBankAccounts);
-                                        MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
-                                        recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
-
-
-                                    }catch (NumberFormatException e){
-
-                                    }
-                                    break;
-                            }
+                            MyCreditCards.get(position).setLimit(MyCreditCards.get(position).getLimit() + Integer.parseInt(editText.getText().toString()));
+                            holder.textCreditCardLimit.setText(String.valueOf(CreditCard.getLimit()));
+                            MyBankAccounts.get(i).setCash(MyBankAccounts.get(i).getCash() -Integer.parseInt(editText.getText().toString()));
+                            updateBankAccount(MyBankAccounts.get(i));
+                            updateCreditCards(MyCreditCards.get(position));
+                            setTotalMoney(MyBankAccounts);
+                            MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(MyBankAccounts,context );
+                            recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
+                            History hs = new History(mainUser.getId(),"Credit Card Paid.",getDate() );
+                            mainUser.getHistory().push(hs);
+                            historyToDatabase(hs);
 
 
 
@@ -376,6 +300,43 @@ public class MyCreditCardAdapter extends RecyclerView.Adapter<MyCreditCardAdapte
             cardView = itemView.findViewById(R.id.card_view_credit_card);
 
         }
+    }
+    public void historyToDatabase(History history){
+        ParseObject object=new ParseObject("History");
+        object.put("process",history.getProcess());
+        object.put("userId", mainUser.getId());
+
+        object.put("date",history.getDateDate());
+
+
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"history datada",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
+
+    public ArrayList<History> stackToArrayList(Stack<History> stack){
+        ArrayList<History> arraylistHistory = new ArrayList<>();
+        while (stack.size() !=0){
+            arraylistHistory.add(stack.pop());
+        }
+        for (int i =arraylistHistory.size()-1;i>=0; i-- ) {
+            mainUser.getHistory().push(arraylistHistory.get(i));
+        }
+        return arraylistHistory;
+    }
+    public Date getDate(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentTime = Calendar.getInstance().getTime();
+        return currentTime;
     }
 
 }
