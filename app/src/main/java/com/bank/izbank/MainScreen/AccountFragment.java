@@ -44,7 +44,7 @@ import java.util.Stack;
 import static com.bank.izbank.Sign.SignIn.mainUser;
 import static com.parse.Parse.getApplicationContext;
 
-public class Fragment1 extends Fragment {
+public class AccountFragment extends Fragment {
     LinearLayout linear_layout_request_money,linear_layout_send_money, linear_layout_history;
     ImageView add_bank_account, add_credit_card;
     RecyclerView recyclerView;
