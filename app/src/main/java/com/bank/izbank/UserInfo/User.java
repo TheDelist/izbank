@@ -34,6 +34,7 @@ public class User {
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
         this.history = new Stack<>();
+        this.userbills = new ArrayList<>();
     }
 
     public User(String name, String id,String pass,String phoneNumber, Address address) {
@@ -45,6 +46,7 @@ public class User {
         this.history = new Stack<>();
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
+        this.userbills = new ArrayList<>();
     }
 
     public User(String name, String id,String phoneNumber, Address address, Job job) {
@@ -57,6 +59,7 @@ public class User {
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
         this.history = new Stack<>();
+        this.userbills = new ArrayList<>();
     }
     public Stack<History> getHistory() {
         return history;

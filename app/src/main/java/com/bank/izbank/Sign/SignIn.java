@@ -95,7 +95,8 @@ public class SignIn extends AppCompatActivity {
                             String jobName = object.getString("job");
                             String maxCreditAmount = object.getString("maxCreditAmount");
                             String maxCreditInstallment = object.getString("maxCreditInstallment");
-                            Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment);
+                            String interestRate = object.getString("interestRate");
+                            Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment,interestRate);
 
                             Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
                             mainUser = new User(name, parseUser.getUsername(), phone,address,tempJob);
@@ -297,7 +298,8 @@ public class SignIn extends AppCompatActivity {
                                         String jobName = object.getString("job");
                                         String maxCreditAmount = object.getString("maxCreditAmount");
                                         String maxCreditInstallment = object.getString("maxCreditInstallment");
-                                        Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment);
+                                        String interestRate = object.getString("interestRate");
+                                        Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment,interestRate);
                                         mainUser = new User(name,userId, phone,address,tempJob);
                                         ParseFile parseFile=(ParseFile)object.get("images");
                                        if( parseFile!=null){

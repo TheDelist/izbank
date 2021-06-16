@@ -41,7 +41,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
     Fragment fragment1 = new AccountFragment();
     final Fragment fragment2 = new Fragment2();
-    final Fragment fragment4 = new Fragment4();
+    final Fragment fragment4 = new BillFragment();
     final Fragment fragment5 = new SettingFragment();
 
     private Fragment tempFragment=fragment1;

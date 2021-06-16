@@ -5,11 +5,13 @@ public class Job {
     private String name;
     private String maxCreditAmount;
     private String maxCreditInstallment;
+    private String interestRate;
 
-    public Job(String name, String maxCreditAmount, String maxCreditInstallment) {
+    public Job(String name, String maxCreditAmount, String maxCreditInstallment,String interestRate) {
         this.name = name;
         this.maxCreditAmount = maxCreditAmount;
         this.maxCreditInstallment = maxCreditInstallment;
+        this.interestRate = interestRate;
     }
 
     public Job() {
@@ -37,5 +39,13 @@ public class Job {
 
     public void setMaxCreditInstallment(String maxCreditInstallment) {
         this.maxCreditInstallment = maxCreditInstallment;
+    }
+
+    public String getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(String interestRate) {
+        this.interestRate = interestRate;
     }
 }

@@ -52,7 +52,7 @@ import java.util.List;
 import static com.bank.izbank.Sign.SignIn.mainUser;
 import static com.parse.Parse.getApplicationContext;
 
-public class Fragment4 extends Fragment implements SearchView.OnQueryTextListener{
+public class BillFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
@@ -228,7 +228,7 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
 
         }
 
-        if(bill.getAmount()<=SignIn.mainUser.getBankAccounts().get(index).getCash()){
+        if(SignIn.mainUser.getBankAccounts().size()>0 && bill.getAmount()<=SignIn.mainUser.getBankAccounts().get(index).getCash()){
 
             SignIn.mainUser.getBankAccounts().get(index).setCash(SignIn.mainUser.getBankAccounts().get(index).getCash()-bill.getAmount());
 
@@ -250,6 +250,8 @@ public class Fragment4 extends Fragment implements SearchView.OnQueryTextListene
         else {
 
             Toast.makeText(getApplicationContext(),"yeterisz bakiye",Toast.LENGTH_LONG).show();
+
+
         }
 
 

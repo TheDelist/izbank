@@ -60,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
     public Job tempJob ;
     public String job;
     private ImageView imageView;
+    
     private Address newAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
         object.put("job",tempJob.getName());
         object.put("maxCreditAmount",tempJob.getMaxCreditAmount());
         object.put("maxCreditInstallment",tempJob.getMaxCreditInstallment());
+        object.put("interestRate",tempJob.getInterestRate());
         object.put("address",mainUser.addressWrite());
 
         object.saveInBackground(new SaveCallback() {

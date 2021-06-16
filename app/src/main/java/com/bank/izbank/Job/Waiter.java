@@ -4,6 +4,7 @@ public class Waiter extends Job {
     private final String name="Waiter";
     private final String maxCreditAmount="300000";
     private final String maxCreditInstallment ="40";
+    private final String interestRate ="2";
 
     public Waiter() {
     }
@@ -21,5 +22,9 @@ public class Waiter extends Job {
     @Override
     public String getMaxCreditInstallment() {
         return maxCreditInstallment;
+    }
+    @Override
+    public String getInterestRate() {
+        return interestRate;
     }
 }
