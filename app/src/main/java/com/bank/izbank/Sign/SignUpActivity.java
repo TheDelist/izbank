@@ -175,12 +175,12 @@ public class SignUpActivity extends AppCompatActivity {
 
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
 
-        ad.setTitle("Change Address");
+        ad.setTitle("Address");
         ad.setIcon(R.drawable.ic_address);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView= inflater.inflate(R.layout.settings_address_popup, null);
         ad.setView(dialogView);
-        ad.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+        ad.setPositiveButton("CONTINUE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 TextView street=dialogView.findViewById(R.id.setting_address_street);

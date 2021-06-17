@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bank.izbank.Bill.Bill;
+import com.bank.izbank.MainScreen.AdminPanelActivity;
 import com.bank.izbank.MainScreen.MainScreenActivity;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
@@ -58,9 +59,18 @@ public class splashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent splashIntent = new Intent( splashScreen.this, MainScreenActivity.class);
+                if (SignIn.mainUser.getId().equals("9999") && SignIn.mainUser.getName().equals("admin")){
+                    Intent intent = new Intent( splashScreen.this, AdminPanelActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent splashIntent = new Intent( splashScreen.this, MainScreenActivity.class);
+                    splashScreen.this.startActivity(splashIntent);
+                }
+
+
                 //splashIntent.putExtra("billList",bills);
-                splashScreen.this.startActivity(splashIntent);
+
                 //splashScreen.this.startActivity(new Intent( splashScreen.this, MainScreenActivity.class));
                 splashScreen.this.finish();
             }

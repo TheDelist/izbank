@@ -14,6 +14,7 @@ import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.Date;
 import com.bank.izbank.Credit.Credit;
 import com.bank.izbank.Job.Job;
+import com.bank.izbank.MainScreen.AdminPanelActivity;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
 import com.bank.izbank.UserInfo.BankAccount;
@@ -37,18 +38,20 @@ import java.util.Stack;
 public class SignIn extends AppCompatActivity {
     private EditText userName,userPass;
     public static User mainUser;
+    public static ArrayList<User> allUsers;
+    public static ArrayList<BankAccount> allBankAccounts;
     public static String name;
-    public String billType;
-    public String billAmount;
-    public String billDate;
-    public ArrayList<Bill> bills;
-    public ArrayList<BankAccount> bankAccounts;
+    private String billType;
+    private String billAmount;
+    private String billDate;
+    private ArrayList<Bill> bills;
+    private ArrayList<BankAccount> bankAccounts;
     private Stack<History> history;
-    public ArrayList<CreditCard> creditCards;
-    String bankCash,bankAccountNo;
-    String cardNo, cardLimit;
-    public Intent intent ;
-    public Job userJob;
+    private ArrayList<CreditCard> creditCards;
+    private String bankCash,bankAccountNo;
+    private String cardNo, cardLimit;
+    private Intent intent ;
+    private Job userJob;
     public ArrayList<Credit> credits;
     public String creditAmount;
     public String creditInstallment;
@@ -108,8 +111,8 @@ public class SignIn extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
                             mainUser = new User(name, parseUser.getUsername(), phone,address,tempJob);
 
-                            getBankAccounts();
-                            getCreditCards();
+                            getBankAccounts(mainUser);
+                            getCreditCards(mainUser);
                             getHistory();
                             getUserBills();
                             getUserCredits();
@@ -211,9 +214,9 @@ public class SignIn extends AppCompatActivity {
     }
 
 
-    public void getCreditCards(){
+    public void getCreditCards(User user){
         ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("CreditCard");
-        queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
+        queryBankAccount.whereEqualTo("userId", user.getId());
         queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -234,7 +237,7 @@ public class SignIn extends AppCompatActivity {
 
 
                     }
-                    SignIn.mainUser.setCreditcards(creditCards);
+                    user.setCreditcards(creditCards);
                 }
 
 
@@ -245,9 +248,11 @@ public class SignIn extends AppCompatActivity {
 
 
 
-    public void getBankAccounts(){
+    public void getBankAccounts(User user){
         ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
-        queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
+
+        queryBankAccount.whereEqualTo("userId", user.getId());
+
         queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -268,7 +273,7 @@ public class SignIn extends AppCompatActivity {
 
 
                     }
-                    SignIn.mainUser.setBankAccounts(bankAccounts);
+                    user.setBankAccounts(bankAccounts);
                 }
 
 
@@ -277,7 +282,14 @@ public class SignIn extends AppCompatActivity {
     }
     public void getHistory(){
         ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("History");
-        queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
+        if (!mainUser.getId().equals("9999")){
+            queryBankAccount.whereEqualTo("userId", SignIn.mainUser.getId());
+        }
+        else{
+            getAllUsers();
+        }
+
+
         queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -308,6 +320,62 @@ public class SignIn extends AppCompatActivity {
             }
         });
     }
+    public void getAllUsers(){
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("UserInfo");
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    allUsers = new ArrayList<>();
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+
+
+                            String name=object.getString("userRealName");
+                            String phone=object.getString("phone");
+                            String userId=object.getString("username");
+                            String address_string= object.getString("address");
+                            String[] str = address_string.split(" ");
+                            Address address = new Address(str[0],str[1],Integer.parseInt(str[2]),Integer.parseInt(str[3]),Integer.parseInt(str[4]),str[5],str[6],str[7]);
+                            String jobName = object.getString("job");
+                            String maxCreditAmount = object.getString("maxCreditAmount");
+                            String interestRate = object.getString("interestRate");
+                            String maxCreditInstallment = object.getString("maxCreditInstallment");
+                            Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment,interestRate);
+                            User tempUser = new User(name,userId, phone,address,tempJob);
+                            getBankAccounts(tempUser);
+                            getCreditCards(tempUser);
+                            ParseFile parseFile=(ParseFile)object.get("images");
+                            if( parseFile!=null){
+                                parseFile.getDataInBackground(new GetDataCallback() {
+                                    @Override
+                                    public void done(byte[] data, ParseException e) {
+                                        if(data!=null && e==null){
+                                            Bitmap downloadedImage= BitmapFactory.decodeByteArray(data,0,data.length);
+                                            tempUser.setPhoto(downloadedImage);
+
+                                        }
+                                    }
+                                });
+                            }
+                            allUsers.add(tempUser);
+
+
+                        }
+
+
+                    }
+
+
+                }
+
+
+            }
+        });
+    }
+
 
 
 
@@ -368,8 +436,8 @@ public class SignIn extends AppCompatActivity {
 
 
 
-                                        getBankAccounts();
-                                        getCreditCards();
+                                        getBankAccounts(mainUser);
+                                        getCreditCards(mainUser);
                                         getHistory();
                                         getUserBills();
                                         getUserCredits();
@@ -387,8 +455,11 @@ public class SignIn extends AppCompatActivity {
                     });
 
 
+
                     intent = new Intent(SignIn.this, splashScreen.class);
                     startActivity(intent);
+
+
 
 
 

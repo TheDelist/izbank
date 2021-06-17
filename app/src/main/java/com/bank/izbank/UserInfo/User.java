@@ -1,10 +1,13 @@
 package com.bank.izbank.UserInfo;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 
 import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Credit.Credit;
 import com.bank.izbank.Job.Job;
+import com.bank.izbank.R;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -51,6 +54,9 @@ public class User {
         this.bankAccounts = new ArrayList<>();
         this.userbills = new ArrayList<>();
         this.credits = new ArrayList<>();
+
+
+
     }
 
     public User(String name, String id,String phoneNumber, Address address, Job job) {
