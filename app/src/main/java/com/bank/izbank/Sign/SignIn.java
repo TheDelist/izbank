@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.Date;
+import com.bank.izbank.Credit.Credit;
 import com.bank.izbank.Job.Job;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
@@ -48,6 +49,12 @@ public class SignIn extends AppCompatActivity {
     String cardNo, cardLimit;
     public Intent intent ;
     public Job userJob;
+    public ArrayList<Credit> credits;
+    public String creditAmount;
+    public String creditInstallment;
+    public String creditInterestRate;
+    public String creditPayAmount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +111,8 @@ public class SignIn extends AppCompatActivity {
                             getBankAccounts();
                             getCreditCards();
                             getHistory();
-
                             getUserBills();
+                            getUserCredits();
 
                         }
 
@@ -154,6 +161,45 @@ public class SignIn extends AppCompatActivity {
 
                     }
                     SignIn.mainUser.setUserbills(bills);
+
+                }
+
+            }
+        });
+
+
+
+    }
+
+    public void getUserCredits(){
+        ParseQuery<ParseObject> queryBill=ParseQuery.getQuery("Credit");
+        queryBill.whereEqualTo("username",SignIn.mainUser.getId());
+        queryBill.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    credits = new ArrayList<>();
+                    if(objects.size()>0){
+                        for(ParseObject object:objects){
+
+                            creditAmount = object.getString("amount");
+                            creditInstallment = object.getString("installment");
+                            creditInterestRate = object.getString("interestRate");
+                            creditPayAmount = object.getString("payAmount");
+
+                            Credit tempCredit = new Credit(Integer.parseInt(creditAmount),Integer.parseInt(creditInstallment),
+                                    Integer.parseInt(creditInterestRate),Integer.parseInt(creditPayAmount));
+
+                            credits.add(tempCredit);
+
+
+                        }
+
+
+                    }
+                    SignIn.mainUser.setCredits(credits);
 
                 }
 
@@ -299,6 +345,7 @@ public class SignIn extends AppCompatActivity {
                                         String maxCreditAmount = object.getString("maxCreditAmount");
                                         String maxCreditInstallment = object.getString("maxCreditInstallment");
                                         String interestRate = object.getString("interestRate");
+
                                         Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment,interestRate);
                                         mainUser = new User(name,userId, phone,address,tempJob);
                                         ParseFile parseFile=(ParseFile)object.get("images");
@@ -325,6 +372,7 @@ public class SignIn extends AppCompatActivity {
                                         getCreditCards();
                                         getHistory();
                                         getUserBills();
+                                        getUserCredits();
 
 
 

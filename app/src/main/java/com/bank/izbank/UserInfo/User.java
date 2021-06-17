@@ -3,6 +3,7 @@ package com.bank.izbank.UserInfo;
 import android.graphics.Bitmap;
 
 import com.bank.izbank.Bill.Bill;
+import com.bank.izbank.Credit.Credit;
 import com.bank.izbank.Job.Job;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class User {
     private Job job;
     private Bitmap photo;
     private Stack<History> history;
+    private ArrayList<Credit> credits;
 
 
     public User(String name, String id,String pass,String phoneNumber, Address address, Job job) {
@@ -35,6 +37,7 @@ public class User {
         this.bankAccounts = new ArrayList<>();
         this.history = new Stack<>();
         this.userbills = new ArrayList<>();
+        this.credits = new ArrayList<>();
     }
 
     public User(String name, String id,String pass,String phoneNumber, Address address) {
@@ -47,6 +50,7 @@ public class User {
         this.creditcards = new ArrayList<>();
         this.bankAccounts = new ArrayList<>();
         this.userbills = new ArrayList<>();
+        this.credits = new ArrayList<>();
     }
 
     public User(String name, String id,String phoneNumber, Address address, Job job) {
@@ -60,6 +64,7 @@ public class User {
         this.bankAccounts = new ArrayList<>();
         this.history = new Stack<>();
         this.userbills = new ArrayList<>();
+        this.credits = new ArrayList<>();
     }
     public Stack<History> getHistory() {
         return history;
@@ -154,6 +159,11 @@ public class User {
         this.userbills = userbills;
     }
 
+    public ArrayList<Credit> getCredits() {
+        return credits;
+    }
 
-
+    public void setCredits(ArrayList<Credit> credits) {
+        this.credits = credits;
+    }
 }
