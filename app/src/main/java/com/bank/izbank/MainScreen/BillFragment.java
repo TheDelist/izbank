@@ -86,8 +86,8 @@ public class BillFragment extends Fragment implements SearchView.OnQueryTextList
         floatingActionButtonBill = getView().findViewById(R.id.floatingActionButton_bill);
 
         toolbar = getView().findViewById(R.id.toolbar_bill);
-        toolbar.setTitle("Search Bill");
-        //toolbar.setLogo(R.drawable.icon_bill);
+        toolbar.setTitle("Bill Screen");
+        toolbar.setLogo(R.drawable.icon_receipt);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 

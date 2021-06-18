@@ -10,13 +10,13 @@
         android:id="@+id/floatingActionButton_bill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        app:srcCompat="@drawable/icon_pay"
-        android:backgroundTint="@color/genel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
-        android:layout_marginRight="30dp"/>
+        android:backgroundTint="@color/user"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/icon_pay" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_bill"
@@ -33,7 +33,7 @@
         android:id="@+id/toolbar_bill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/genel"
+        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"

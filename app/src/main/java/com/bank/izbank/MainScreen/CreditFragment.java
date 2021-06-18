@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.bank.izbank.Bill.Bill;
 import com.bank.izbank.Bill.BillAdapter;
 import com.bank.izbank.Credit.Credit;
 import com.bank.izbank.Credit.CreditAdapter;
+import com.bank.izbank.Credit.CustomEventListener;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;
@@ -42,7 +44,7 @@ import java.util.List;
 import static com.bank.izbank.Sign.SignIn.mainUser;
 import static com.parse.Parse.getApplicationContext;
 
-public class Fragment2 extends Fragment {
+public class CreditFragment extends Fragment {
 
     private Toolbar toolbarCredit;
     private RecyclerView recyclerViewCredit;
@@ -50,6 +52,8 @@ public class Fragment2 extends Fragment {
     private CreditAdapter creditAdapter;
     private FloatingActionButton floatingActionButtonCredit;
     private Credit credit;
+    private AdapterView.OnItemClickListener mListener;
+
 
 
     @Nullable
@@ -70,7 +74,8 @@ public class Fragment2 extends Fragment {
         floatingActionButtonCredit = getView().findViewById(R.id.floatingActionButton_credit);
 
         toolbarCredit = getView().findViewById(R.id.toolbar_credit);
-        toolbarCredit.setTitle("Search Credit");
+        toolbarCredit.setTitle("Credit Screen");
+        toolbarCredit.setLogo(R.drawable.icon_credit);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbarCredit);
 
         setHasOptionsMenu(true);
@@ -80,7 +85,32 @@ public class Fragment2 extends Fragment {
 
         list = SignIn.mainUser.getCredits();
 
+        //creditAdapter = new CreditAdapter(getContext(),list);
         creditAdapter = new CreditAdapter(getContext(),list);
+        creditAdapter.setListener(new CustomEventListener() {
+            @Override
+            public void MyEventListener() {
+
+                Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+                list= mainUser.getCredits();
+                creditAdapter = new CreditAdapter(getContext(),list);
+                creditAdapter.setListener(new CustomEventListener() {
+                    @Override
+                    public void MyEventListener() {
+
+                        Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+                        list= mainUser.getCredits();
+                        creditAdapter = new CreditAdapter(getContext(),list);
+
+
+                        recyclerViewCredit.setAdapter(creditAdapter);
+                    }
+                });
+
+
+                recyclerViewCredit.setAdapter(creditAdapter);
+            }
+        });
 
         recyclerViewCredit.setAdapter(creditAdapter);
 
@@ -134,7 +164,7 @@ public class Fragment2 extends Fragment {
                                TextView payAmountSecond = dialogViewSecond.findViewById(R.id.textView_pay_amount);
 
                                amountSecond.setText(String.valueOf(currentAmount));
-                               payAmountSecond.setText(String.valueOf(currentAmount + ((currentAmount/Integer.parseInt(SignIn.mainUser.getJob().getInterestRate()))*currentInstallment)/12));
+                               payAmountSecond.setText(String.valueOf(currentAmount + ((currentAmount/Integer.parseInt(SignIn.mainUser.getJob().getInterestRate()))*currentInstallment)/1200));
 
                                creditPopupSecond.setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
                                    @Override
@@ -143,7 +173,7 @@ public class Fragment2 extends Fragment {
                                        // database vesaire
                                        Toast.makeText(getContext(), "ALDIN DATABASE E KOÇUM", Toast.LENGTH_SHORT).show();
 
-                                       int payCurrentAmount = currentAmount + ((currentAmount/Integer.parseInt(SignIn.mainUser.getJob().getInterestRate()))*currentInstallment)/12;
+                                       int payCurrentAmount = currentAmount + ((currentAmount*Integer.parseInt(SignIn.mainUser.getJob().getInterestRate()))*currentInstallment)/1200;
 
                                        Credit tempCredit = new Credit(currentAmount,currentInstallment,Integer.parseInt(SignIn.mainUser.getJob().getInterestRate()),payCurrentAmount);
 
@@ -305,6 +335,30 @@ public class Fragment2 extends Fragment {
             creditToDatabase(tempCredit);
             list.add(tempCredit);
             creditAdapter = new CreditAdapter(getContext(),list);
+            creditAdapter.setListener(new CustomEventListener() {
+                @Override
+                public void MyEventListener() {
+
+                    Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+                    list= mainUser.getCredits();
+                    creditAdapter = new CreditAdapter(getContext(),list);
+                    creditAdapter.setListener(new CustomEventListener() {
+                        @Override
+                        public void MyEventListener() {
+
+                            Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+                            list= mainUser.getCredits();
+                            creditAdapter = new CreditAdapter(getContext(),list);
+
+
+                            recyclerViewCredit.setAdapter(creditAdapter);
+                        }
+                    });
+
+
+                    recyclerViewCredit.setAdapter(creditAdapter);
+                }
+            });
 
 
             recyclerViewCredit.setAdapter(creditAdapter);
@@ -321,5 +375,24 @@ public class Fragment2 extends Fragment {
         }
 
 
+    }
+
+
+
+    public void InitAdapter(){
+
+        creditAdapter = new CreditAdapter(getContext(),list);
+        creditAdapter.setListener(new CustomEventListener() {
+            @Override
+            public void MyEventListener() {
+
+                Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+                list= mainUser.getCredits();
+                creditAdapter = new CreditAdapter(getContext(),list);
+
+
+                recyclerViewCredit.setAdapter(creditAdapter);
+            }
+        });
     }
 }
