@@ -9,6 +9,7 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,7 @@ import com.bank.izbank.UserInfo.Address;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.FunctionCallback;
+import com.parse.LogOutCallback;
 import com.parse.Parse;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
@@ -65,9 +67,10 @@ import java.util.List;
 import java.util.Map;
 
 import static com.bank.izbank.Sign.SignIn.mainUser;
+import static com.parse.Parse.getApplicationContext;
 
 public class SettingFragment extends Fragment {
-   private TextView name,phone,userId,userAdress,prof;
+   private TextView name,phone,userId,userAdress,prof,logOut;
     private Bitmap selectedImage;
     private ImageView imageView;
     private Spinner spinner;
@@ -95,6 +98,7 @@ public class SettingFragment extends Fragment {
         relativeLayoutAddressRow=rootView.findViewById(R.id.settings_addres_row);
         relativeLayoutPassRow=rootView.findViewById(R.id.settings_change_pass_row);
         relativeLayoutDeleteRow=rootView.findViewById(R.id.settings_account_delete_row);
+        logOut=rootView.findViewById(R.id.setting_logout_textView);
 
         spinner = rootView.findViewById(R.id.jobSpinner);
         name.setText(mainUser.getName());
@@ -151,7 +155,12 @@ relativeLayoutDeleteRow.setOnClickListener(new View.OnClickListener() {
         deleteAccount(v);
     }
 });
-
+logOut.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        logOut(v);
+    }
+});
     }
 
     public void changeName(View v){
@@ -295,16 +304,127 @@ relativeLayoutDeleteRow.setOnClickListener(new View.OnClickListener() {
 
     private void deleteAccount(View v){
         ParseUser user = ParseUser.getCurrentUser();
-        user.deleteInBackground(new DeleteCallback() {
+
+        ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
+        queryBankAccount.whereEqualTo("userId", mainUser.getId());
+        queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(com.parse.ParseException e) {
-                if (e == null) {
-                    Toast.makeText(getContext(),user.getUsername()+" deleted",Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(),user.getUsername()+"not deleted",Toast.LENGTH_SHORT).show();
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    if(objects.size()>0){
+                        ParseObject.deleteAllInBackground(objects);
+                    }
                 }
             }
         });
+        ParseQuery<ParseObject> queryDel=ParseQuery.getQuery("Bill");
+        queryDel.whereEqualTo("username", mainUser.getId());
+        queryDel.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    if(objects.size()>0){
+                        ParseObject.deleteAllInBackground(objects);
+                    }
+                }
+            }
+        });
+        ParseQuery<ParseObject> queryDel2=ParseQuery.getQuery("Credit");
+        queryDel2.whereEqualTo("username", mainUser.getId());
+        queryDel2.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    if(objects.size()>0){
+                        ParseObject.deleteAllInBackground(objects);
+                    }
+                }
+            }
+        });
+        ParseQuery<ParseObject> queryDel3=ParseQuery.getQuery("CreditCard");
+        queryDel3.whereEqualTo("userId", mainUser.getId());
+        queryDel3.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    if(objects.size()>0){
+                        ParseObject.deleteAllInBackground(objects);
+                    }
+                }
+            }
+        });
+        ParseQuery<ParseObject> queryDel4=ParseQuery.getQuery("CryptoAmount");
+        queryDel4.whereEqualTo("username",mainUser.getId());
+        queryDel4.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    if(objects.size()>0){
+                        ParseObject.deleteAllInBackground(objects);
+                    }
+                }
+            }
+        });
+        ParseQuery<ParseObject> queryDel5=ParseQuery.getQuery("History");
+        queryDel5.whereEqualTo("userId", mainUser.getId());
+        queryDel5.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    if(objects.size()>0){
+                        ParseObject.deleteAllInBackground(objects);
+                    }
+                }
+            }
+        });
+        ParseQuery<ParseObject> queryDel6=ParseQuery.getQuery("UserInfo");
+        queryDel6.whereEqualTo("username", mainUser.getId());
+        queryDel6.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e!=null){
+                    e.printStackTrace();
+                }else{
+                    if(objects.size()>0){
+                        ParseObject.deleteAllInBackground(objects);
+
+                    }
+                }
+            }
+        });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                user.deleteInBackground(new DeleteCallback() {
+                    @Override
+                    public void done(com.parse.ParseException e) {
+                        if (e == null) {
+                            Toast.makeText(getContext(), user.getUsername() + " deleted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), user.getUsername() + "not deleted", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+            },1000);
+
+
+        Intent intent=new Intent(getActivity(),SignIn.class);
+        startActivity(intent);
+
     }
 
     private void change(String changeItem,String changeColumName){
@@ -381,6 +501,23 @@ relativeLayoutDeleteRow.setOnClickListener(new View.OnClickListener() {
             }
         });
 
+
+    }
+    public void logOut(View view){
+
+        ParseUser.logOutInBackground(new LogOutCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e !=null){
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                }else{
+                    Intent intent=new Intent(getApplicationContext(), SignIn.class);
+                    startActivity(intent);
+
+
+                }
+            }
+        });
 
     }
 

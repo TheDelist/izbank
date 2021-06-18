@@ -63,19 +63,11 @@ public class SignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //remember
-     //   ParseUser parseUser =ParseUser.getCurrentUser();
-     //  if(parseUser !=null parseUser. ){
-          //loading screen
-    //       getUser(parseUser);
 
-
-
-     //  }else{
            setContentView(R.layout.activity_sign_in);//load screen
            userName=findViewById(R.id.edittext_id_number_sign_in);
            userPass=findViewById(R.id.edittext_user_password_sign_in);
-     //  }
+
 
 
     }
@@ -84,54 +76,7 @@ public class SignIn extends AppCompatActivity {
         startActivity(signUp);
 
     }
-    public void getUser(ParseUser parseUser)  {
 
-        ParseQuery<ParseObject>  query=ParseQuery.getQuery("UserInfo");
-        query.whereEqualTo("username",parseUser.getUsername().toString());
-
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if(e!=null){
-                    e.printStackTrace();
-                }else{
-                    if(objects.size()>0){
-                        for(ParseObject object:objects){
-                            String name=object.getString("userRealName");
-                            String phone=object.getString("phone");
-                            String address_string= object.getString("address");
-                            String[] str = address_string.split(" ");
-                            Address address = new Address(str[0],str[1],Integer.parseInt(str[2]),Integer.parseInt(str[3]),Integer.parseInt(str[4]),str[5],str[6],str[7]);
-                            String jobName = object.getString("job");
-                            String maxCreditAmount = object.getString("maxCreditAmount");
-                            String maxCreditInstallment = object.getString("maxCreditInstallment");
-                            String interestRate = object.getString("interestRate");
-                            Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment,interestRate);
-
-                            Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
-                            mainUser = new User(name, parseUser.getUsername(), phone,address,tempJob);
-
-                            getBankAccounts(mainUser);
-                            getCreditCards(mainUser);
-                            getHistory();
-                            getUserBills();
-                            getUserCredits();
-
-                        }
-
-
-                    }
-
-                    intent = new Intent(SignIn.this, splashScreen.class);
-                    startActivity(intent);
-                }
-
-            }
-        });
-
-
-
-    }
 
     public void getUserBills(){
         ParseQuery<ParseObject> queryBill=ParseQuery.getQuery("Bill");

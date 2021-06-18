@@ -67,11 +67,11 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                             android:background="@drawable/profile_bk"/>
 
                         <TextView
+                            android:id="@+id/setting_logout_textView"
                             style="@style/profileStyledBackButton"
-                            android:onClick="logOut"
                             android:text="Log Out"
-                            android:textColor="@color/whiteTextColor"
 
+                            android:textColor="@color/whiteTextColor"
                             android:textSize="28sp" />
                     </RelativeLayout>
 

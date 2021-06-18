@@ -44,10 +44,6 @@ public class CryptoLookAdapter extends RecyclerView.Adapter<CryptoLookAdapter.Po
         }
     }
 
-
-
-
-
     public CryptoLookAdapter(ArrayList<CryptoModel> models, Activity activity, Context context) {
         this.models = models;
         this.activity=activity;

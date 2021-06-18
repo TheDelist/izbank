@@ -4,7 +4,9 @@ import android.app.Activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +25,18 @@ import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.User;
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.bank.izbank.Sign.SignIn.mainUser;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
@@ -64,9 +75,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             public void onClick(View v) {
                 AlertDialog.Builder buyCryptoPopup=new AlertDialog.Builder(context);
                 buyCryptoPopup.setTitle("USER INFO");
-
-
-
 
                 LayoutInflater inflater = context.getLayoutInflater();
                 View dialogView= inflater.inflate(R.layout.admin_screen_user_popup, null);
@@ -108,6 +116,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
                     }
                 });
+
                 buyCryptoPopup.create().show();
             }
         });
@@ -115,6 +124,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
 
     }
+
 
     @Override
     public int getItemCount() {

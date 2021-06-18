@@ -69,9 +69,6 @@ public class splashScreen extends AppCompatActivity {
                 }
 
 
-                //splashIntent.putExtra("billList",bills);
-
-                //splashScreen.this.startActivity(new Intent( splashScreen.this, MainScreenActivity.class));
                 splashScreen.this.finish();
             }
         },5000);
