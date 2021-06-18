@@ -17,10 +17,13 @@ import com.bank.izbank.Job.Job;
 import com.bank.izbank.MainScreen.AdminPanelActivity;
 import com.bank.izbank.R;
 import com.bank.izbank.UserInfo.Address;
+import com.bank.izbank.UserInfo.Admin;
 import com.bank.izbank.UserInfo.BankAccount;
 import com.bank.izbank.UserInfo.CreditCard;
 import com.bank.izbank.UserInfo.History;
 import com.bank.izbank.UserInfo.User;
+import com.bank.izbank.UserInfo.UserContext;
+import com.bank.izbank.UserInfo.UserTypeState;
 import com.bank.izbank.splashScreen.splashScreen;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
@@ -39,8 +42,6 @@ public class SignIn extends AppCompatActivity {
     private EditText userName,userPass;
     public static User mainUser;
     public static ArrayList<User> allUsers;
-    public static ArrayList<BankAccount> allBankAccounts;
-    public static String name;
     private String billType;
     private String billAmount;
     private String billDate;
@@ -51,12 +52,12 @@ public class SignIn extends AppCompatActivity {
     private String bankCash,bankAccountNo;
     private String cardNo, cardLimit;
     private Intent intent ;
-    private Job userJob;
-    public ArrayList<Credit> credits;
-    public String creditAmount;
-    public String creditInstallment;
-    public String creditInterestRate;
-    public String creditPayAmount;
+    private ArrayList<Credit> credits;
+    private String creditAmount;
+    private String creditInstallment;
+    private String creditInterestRate;
+    private String creditPayAmount;
+
 
 
     @Override
@@ -347,7 +348,7 @@ public class SignIn extends AppCompatActivity {
 
                                 if(objects.size()>0){
                                     for(ParseObject object:objects){
-                                      //  name=object.getString("userRealName");
+
                                         String name=object.getString("userRealName");
                                         String phone=object.getString("phone");
                                         String userId=object.getString("username");
@@ -360,6 +361,7 @@ public class SignIn extends AppCompatActivity {
                                         String interestRate = object.getString("interestRate");
 
                                         Job tempJob = new Job(jobName,maxCreditAmount,maxCreditInstallment,interestRate);
+
                                         mainUser = new User(name,userId, phone,address,tempJob);
                                         ParseFile parseFile=(ParseFile)object.get("images");
                                        if( parseFile!=null){
@@ -389,7 +391,6 @@ public class SignIn extends AppCompatActivity {
 
 
 
-                                        Toast.makeText(getApplicationContext(),"Welcome "+name,Toast.LENGTH_LONG).show();
                                     }
 
 
@@ -398,7 +399,6 @@ public class SignIn extends AppCompatActivity {
 
                         }
                     });
-
 
 
                     intent = new Intent(SignIn.this, splashScreen.class);

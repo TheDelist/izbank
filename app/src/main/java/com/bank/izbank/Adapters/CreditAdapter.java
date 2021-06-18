@@ -1,4 +1,4 @@
-package com.bank.izbank.Credit;
+package com.bank.izbank.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bank.izbank.Credit.Credit;
+import com.bank.izbank.Credit.CustomEventListener;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;

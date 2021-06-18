@@ -16,12 +16,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bank.izbank.Bill.BillAdapter;
-import com.bank.izbank.Bill.ElectricBill;
-import com.bank.izbank.Bill.GasBill;
-import com.bank.izbank.Bill.InternetBill;
-import com.bank.izbank.Bill.PhoneBill;
-import com.bank.izbank.Bill.WaterBill;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
 import com.bank.izbank.UserInfo.BankAccount;

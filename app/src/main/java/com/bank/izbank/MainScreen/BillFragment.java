@@ -2,9 +2,7 @@ package com.bank.izbank.MainScreen;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bank.izbank.Bill.Bill;
-import com.bank.izbank.Bill.BillAdapter;
+import com.bank.izbank.Adapters.BillAdapter;
 import com.bank.izbank.Bill.ElectricBill;
 import com.bank.izbank.Bill.GasBill;
 import com.bank.izbank.Bill.InternetBill;
@@ -40,7 +38,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
@@ -121,7 +118,7 @@ public class BillFragment extends Fragment implements SearchView.OnQueryTextList
                 String[] items = {"Electric","Gas","Internet","Phone","Water"};
 
                 final int[] checkedItem = {0};
-                final int[] whichbill = {0};
+
                 ad.setSingleChoiceItems(items, checkedItem[0], new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

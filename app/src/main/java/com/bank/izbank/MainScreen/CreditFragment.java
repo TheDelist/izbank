@@ -19,10 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bank.izbank.Bill.Bill;
-import com.bank.izbank.Bill.BillAdapter;
 import com.bank.izbank.Credit.Credit;
-import com.bank.izbank.Credit.CreditAdapter;
+import com.bank.izbank.Adapters.CreditAdapter;
 import com.bank.izbank.Credit.CustomEventListener;
 import com.bank.izbank.R;
 import com.bank.izbank.Sign.SignIn;
