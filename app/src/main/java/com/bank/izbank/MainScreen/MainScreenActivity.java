@@ -139,19 +139,6 @@ public class MainScreenActivity extends AppCompatActivity {
     }
 
 
-    public void logOut(View view){
-        ParseUser.logOutInBackground(new LogOutCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e !=null){
-                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
-                }else{
-                    Intent intent=new Intent(getApplicationContext(), SignIn.class);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
 
 
 

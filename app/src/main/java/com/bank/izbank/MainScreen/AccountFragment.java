@@ -664,23 +664,5 @@ public class AccountFragment extends Fragment {
     }
 
 
-   /*
-    @Override
-    public void onStop() {
-        super.onStop();
-        shouldRefreshOnResume = true;
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (shouldRefreshOnResume) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.setReorderingAllowed(false);
-            transaction.detach(this).attach(this).commitAllowingStateLoss();
-            shouldRefreshOnResume=false;
-        }
-    }
-
-    */
 }
