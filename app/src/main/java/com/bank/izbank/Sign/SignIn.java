@@ -196,9 +196,7 @@ public class SignIn extends AppCompatActivity {
 
     public void getBankAccounts(User user){
         ParseQuery<ParseObject> queryBankAccount=ParseQuery.getQuery("BankAccount");
-
         queryBankAccount.whereEqualTo("userId", user.getId());
-
         queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -211,9 +209,7 @@ public class SignIn extends AppCompatActivity {
 
                             bankAccountNo=object.getString("accountNo");
                             bankCash=object.getString("cash");
-
                             bankAccounts.add(new BankAccount(bankAccountNo,Integer.parseInt(bankCash)));
-
 
                         }
 
@@ -234,8 +230,6 @@ public class SignIn extends AppCompatActivity {
         else{
             getAllUsers();
         }
-
-
         queryBankAccount.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -246,20 +240,16 @@ public class SignIn extends AppCompatActivity {
                     if(objects.size()>0){
                         for(ParseObject object:objects){
 
-
                             String id = object.getString("userId");
                             String process = object.getString("process");
                             java.util.Date date = object.getDate("date");
                             history.push(new History(id,process,date));
 
-
-
                         }
-
 
                     }
                     SignIn.mainUser.setHistory(history);
-                    Toast.makeText(getApplicationContext(),"history alındı",Toast.LENGTH_LONG).show();
+
                 }
 
 

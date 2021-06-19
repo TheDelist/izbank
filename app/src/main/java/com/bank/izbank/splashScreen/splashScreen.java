@@ -53,7 +53,7 @@ public class splashScreen extends AppCompatActivity {
         userContext=new UserContext();
         normalUser=new User();
         adminUser=new Admin();
-        //deneme
+        //Gif create
         try {
             InputStream inputStream = getAssets().open("deneme2.gif");
             byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -82,16 +82,6 @@ public class splashScreen extends AppCompatActivity {
                     Intent splashIntent = new Intent( splashScreen.this, MainScreenActivity.class);
                     splashScreen.this.startActivity(splashIntent);
                 }
-/*
-                if (mainUser.getId().equals("9999") && mainUser.getName().equals("admin")){
-                    Intent intent = new Intent( splashScreen.this, AdminPanelActivity.class);
-                    startActivity(intent);
-                }
-                else{
-                    Intent splashIntent = new Intent( splashScreen.this, MainScreenActivity.class);
-                    splashScreen.this.startActivity(splashIntent);
-                }
-*/
 
                 splashScreen.this.finish();
             }

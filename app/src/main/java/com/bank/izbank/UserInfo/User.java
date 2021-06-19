@@ -16,7 +16,6 @@ public class User implements  UserTypeState{
     private String name;
     private String id;
     private String pass;
-  //  private String surname;
     private String phoneNumber;
     private Address address;
     private String addressSum;

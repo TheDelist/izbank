@@ -171,7 +171,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void changeAddress(View v){
+    public void createAddress(View v){
 
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
 

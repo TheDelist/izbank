@@ -80,8 +80,7 @@ public class SettingFragment extends Fragment {
     private Address newAddress;
     private String [] jobs;
     private Job [] defaultJobs;
-    public Job tempJob ;
-    public String job;
+    private  String job;
 
     @Nullable
     @Override
@@ -445,9 +444,6 @@ logOut.setOnClickListener(new View.OnClickListener() {
                                 public void done(ParseException e) {
                                     if (e != null) {
                                         Toast.makeText(getContext(), e.getLocalizedMessage().toString(), Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getContext(), "changed " + changeItem, Toast.LENGTH_SHORT).show();
-
                                     }
                                 }
                             });

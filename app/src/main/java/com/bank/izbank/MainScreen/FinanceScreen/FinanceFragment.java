@@ -62,7 +62,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
     private CryptoModel buyedCrypto;
     private String buyedCrptoAmount;
     private CryptoLookAdapter cryptoLookPopup;
-    int index;
+    private  int index;
 
     public FinanceFragment(ArrayList<CryptoModel> list){
         this.cryptoModels=list;
@@ -409,10 +409,7 @@ public class FinanceFragment extends Fragment implements SearchView.OnQueryTextL
                 if(e != null){
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
-                else{
-                    Toast.makeText(getApplicationContext(),"history datada",Toast.LENGTH_LONG).show();
 
-                }
             }
         });
     }
