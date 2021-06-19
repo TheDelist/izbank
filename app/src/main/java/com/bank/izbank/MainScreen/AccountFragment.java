@@ -130,7 +130,7 @@ public class AccountFragment extends Fragment {
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                      Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }
@@ -152,7 +152,7 @@ public class AccountFragment extends Fragment {
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"kart datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }
@@ -173,7 +173,7 @@ public class AccountFragment extends Fragment {
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"history datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }
@@ -193,7 +193,7 @@ public class AccountFragment extends Fragment {
                     if(objects.size()>0){
                         for(ParseObject object:objects){
                             object.deleteInBackground();
-                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+
                             accountsToDatabase(bankac);
                         }
                     }
@@ -214,7 +214,7 @@ public class AccountFragment extends Fragment {
                     if(objects.size()>0){
                         for(ParseObject object:objects){
                             object.deleteInBackground();
-                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+
                             accountsToDatabaseAnotherUser(bankac,userId);
                         }
                     }
@@ -237,7 +237,7 @@ public class AccountFragment extends Fragment {
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }
@@ -501,10 +501,10 @@ public class AccountFragment extends Fragment {
 
                                                             }
                                                             else{
-                                                                Toast.makeText(getApplicationContext(),"yeterince paranız yok",Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(getApplicationContext(),"You don't have enough money.",Toast.LENGTH_LONG).show();
                                                             }
                                                         }catch (NumberFormatException e){
-                                                            Toast.makeText(getApplicationContext(),"Para Girmedin",Toast.LENGTH_LONG).show();
+
                                                         }
 
                                                     }
@@ -558,7 +558,7 @@ public class AccountFragment extends Fragment {
 
                                                     }
                                                     else {
-                                                        Toast.makeText(getApplicationContext(),"yanlış bank no girdin",Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getApplicationContext(),"Invalid Bank No",Toast.LENGTH_LONG).show();
                                                     }
                                                 }
 
@@ -603,7 +603,7 @@ public class AccountFragment extends Fragment {
                                                                 myBankAccount.get(from[0]).setCash(myBankAccount.get(from[0]).getCash()- Integer.parseInt(editText.getText().toString()));
                                                                 updateBankAccountAnotherUser(sendUser, anotherUserid);
                                                                 updateBankAccount(myBankAccount.get(from[0]));
-                                                                Toast.makeText(getApplicationContext(),"gönderildi",Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(getApplicationContext(),"Sent",Toast.LENGTH_LONG).show();
                                                                 MyBankAccountAdapter myBankAccountAdapter = new MyBankAccountAdapter(myBankAccount,getActivity() );
                                                                 recyclerViewbankaccount.setAdapter(myBankAccountAdapter);
                                                                 History hs = new History(mainUser.getId(),"Money Sent to Another User.",getDate() );
@@ -611,12 +611,12 @@ public class AccountFragment extends Fragment {
                                                                 historyToDatabase(hs);
                                                             }
                                                             else {
-                                                                Toast.makeText(getApplicationContext(),"para yetersiz",Toast.LENGTH_LONG).show();
+                                                                Toast.makeText(getApplicationContext(),"You don't have enough money.",Toast.LENGTH_LONG).show();
                                                             }
 
                                                         }
                                                         else{
-                                                            Toast.makeText(getApplicationContext(),"yanlış id girdin",Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(getApplicationContext(),"Invalid Id",Toast.LENGTH_LONG).show();
                                                         }
                                                     }
                                                 });

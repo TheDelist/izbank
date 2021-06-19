@@ -169,7 +169,7 @@ public class CreditFragment extends Fragment {
                                    public void onClick(DialogInterface dialogInterface, int i) {
 
                                        // database vesaire
-                                       Toast.makeText(getContext(), "ALDIN DATABASE E KOÇUM", Toast.LENGTH_SHORT).show();
+
 
                                        int payCurrentAmount = currentAmount + ((currentAmount*Integer.parseInt(SignIn.mainUser.getJob().getInterestRate()))*currentInstallment)/1200;
 

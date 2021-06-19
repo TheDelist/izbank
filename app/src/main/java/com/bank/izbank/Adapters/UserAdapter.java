@@ -53,7 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.bank_account_cardview,parent,false);
+        View view = layoutInflater.inflate(R.layout.user_admin_card_view,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

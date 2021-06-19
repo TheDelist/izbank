@@ -248,7 +248,7 @@ public class BillFragment extends Fragment{
         }
         else {
 
-            Toast.makeText(getApplicationContext(),"Don't Have Enough Money",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"You Don't Have Enough Money",Toast.LENGTH_LONG).show();
 
 
         }
