@@ -49,11 +49,11 @@ import java.util.List;
 import static com.bank.izbank.Sign.SignIn.mainUser;
 import static com.parse.Parse.getApplicationContext;
 
-public class BillFragment extends Fragment implements SearchView.OnQueryTextListener{
+public class BillFragment extends Fragment{
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private ArrayList<Bill> list,searchList;
+    private ArrayList<Bill> list;
     private BillAdapter billAdapter;
     private FloatingActionButton floatingActionButtonBill;
     private Bill bill;
@@ -332,53 +332,11 @@ public class BillFragment extends Fragment implements SearchView.OnQueryTextList
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-
-        inflater.inflate(R.menu.bill_toolbar_menu,menu);
-
-        MenuItem item = menu.findItem(R.id.toolbar_bill_search);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(this);
-
-
-        super.onCreateOptionsMenu(menu, inflater);
 
 
 
-    }
 
-    public void toolbarSearch(String searchWord){
 
-        searchList = new ArrayList<>();
-        searchList = searchBill(list,searchWord);
-
-        billAdapter = new BillAdapter(getContext(),searchList);
-        recyclerView.setAdapter(billAdapter);
-
-    }
-
-    public ArrayList<Bill> searchBill(ArrayList<Bill> list, String string){
-
-        ArrayList<Bill> returnList = new ArrayList<>();
-
-        if(string.equals("")){
-            return list;
-        }
-        else {
-            for(Bill bill: list){
-
-                String dateStr = bill.getDate().getDay() +"."+ bill.getDate().getMonth() +"."+ bill.getDate().getYear();
-
-                if(dateStr.toLowerCase().contains(string.toLowerCase()) || bill.getType().toLowerCase().contains(string.toLowerCase())
-                        || String.valueOf(bill.getAmount()).toLowerCase().contains(string.toLowerCase())){
-                    returnList.add(bill);
-                }
-
-            }
-            return returnList;
-        }
-    }
 
     public void historyToDatabase(History history){
         ParseObject object=new ParseObject("History");
@@ -410,15 +368,5 @@ public class BillFragment extends Fragment implements SearchView.OnQueryTextList
     }
 
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        toolbarSearch(query);
-        return false;
-    }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        toolbarSearch(newText);
-        return false;
-    }
 }
