@@ -56,7 +56,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="7dp"
         android:hint="Enter money amount"
-        android:text="How much will you want ?"
+        android:text="How much do you want?"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CryptovalueTextView" />
