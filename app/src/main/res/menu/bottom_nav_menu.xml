@@ -4,21 +4,21 @@
 
     <item
         android:id="@+id/menu1"
-        android:icon="@drawable/ic_launcher_foreground" />
+        android:icon="@drawable/icon_bank" />
 
     <item
         android:id="@+id/menu2"
-        android:icon="@drawable/icon_address" />
+        android:icon="@drawable/icon_pay" />
 
     <item
         android:id="@+id/menu3"
-        android:icon="@drawable/icon_bank" />
+        android:icon="@drawable/icon_drawer_bitcoin" />
 
     <item
         android:id="@+id/menu4"
-        android:icon="@drawable/icon_phone" />
+        android:icon="@drawable/icon_bill" />
 
     <item
         android:id="@+id/menu5"
-        android:icon="@drawable/icon_bank" />
+        android:icon="@drawable/icon_settings" />
 </menu>
