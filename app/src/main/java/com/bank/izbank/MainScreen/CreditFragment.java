@@ -89,14 +89,14 @@ public class CreditFragment extends Fragment {
             @Override
             public void MyEventListener() {
 
-                Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+
                 list= mainUser.getCredits();
                 creditAdapter = new CreditAdapter(getContext(),list);
                 creditAdapter.setListener(new CustomEventListener() {
                     @Override
                     public void MyEventListener() {
 
-                        Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+
                         list= mainUser.getCredits();
                         creditAdapter = new CreditAdapter(getContext(),list);
 
@@ -249,7 +249,7 @@ public class CreditFragment extends Fragment {
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
 
@@ -377,20 +377,5 @@ public class CreditFragment extends Fragment {
 
 
 
-    public void InitAdapter(){
 
-        creditAdapter = new CreditAdapter(getContext(),list);
-        creditAdapter.setListener(new CustomEventListener() {
-            @Override
-            public void MyEventListener() {
-
-
-                list= mainUser.getCredits();
-                creditAdapter = new CreditAdapter(getContext(),list);
-
-
-                recyclerViewCredit.setAdapter(creditAdapter);
-            }
-        });
-    }
 }

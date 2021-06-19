@@ -225,9 +225,11 @@ public class BillFragment extends Fragment{
 
         }
 
-        if(SignIn.mainUser.getBankAccounts().size()>0 && bill.getAmount()<=SignIn.mainUser.getBankAccounts().get(index).getCash()){
+        if(SignIn.mainUser.getBankAccounts().size()>0 &&
+                bill.getAmount()<=SignIn.mainUser.getBankAccounts().get(index).getCash()){
 
-            SignIn.mainUser.getBankAccounts().get(index).setCash(SignIn.mainUser.getBankAccounts().get(index).getCash()-bill.getAmount());
+            SignIn.mainUser.getBankAccounts().get(index).
+                    setCash(SignIn.mainUser.getBankAccounts().get(index).getCash()-bill.getAmount());
 
             updateBankAccount(SignIn.mainUser.getBankAccounts().get(index));
 
@@ -287,7 +289,8 @@ public class BillFragment extends Fragment{
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().
+                            toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
 
@@ -303,13 +306,14 @@ public class BillFragment extends Fragment{
         object.put("type",bill.getType());
         object.put("username", SignIn.mainUser.getId());
         object.put("amount",String.valueOf(bill.getAmount()));
-        object.put("date",bill.getDate().getDay()+"/"+bill.getDate().getMonth()+"/"+bill.getDate().getYear());
+        object.put("date",bill.getDate().getDay()+"/"+bill.getDate().getMonth()+
+                "/"+bill.getDate().getYear());
 
         object.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    //Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+
                 }
                 else{
 
@@ -350,10 +354,9 @@ public class BillFragment extends Fragment{
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    //Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+
                 }
                 else{
-
 
                 }
             }
