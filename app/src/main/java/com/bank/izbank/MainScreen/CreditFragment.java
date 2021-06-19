@@ -187,7 +187,7 @@ public class CreditFragment extends Fragment {
 
                            }
                            else {
-                               Toast.makeText(getContext(), "HOCAM TUTARLI DOLDUR", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getContext(), "Type proper values!", Toast.LENGTH_SHORT).show();
                            }
 
 
@@ -195,7 +195,7 @@ public class CreditFragment extends Fragment {
                        }
                        else {
 
-                           Toast.makeText(getContext(), "HOCAM DÜZGÜN DOLDUR", Toast.LENGTH_SHORT).show();
+                           Toast.makeText(getContext(), "Type proper values!", Toast.LENGTH_SHORT).show();
 
                        }
 
@@ -228,7 +228,7 @@ public class CreditFragment extends Fragment {
                     if(objects.size()>0){
                         for(ParseObject object:objects){
                             object.deleteInBackground();
-                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+
                             accountsToDatabase(bankac);
                         }
                     }
@@ -252,7 +252,7 @@ public class CreditFragment extends Fragment {
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }
@@ -271,7 +271,7 @@ public class CreditFragment extends Fragment {
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
 
@@ -301,7 +301,7 @@ public class CreditFragment extends Fragment {
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"history datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }
@@ -328,7 +328,7 @@ public class CreditFragment extends Fragment {
 
             updateBankAccount(SignIn.mainUser.getBankAccounts().get(index));
 
-            Toast.makeText(getApplicationContext(),"KREDİ ALINDI",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Credit Received!",Toast.LENGTH_LONG).show();
 
             creditToDatabase(tempCredit);
             list.add(tempCredit);
@@ -337,14 +337,14 @@ public class CreditFragment extends Fragment {
                 @Override
                 public void MyEventListener() {
 
-                    Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+
                     list= mainUser.getCredits();
                     creditAdapter = new CreditAdapter(getContext(),list);
                     creditAdapter.setListener(new CustomEventListener() {
                         @Override
                         public void MyEventListener() {
 
-                            Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+
                             list= mainUser.getCredits();
                             creditAdapter = new CreditAdapter(getContext(),list);
 
@@ -367,7 +367,7 @@ public class CreditFragment extends Fragment {
         }
         else {
 
-            Toast.makeText(getApplicationContext(),"KREDİ ALINAMADI HESAP YOK",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Don't Have Bank Account!",Toast.LENGTH_LONG).show();
 
 
         }
@@ -384,7 +384,7 @@ public class CreditFragment extends Fragment {
             @Override
             public void MyEventListener() {
 
-                Toast.makeText(getContext(), "LİSTENERA GİRDİ", Toast.LENGTH_SHORT).show();
+
                 list= mainUser.getCredits();
                 creditAdapter = new CreditAdapter(getContext(),list);
 

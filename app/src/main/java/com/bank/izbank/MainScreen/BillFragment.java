@@ -231,7 +231,7 @@ public class BillFragment extends Fragment{
 
             updateBankAccount(SignIn.mainUser.getBankAccounts().get(index));
 
-            Toast.makeText(getApplicationContext(),"ÖDENDİ",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Bill Paid",Toast.LENGTH_LONG).show();
 
             billToDatabase(bill);
             list.add(bill);
@@ -246,7 +246,7 @@ public class BillFragment extends Fragment{
         }
         else {
 
-            Toast.makeText(getApplicationContext(),"yeterisz bakiye",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Don't Have Enough Money",Toast.LENGTH_LONG).show();
 
 
         }
@@ -266,7 +266,7 @@ public class BillFragment extends Fragment{
                     if(objects.size()>0){
                         for(ParseObject object:objects){
                             object.deleteInBackground();
-                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+
                             accountsToDatabase(bankac);
                         }
                     }
@@ -290,7 +290,7 @@ public class BillFragment extends Fragment{
                     Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }
@@ -309,7 +309,7 @@ public class BillFragment extends Fragment{
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
 
@@ -350,10 +350,10 @@ public class BillFragment extends Fragment{
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"history datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }

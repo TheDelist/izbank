@@ -97,7 +97,7 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.CardViewOb
                 if(listener!=null){
                     payCredit(credit,position);
                     listener.MyEventListener();
-                    Toast.makeText(mContext, "LİSTENER GİRDİ BİND", Toast.LENGTH_LONG).show();
+
 
 
 
@@ -146,7 +146,7 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.CardViewOb
 
             mainUser.setCredits(new ArrayList<Credit>(list));
 
-            Toast.makeText(getApplicationContext(),"KREDİ ÖDENDİ",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Credit Paid",Toast.LENGTH_LONG).show();
 
 
 
@@ -154,7 +154,7 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.CardViewOb
         }
         else {
 
-            Toast.makeText(getApplicationContext(),"KREDİ ÖDENEMEDİ SIKINTI VAR",Toast.LENGTH_LONG).show();
+
 
 
         }
@@ -208,7 +208,7 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.CardViewOb
                     if(objects.size()>0){
                         for(ParseObject object:objects){
                             object.deleteInBackground();
-                            Toast.makeText(getApplicationContext(),"sildi",Toast.LENGTH_LONG).show();
+
                             accountsToDatabase(bankac);
                         }
                     }
@@ -229,10 +229,10 @@ public class CreditAdapter extends RecyclerView.Adapter<CreditAdapter.CardViewOb
             @Override
             public void done(ParseException e) {
                 if(e != null){
-                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"banka datada",Toast.LENGTH_LONG).show();
+
 
                 }
             }
