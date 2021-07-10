@@ -8,20 +8,20 @@ In addition, we supported each other when necessary and repaired the problems.
 this added us time and efficiency while developing the app.
 
 ## This app features:
--send money to another account
--send money between own accounts
+-Send money to another account
+-Send money between own accounts
 -Creating a bank account
 -creation of credit card
--seeing the history of transactions
+-Seeing the history of transactions
 -Change of loan amount and rate according to profession group
-- loan payment
-- purchase of top 25 cryptocurrencies at Current values
+-Loan payment
+-Purchase of top 25 cryptocurrencies at Current values
 -Storing the purchased crypto money (in this way, you can see the increase or decrease in value when you buy crypto money imaginary)
 -Adding and paying the invoice
--change user account settings
+-Change user account settings
 -Admin panel
 
-used technologies:
+## Used technologies:
 -Parse database
 -Retrofit
 -Fragment
