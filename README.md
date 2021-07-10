@@ -7,7 +7,7 @@ In order to be completely independent in this project, I learned the use of Git 
 In addition, we supported each other when necessary and repaired the problems.
 this added us time and efficiency while developing the app.
 
-This app features:
+##This app features:
 -send money to another account
 -send money between own accounts
 -Creating a bank account
